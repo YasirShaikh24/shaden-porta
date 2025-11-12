@@ -9,6 +9,21 @@ import image3 from "@/assets/img/image3.jpg";
 import image4 from "@/assets/img/image4.jpg";
 import image5 from "@/assets/img/image5.jpg";
 import image6 from "@/assets/img/image6.jpg";
+import image7 from "@/assets/img/image7.jpg";
+import image8 from "@/assets/img/image8.jpg";
+import image9 from "@/assets/img/image9.jpg";
+import image10 from "@/assets/img/image10.jpg";
+import image11 from "@/assets/img/image11.jpg";
+import image12 from "@/assets/img/image12.jpg";
+import image13 from "@/assets/img/image13.jpg";
+import image14 from "@/assets/img/image14.jpg";
+import image15 from "@/assets/img/image15.jpg";
+import image16 from "@/assets/img/image16.jpg";
+import image17 from "@/assets/img/image17.jpg";
+import image18 from "@/assets/img/image18.jpg";
+import image19 from "@/assets/img/image19.jpg";
+import image20 from "@/assets/img/image20.jpg";
+import image21 from "@/assets/img/image21.jpg";
 
 const Gallery = () => {
   const { t } = useLanguage();
@@ -22,7 +37,21 @@ const Gallery = () => {
     { src: image4, alt: "Interior Kitchen Design" },
     { src: image5, alt: "Spacious Interior Room" },
     { src: image6, alt: "Exterior Porta Cabin" },
-    // Add more images here as: { src: image7, alt: "Description" }
+    { src: image7, alt: "Porta Cabin Project" },
+    { src: image8, alt: "Construction Site" },
+    { src: image9, alt: "Modern Porta Cabin" },
+    { src: image10, alt: "Industrial Building" },
+    { src: image11, alt: "Modular Construction" },
+    { src: image12, alt: "Porta Cabin Interior" },
+    { src: image13, alt: "Building Structure" },
+    { src: image14, alt: "Construction Work" },
+    { src: image15, alt: "Porta Cabin Design" },
+    { src: image16, alt: "Site Development" },
+    { src: image17, alt: "Modern Construction" },
+    { src: image18, alt: "Porta Cabin Installation" },
+    { src: image19, alt: "Building Project" },
+    { src: image20, alt: "Construction Progress" },
+    { src: image21, alt: "Completed Porta Cabin" },
   ];
 
   return (
