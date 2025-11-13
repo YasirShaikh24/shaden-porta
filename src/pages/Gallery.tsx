@@ -2,7 +2,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, X, ZoomIn } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react"; // Added useEffect and useRef
+import { useState, useEffect, useRef } from "react";
 import image1 from "@/assets/img/image1.jpg";
 import image2 from "@/assets/img/image2.jpg";
 import image3 from "@/assets/img/image3.jpg";
@@ -29,17 +29,38 @@ const Gallery = () => {
   const { t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  
-  // Ref to track if the scroll-to-top has happened
-  const didMountRef = useRef(false);
+  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Scroll to top on page load
   useEffect(() => {
-    // This ensures it only runs on the initial mount/navigation
-    if (!didMountRef.current) {
-        window.scrollTo(0, 0);
-        didMountRef.current = true;
-    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute('data-index'));
+            setVisibleImages((prev) => new Set(prev).add(index));
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
+
+    imageRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      imageRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
   }, []);
 
   const images = [
@@ -85,8 +106,8 @@ const Gallery = () => {
 
       {/* Gallery Content */}
       <main className="container mx-auto px-4 pt-32 pb-12">
-        {/* Title Section */}
-        <div className="text-center mb-16 animate-fade-in">
+        {/* Title Section with Entrance Animation */}
+        <div className="text-center mb-16 opacity-0 translate-y-10 animate-fade-in">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               {t.gallery}
@@ -97,86 +118,130 @@ const Gallery = () => {
           </p>
         </div>
 
-        {/* Image Grid with Staggered Animation */}
+        {/* Image Grid with Individual Scroll Animations */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className="group relative overflow-hidden rounded-2xl border-2 border-border bg-card hover:border-transparent transition-all duration-500 cursor-pointer aspect-video hover:shadow-2xl hover:-translate-y-2 opacity-0 translate-y-8 animate-fade-in" // Combined animation classes
-              onClick={() => setSelectedImage(image.src)}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              style={{ animationDelay: `${index * 100}ms` }} // Staggered delay for "one-by-one" effect
-            >
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+          {images.map((image, index) => {
+            const isVisible = visibleImages.has(index);
+            const isHovered = hoveredIndex === index;
+            
+            return (
+              <div
+                key={index}
+                ref={(el) => (imageRefs.current[index] = el)}
+                data-index={index}
+                className={`group relative overflow-hidden rounded-2xl border-2 border-border bg-card hover:border-transparent cursor-pointer aspect-video hover:shadow-2xl transition-all duration-700 ${
+                  isVisible 
+                    ? 'opacity-100 translate-y-0 scale-100' 
+                    : 'opacity-0 translate-y-20 scale-95'
+                }`}
+                style={{
+                  transitionDelay: isVisible ? `${(index % 3) * 100}ms` : '0ms',
+                  transform: isHovered ? 'translateY(-12px) scale(1.02)' : undefined
+                }}
+                onClick={() => setSelectedImage(image.src)}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                {/* Animated Glow Effect */}
+                <div className={`absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl -z-10 transition-opacity duration-500 ${
+                  isHovered ? 'opacity-100' : 'opacity-0'
+                }`}></div>
 
-              {/* Image */}
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-105"
-              />
-
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-6">
-                {/* Zoom Icon */}
-                <div className={`w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mb-4 border border-white/20 transition-all duration-300 ${
-                  hoveredIndex === index ? 'scale-100 opacity-100' : 'scale-50 opacity-0'
-                }`}>
-                  <ZoomIn className="text-white" size={24} />
+                {/* Image with Parallax Effect */}
+                <div className="relative w-full h-full overflow-hidden">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className={`w-full h-full object-cover transition-transform duration-700 brightness-105 ${
+                      isHovered ? 'scale-110' : 'scale-100'
+                    }`}
+                  />
+                  
+                  {/* Shimmer Effect on Load */}
+                  {isVisible && (
+                    <div 
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer"
+                      style={{
+                        animation: 'shimmer 1.5s ease-in-out',
+                        animationDelay: `${(index % 3) * 150}ms`
+                      }}
+                    />
+                  )}
                 </div>
 
-                {/* Image Title */}
-                <p className="text-foreground font-bold text-lg text-center">{image.alt}</p>
-              </div>
+                {/* Overlay with Smooth Fade */}
+                <div className={`absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent flex flex-col items-center justify-center p-6 transition-opacity duration-500 ${
+                  isHovered ? 'opacity-100' : 'opacity-0'
+                }`}>
+                  {/* Zoom Icon with Scale Animation */}
+                  <div className={`w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mb-4 border border-white/20 transition-all duration-300 ${
+                    isHovered ? 'scale-100 rotate-0 opacity-100' : 'scale-50 rotate-45 opacity-0'
+                  }`}>
+                    <ZoomIn className="text-white" size={24} />
+                  </div>
 
-              {/* Bottom Accent Line */}
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            </div>
-          ))}
+                  {/* Image Title with Slide Up */}
+                  <p className={`text-foreground font-bold text-lg text-center transition-all duration-300 ${
+                    isHovered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                  }`}>
+                    {image.alt}
+                  </p>
+                </div>
+
+                {/* Bottom Accent Line */}
+                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary transition-all duration-500 ${
+                  isHovered ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+                }`}></div>
+
+                {/* Corner Accent */}
+                <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary to-accent opacity-0 rounded-bl-full transition-all duration-500 ${
+                  isHovered ? 'opacity-20 scale-100' : 'opacity-0 scale-0'
+                }`}></div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Gallery Stats */}
-        <div className="mt-16 text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 backdrop-blur-sm">
-            <div className="text-center">
-              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        {/* Gallery Stats with Entrance Animation */}
+        <div className="mt-16 text-center opacity-0 translate-y-10 animate-fade-in" style={{ animationDelay: '300ms' }}>
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 backdrop-blur-sm hover:scale-105 transition-transform duration-300">
+            <div className="text-center group">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 {images.length}
               </div>
               <div className="text-sm text-muted-foreground font-medium">Total Images</div>
             </div>
             <div className="w-px h-12 bg-border hidden sm:block"></div>
-            <div className="text-center">
-              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <div className="text-center group">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 500+
               </div>
               <div className="text-sm text-muted-foreground font-medium">Projects Done</div>
             </div>
           </div>
-          <p className="mt-6 text-muted-foreground text-sm">More exciting projects coming soon!</p>
+          <p className="mt-6 text-muted-foreground text-sm animate-pulse">More exciting projects coming soon!</p>
         </div>
       </main>
 
-      {/* Lightbox */}
+      {/* Enhanced Lightbox */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl flex items-center justify-center p-4 animate-fade-in"
           onClick={() => setSelectedImage(null)}
         >
-          {/* Close Button */}
+          {/* Close Button with Rotation Animation */}
           <button
             onClick={() => setSelectedImage(null)}
-            className="absolute top-6 right-6 p-3 bg-card rounded-full border border-border hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 hover:border-primary transition-all duration-300 hover:scale-110 group"
+            className="absolute top-6 right-6 p-3 bg-card rounded-full border border-border hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 hover:border-primary transition-all duration-300 hover:scale-110 hover:rotate-90 group z-50"
             aria-label="Close"
           >
             <X size={24} className="text-foreground group-hover:text-primary transition-colors duration-300" />
           </button>
 
-          {/* Image Container */}
-          <div className="relative max-w-7xl max-h-[90vh]">
-            {/* Glow Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-accent/30 rounded-3xl blur-3xl"></div>
+          {/* Image Container with Scale Animation */}
+          <div className="relative max-w-7xl max-h-[90vh] animate-scale-in">
+            {/* Animated Glow Effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-accent/30 rounded-3xl blur-3xl animate-pulse-glow"></div>
             
             <img
               src={selectedImage}

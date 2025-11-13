@@ -1,10 +1,18 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Sparkles } from "lucide-react";
-import heroImage from "@/assets/img/image22.jpg"; // Your office image
+import heroImage from "@/assets/img/image22.jpg";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
   const { t } = useLanguage();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Trigger animations after component mounts
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const scrollToContact = () => {
     const element = document.getElementById('contact');
@@ -25,51 +33,93 @@ const Hero = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <div 
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 ease-out"
           style={{ 
             backgroundImage: `url(${heroImage})`,
-            filter: 'brightness(0.4)'
+            filter: 'brightness(0.4)',
+            transform: isVisible ? 'scale(1)' : 'scale(1.1)'
           }}
         />
-        {/* Gradient Overlays for Better Text Visibility */}
+        {/* Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/80" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-accent/20" />
+        
+        {/* Animated Particles */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/30 rounded-full animate-float"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${3 + Math.random() * 4}s`
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Content */}
       <div className="container mx-auto px-4 py-32 relative z-10">
-        <div className="text-center max-w-5xl mx-auto animate-fade-in">
-          {/* Premium Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/30 mb-8 animate-pulse-glow">
-            <Sparkles className="text-primary" size={18} />
+        <div className="text-center max-w-5xl mx-auto">
+          {/* Premium Badge with Slide In Animation */}
+          <div 
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/30 mb-8 transition-all duration-1000 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+            }`}
+            style={{ transitionDelay: '200ms' }}
+          >
+            <Sparkles className="text-primary animate-pulse" size={18} />
             <span className="text-sm font-semibold text-white">
                 {t.premiumConstruction}
             </span>
           </div>
 
-          {/* Main Heading */}
-          <h1 className="mb-6 animate-scale-in">
+          {/* Main Heading with Scale Animation */}
+          <h1 
+            className={`mb-6 transition-all duration-1000 ${
+              isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+            }`}
+            style={{ transitionDelay: '400ms' }}
+          >
             <span className="block text-white font-extrabold drop-shadow-2xl">
               Shaden House Porta Cabin
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <h2 className="text-2xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">
+          {/* Subtitle with Fade In */}
+          <h2 
+            className={`text-2xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg transition-all duration-1000 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+            style={{ transitionDelay: '600ms' }}
+          >
             {t.heroSubtitle}
           </h2>
 
-          {/* Description */}
-          <p className="text-lg md:text-xl mb-12 max-w-3xl mx-auto text-white font-medium drop-shadow-md leading-relaxed">
+          {/* Description with Fade In */}
+          <p 
+            className={`text-lg md:text-xl mb-12 max-w-3xl mx-auto text-white font-medium drop-shadow-md leading-relaxed transition-all duration-1000 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+            style={{ transitionDelay: '800ms' }}
+          >
             {t.heroDescription}
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+          {/* CTA Buttons with Staggered Animation */}
+          <div 
+            className={`flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 transition-all duration-1000 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+            style={{ transitionDelay: '1000ms' }}
+          >
             <Button
               onClick={scrollToContact}
               size="lg"
-              className="group px-8 py-6 text-lg font-bold bg-gradient-to-r from-primary to-accent text-white rounded-xl shadow-glow-lg hover:shadow-neon hover:scale-105 transition-all duration-300 border-0"
+              className="group px-8 py-6 text-lg font-bold bg-gradient-to-r from-primary to-accent text-white rounded-xl shadow-glow-lg hover:shadow-neon hover:scale-105 transition-all duration-300 border-0 animate-pulse-glow"
             >
               {t.getStarted}
               <ArrowDown className="ml-2 group-hover:translate-y-1 transition-transform" size={20} />
@@ -85,8 +135,13 @@ const Hero = () => {
             </Button>
           </div>
 
-          {/* Scroll Down Indicator */}
-          <div className="animate-float">
+          {/* Scroll Down Indicator with Float Animation */}
+          <div 
+            className={`animate-float transition-all duration-1000 ${
+              isVisible ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{ transitionDelay: '1200ms' }}
+          >
             <button
               onClick={scrollToAbout}
               className="flex flex-col items-center gap-2 mx-auto text-white hover:text-primary transition-colors duration-300 group"
@@ -95,7 +150,7 @@ const Hero = () => {
                 {t.exploreMore}
               </span>
               <ArrowDown 
-                className="group-hover:translate-y-2 transition-transform duration-300" 
+                className="group-hover:translate-y-2 transition-transform duration-300 animate-bounce" 
                 size={24} 
               />
             </button>
