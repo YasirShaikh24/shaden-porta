@@ -30,15 +30,14 @@ const Hero = () => {
       {/* Animated Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-background animate-gradient-shift"></div>
       
-      {/* Background Image with Overlay - MODIFIED FOR CLARITY */}
+      {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage} 
           alt="Hero Background" 
-          className="w-full h-full object-cover opacity-30" // Increased image opacity slightly
+          className="w-full h-full object-cover opacity-50"
         />
-        {/* Reduced overlay opacity to make the image "clearer" and more visible */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/70"></div>
       </div>
 
       {/* Floating Particles */}

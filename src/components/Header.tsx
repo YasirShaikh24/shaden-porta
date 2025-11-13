@@ -99,21 +99,8 @@ const Header = () => {
             </button>
           </nav>
 
-          {/* Language Toggle & Theme Toggle & Mobile Menu */}
+          {/* Language Toggle & Mobile Menu */}
           <div className="flex items-center gap-3">
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110"
-              aria-label="Toggle theme"
-            >
-              {isDark ? (
-                <Sun size={20} className="text-[hsl(var(--header-foreground))]" />
-              ) : (
-                <Moon size={20} className="text-[hsl(var(--header-foreground))]" />
-              )}
-            </button>
-
             {/* Language Buttons */}
             <div className="flex gap-2">
               <button
