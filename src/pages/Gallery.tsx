@@ -55,7 +55,7 @@ const Gallery = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-[hsl(var(--header-background))]/95 backdrop-blur-xl border-b border-white/10 shadow-lg">
         <div className="container mx-auto px-4 py-4">
