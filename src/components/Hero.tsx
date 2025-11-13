@@ -1,7 +1,7 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Sparkles } from "lucide-react";
-import heroImage from "@/assets/img/image22.jpg";
+import heroImage from "@/assets/img/image3.jpg";
 import { useEffect, useState } from "react";
 
 const Hero = () => {
