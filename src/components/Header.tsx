@@ -47,8 +47,8 @@ const Header = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled 
-        ? 'bg-background/80 backdrop-blur-xl shadow-lg border-b border-border/50' 
-        : 'bg-transparent'
+        ? 'bg-[hsl(var(--header-background))]/95 backdrop-blur-xl shadow-lg border-b border-border/50' 
+        : 'bg-[hsl(var(--header-background))]/90 backdrop-blur-md'
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
@@ -62,7 +62,7 @@ const Header = () => {
                 className="h-12 w-12 object-contain relative z-10 transform group-hover:scale-110 transition-transform duration-300" 
               />
             </div>
-            <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hidden sm:inline-block">
+            <span className="text-lg font-bold text-[hsl(var(--header-foreground))] hidden sm:inline-block">
               Shaden House Porta Cabin
             </span>
           </div>
@@ -71,28 +71,28 @@ const Header = () => {
           <nav className="hidden md:flex items-center gap-8">
             <button 
               onClick={() => scrollToSection('home')} 
-              className="relative text-foreground font-medium hover:text-primary transition-all duration-300 group"
+              className="relative text-[hsl(var(--header-foreground))] font-medium hover:text-primary transition-all duration-300 group"
             >
               {t.home}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
             <button 
               onClick={() => scrollToSection('about')} 
-              className="relative text-foreground font-medium hover:text-primary transition-all duration-300 group"
+              className="relative text-[hsl(var(--header-foreground))] font-medium hover:text-primary transition-all duration-300 group"
             >
               {t.about}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
             <a 
               href="/gallery" 
-              className="relative text-foreground font-medium hover:text-primary transition-all duration-300 group"
+              className="relative text-[hsl(var(--header-foreground))] font-medium hover:text-primary transition-all duration-300 group"
             >
               {t.gallery}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </a>
             <button 
               onClick={() => scrollToSection('contact')} 
-              className="relative text-foreground font-medium hover:text-primary transition-all duration-300 group"
+              className="relative text-[hsl(var(--header-foreground))] font-medium hover:text-primary transition-all duration-300 group"
             >
               {t.contact}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
@@ -104,13 +104,13 @@ const Header = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-secondary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110"
               aria-label="Toggle theme"
             >
               {isDark ? (
-                <Sun size={20} className="text-accent" />
+                <Sun size={20} className="text-[hsl(var(--header-foreground))]" />
               ) : (
-                <Moon size={20} className="text-primary" />
+                <Moon size={20} className="text-[hsl(var(--header-foreground))]" />
               )}
             </button>
 
@@ -121,7 +121,7 @@ const Header = () => {
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 ${
                   language === 'en' 
                     ? 'bg-gradient-to-r from-primary to-accent text-white shadow-lg' 
-                    : 'bg-secondary text-foreground hover:bg-secondary/80'
+                    : 'bg-white/10 text-[hsl(var(--header-foreground))] hover:bg-white/20'
                 }`}
               >
                 EN 🇬🇧
@@ -131,7 +131,7 @@ const Header = () => {
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 ${
                   language === 'ar' 
                     ? 'bg-gradient-to-r from-primary to-accent text-white shadow-lg' 
-                    : 'bg-secondary text-foreground hover:bg-secondary/80'
+                    : 'bg-white/10 text-[hsl(var(--header-foreground))] hover:bg-white/20'
                 }`}
               >
                 AR 🇸🇦
@@ -141,7 +141,7 @@ const Header = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-foreground hover:bg-secondary rounded-lg transition-all duration-300 hover:scale-110"
+              className="md:hidden p-2 text-[hsl(var(--header-foreground))] hover:bg-white/10 rounded-lg transition-all duration-300 hover:scale-110"
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -150,29 +150,29 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-border/50 backdrop-blur-xl">
+          <nav className="md:hidden py-4 border-t border-white/10 backdrop-blur-xl">
             <div className="flex flex-col gap-4">
               <button 
                 onClick={() => scrollToSection('home')} 
-                className="text-left text-foreground hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-secondary/50"
+                className="text-left text-[hsl(var(--header-foreground))] hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-white/10"
               >
                 {t.home}
               </button>
               <button 
                 onClick={() => scrollToSection('about')} 
-                className="text-left text-foreground hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-secondary/50"
+                className="text-left text-[hsl(var(--header-foreground))] hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-white/10"
               >
                 {t.about}
               </button>
               <a 
                 href="/gallery" 
-                className="text-foreground hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-secondary/50"
+                className="text-[hsl(var(--header-foreground))] hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-white/10"
               >
                 {t.gallery}
               </a>
               <button 
                 onClick={() => scrollToSection('contact')} 
-                className="text-left text-foreground hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-secondary/50"
+                className="text-left text-[hsl(var(--header-foreground))] hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-white/10"
               >
                 {t.contact}
               </button>

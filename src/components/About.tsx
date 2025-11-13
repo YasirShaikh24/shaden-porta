@@ -31,24 +31,28 @@ const About = () => {
   const features = [
     {
       icon: Shield,
+      emoji: "🛡️",
       title: t.aboutFeature1,
       description: "High-grade materials ensuring longevity and safety",
       gradient: "from-purple-500 to-pink-500"
     },
     {
       icon: Zap,
+      emoji: "⚡",
       title: t.aboutFeature2,
       description: "Efficient project execution and timely completion",
       gradient: "from-blue-500 to-cyan-500"
     },
     {
       icon: Wrench,
+      emoji: "🔧",
       title: t.aboutFeature3,
       description: "Tailored designs to meet your specific requirements",
       gradient: "from-green-500 to-teal-500"
     },
     {
       icon: Award,
+      emoji: "🏆",
       title: t.aboutFeature4,
       description: "Built to withstand harsh environmental conditions",
       gradient: "from-orange-500 to-red-500"
@@ -95,7 +99,7 @@ const About = () => {
                   {/* Icon Container */}
                   <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${feature.gradient} p-0.5 mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                     <div className="w-full h-full bg-card rounded-2xl flex items-center justify-center">
-                      <feature.icon className={`text-transparent bg-gradient-to-br ${feature.gradient} bg-clip-text`} size={36} strokeWidth={1.5} />
+                      <span className="text-4xl">{feature.emoji}</span>
                     </div>
                   </div>
 

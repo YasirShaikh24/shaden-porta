@@ -57,12 +57,12 @@ const Gallery = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-[hsl(var(--header-background))]/95 backdrop-blur-xl border-b border-white/10 shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <Link to="/">
             <Button 
               variant="ghost" 
-              className="gap-2 hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all duration-300 hover:scale-105"
+              className="gap-2 text-[hsl(var(--header-foreground))] hover:bg-white/10 transition-all duration-300 hover:scale-105"
             >
               <ArrowLeft size={20} />
               <span className="font-semibold">{t.home}</span>
