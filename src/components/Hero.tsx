@@ -28,16 +28,16 @@ const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/10 to-transparent animate-gradient-shift"></div>
+      <div className="absolute inset-0 opacity-30"></div>
       
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage} 
           alt="Hero Background" 
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--gradient-start))]/80 via-[hsl(var(--gradient-end))]/60 to-[hsl(var(--gradient-start))]/85"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--gradient-start))]/50 via-transparent to-[hsl(var(--gradient-end))]/60"></div>
       </div>
 
       {/* Floating Particles */}
@@ -118,7 +118,7 @@ const Hero = () => {
       </div>
 
       {/* Bottom Gradient Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[hsl(var(--gradient-end))] to-transparent z-10"></div>
     </section>
   );
 };
