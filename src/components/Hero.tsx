@@ -26,10 +26,12 @@ const Hero = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <div 
-          className="absolute inset-0 bg-cover bg-center"
+          // Use bg-top on small screens for better visibility of the structure, and bg-center on wider screens
+          className="absolute inset-0 bg-cover bg-top md:bg-center" 
           style={{ 
             backgroundImage: `url(${heroImage})`,
-            filter: 'brightness(0.4)'
+            // INCREASED BRIGHTNESS TO 0.6 FOR MORE VISIBILITY
+            filter: 'brightness(0.6)' 
           }}
         />
         {/* Gradient Overlays for Better Text Visibility */}
