@@ -2,7 +2,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, X, ZoomIn } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react"; // Added useEffect and useRef
 import image1 from "@/assets/img/image1.jpg";
 import image2 from "@/assets/img/image2.jpg";
 import image3 from "@/assets/img/image3.jpg";
@@ -29,6 +29,18 @@ const Gallery = () => {
   const { t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  
+  // Ref to track if the scroll-to-top has happened
+  const didMountRef = useRef(false);
+
+  // Scroll to top on page load
+  useEffect(() => {
+    // This ensures it only runs on the initial mount/navigation
+    if (!didMountRef.current) {
+        window.scrollTo(0, 0);
+        didMountRef.current = true;
+    }
+  }, []);
 
   const images = [
     { src: image1, alt: "Steel Frame Construction Site" },
@@ -85,16 +97,16 @@ const Gallery = () => {
           </p>
         </div>
 
-        {/* Image Grid */}
+        {/* Image Grid with Staggered Animation */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {images.map((image, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-2xl border-2 border-border bg-card hover:border-transparent transition-all duration-500 cursor-pointer aspect-video hover:shadow-2xl hover:-translate-y-2"
+              className="group relative overflow-hidden rounded-2xl border-2 border-border bg-card hover:border-transparent transition-all duration-500 cursor-pointer aspect-video hover:shadow-2xl hover:-translate-y-2 opacity-0 translate-y-8 animate-fade-in" // Combined animation classes
               onClick={() => setSelectedImage(image.src)}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              style={{ animationDelay: `${index * 50}ms` }}
+              style={{ animationDelay: `${index * 100}ms` }} // Staggered delay for "one-by-one" effect
             >
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
@@ -127,14 +139,14 @@ const Gallery = () => {
 
         {/* Gallery Stats */}
         <div className="mt-16 text-center">
-          <div className="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 backdrop-blur-sm">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 backdrop-blur-sm">
             <div className="text-center">
               <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 {images.length}
               </div>
               <div className="text-sm text-muted-foreground font-medium">Total Images</div>
             </div>
-            <div className="w-px h-12 bg-border"></div>
+            <div className="w-px h-12 bg-border hidden sm:block"></div>
             <div className="text-center">
               <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 500+

@@ -31,6 +31,13 @@ export const translations = {
     address: "Al Yasmin, Riyadh 13325, Saudi Arabia",
     phone: "+966 55 446 7464",
     email: "info@shadenhouseportacabin.com",
+    // New Keys
+    premiumConstruction: "Premium Construction Solutions", // For Hero badge
+    getStarted: "Get Started", // For Hero button
+    viewGallery: "View Gallery", // For Hero button
+    exploreMore: "Explore More", // For Hero scroll indicator
+    madeInSaudi: "Proudly Made in Saudi Arabia", // For Saudi Made image
+    socialLinks: "Follow Us", // For Social Media Header
   },
   ar: {
     home: "الرئيسية",
@@ -64,5 +71,12 @@ export const translations = {
     address: "الياسمين، الرياض 13325، المملكة العربية السعودية",
     phone: "+966 55 446 7464",
     email: "info@shadenhouseportacabin.com",
+    // New Keys
+    premiumConstruction: "حلول بناء متميزة",
+    getStarted: "ابدأ الآن",
+    viewGallery: "عرض المعرض",
+    exploreMore: "استكشف المزيد",
+    madeInSaudi: "صنع بفخر في المملكة العربية السعودية",
+    socialLinks: "تابعنا",
   }
 };

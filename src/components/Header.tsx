@@ -83,7 +83,7 @@ const Header = () => {
 
           {/* Language Toggle & Mobile Menu */}
           <div className="flex items-center gap-3">
-            {/* Language Buttons */}
+            {/* Language Buttons - UPDATED WITH FLAGS */}
             <div className="flex gap-2">
               <button
                 onClick={() => setLanguage('en')}

@@ -156,7 +156,7 @@
     font-weight: 600;
   }
 
-  /* Image optimization for dark theme */
+  /* Image optimization for dark theme: REMOVED OLD STYLES AND LET TAILWIND HANDLE IT */
   img {
     border-radius: var(--radius);
   }
@@ -256,17 +256,6 @@
   .text-muted-dark {
     color: hsl(215 15% 70%);
     font-weight: 500;
-  }
-
-  /* Image enhancement for dark theme */
-  .img-enhanced {
-    filter: brightness(1.05) contrast(1.05);
-    transition: all 0.3s ease;
-  }
-
-  .img-enhanced:hover {
-    filter: brightness(1.1) contrast(1.1);
-    transform: scale(1.02);
   }
 
   /* Button styling for dark theme */

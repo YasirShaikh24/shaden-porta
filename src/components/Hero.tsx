@@ -43,7 +43,7 @@ const Hero = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/30 mb-8 animate-pulse-glow">
             <Sparkles className="text-primary" size={18} />
             <span className="text-sm font-semibold text-white">
-              ✨ {t.premiumConstruction || "Premium Construction Solutions"}
+                {t.premiumConstruction}
             </span>
           </div>
 
@@ -56,12 +56,12 @@ const Hero = () => {
 
           {/* Subtitle */}
           <h2 className="text-2xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">
-            {t.heroSubtitle || "Premium Modular Construction Solutions"}
+            {t.heroSubtitle}
           </h2>
 
           {/* Description */}
           <p className="text-lg md:text-xl mb-12 max-w-3xl mx-auto text-white font-medium drop-shadow-md leading-relaxed">
-            {t.heroDescription || "Leading provider of portable cabins and modular buildings in Saudi Arabia. Quality, durability, and innovation in every project."}
+            {t.heroDescription}
           </p>
 
           {/* CTA Buttons */}
@@ -71,7 +71,7 @@ const Hero = () => {
               size="lg"
               className="group px-8 py-6 text-lg font-bold bg-gradient-to-r from-primary to-accent text-white rounded-xl shadow-glow-lg hover:shadow-neon hover:scale-105 transition-all duration-300 border-0"
             >
-              {t.getStarted || "Get Started"}
+              {t.getStarted}
               <ArrowDown className="ml-2 group-hover:translate-y-1 transition-transform" size={20} />
             </Button>
             
@@ -81,7 +81,7 @@ const Hero = () => {
               variant="outline"
               className="px-8 py-6 text-lg font-bold glass text-white border-2 border-white/30 rounded-xl hover:bg-white/10 hover:scale-105 transition-all duration-300 hover:border-white/50"
             >
-              {t.viewGallery || "View Gallery"}
+              {t.viewGallery}
             </Button>
           </div>
 
@@ -92,7 +92,7 @@ const Hero = () => {
               className="flex flex-col items-center gap-2 mx-auto text-white hover:text-primary transition-colors duration-300 group"
             >
               <span className="text-sm font-semibold uppercase tracking-wider">
-                {t.exploreMore || "Explore More"}
+                {t.exploreMore}
               </span>
               <ArrowDown 
                 className="group-hover:translate-y-2 transition-transform duration-300" 
