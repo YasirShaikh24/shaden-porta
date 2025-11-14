@@ -1,7 +1,8 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Sparkles } from "lucide-react";
-import heroImage from "@/assets/img/image3.jpg"; // Your office image
+import VideoBackground from "./VideoBackground";
+import heroImage from "@/assets/img/image3.jpg";
 
 const Hero = () => {
   const { t } = useLanguage();
@@ -21,49 +22,38 @@ const Hero = () => {
   };
 
   return (
-    // ADDED h-full for a more robust full-height on some mobile browsers
-    <section id="home" className="relative min-h-screen h-full flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <div 
-          // Use bg-top on small screens for better visibility of the structure, and bg-center on wider screens
-          className="absolute inset-0 bg-cover bg-top md:bg-center" 
-          style={{ 
-            backgroundImage: `url(${heroImage})`,
-            // INCREASED BRIGHTNESS TO 0.6 FOR MORE VISIBILITY
-            filter: 'brightness(0.6)' 
-          }}
-        />
-        {/* Gradient Overlays for Better Text Visibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-accent/20" />
-      </div>
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Video Background - Replace with your construction site video URL */}
+      <VideoBackground 
+        videoUrl="/construction-video.mp4" 
+        posterImage={heroImage}
+      />
 
       {/* Content */}
       <div className="container mx-auto px-4 py-32 relative z-10">
         <div className="text-center max-w-5xl mx-auto animate-fade-in">
           {/* Premium Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/30 mb-8 animate-pulse-glow">
-            <Sparkles className="text-primary" size={18} />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/30 mb-8 animate-pulse-glow">
+            <Sparkles className="text-white" size={18} />
             <span className="text-sm font-semibold text-white">
               ✨ {t.premiumConstruction}
             </span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="mb-6 animate-scale-in">
+          <h1 className="mb-4 animate-scale-in">
             <span className="block text-white font-extrabold drop-shadow-2xl">
-              Shaden House Porta Cabin
+              {t.heroTitle}
             </span>
           </h1>
 
           {/* Subtitle */}
-          <h2 className="text-2xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">
+          <h2 className="text-xl md:text-3xl font-bold mb-4 text-white drop-shadow-lg">
             {t.heroSubtitle}
           </h2>
 
-          {/* Description */}
-          <p className="text-lg md:text-xl mb-12 max-w-3xl mx-auto text-white font-medium drop-shadow-md leading-relaxed">
+          {/* Description - Smaller and Better */}
+          <p className="text-sm md:text-base mb-10 max-w-2xl mx-auto text-white/90 font-normal drop-shadow-md leading-relaxed">
             {t.heroDescription}
           </p>
 

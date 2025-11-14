@@ -1,6 +1,7 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import logo from "@/assets/img/logo.png";
 import saudimade from "@/assets/img/saudimade.png";
+import vision2030 from "@/assets/img/vision2030.jpg";
 import { MapPin, Phone, Mail, ArrowUp, Linkedin, Facebook, Instagram } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
@@ -206,16 +207,29 @@ const Footer = () => {
             </div>
 
             {/* Saudi Made Image */}
-            <div className="flex flex-col items-center md:items-end gap-2">
+            <div className="flex flex-col items-center md:items-end gap-4">
               <img 
                 src={saudimade} 
                 alt="Saudi Made" 
-                className="h-12 w-auto object-contain"
+                className="h-12 w-auto object-contain hover:scale-110 transition-transform duration-300"
               />
               <p className="text-xs font-medium text-muted-foreground italic">
                 {t.madeInSaudi}
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* Vision 2030 Section */}
+        <div className={`mt-12 pt-8 border-t border-border/50 transition-all duration-700 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`} style={{ transitionDelay: '450ms' }}>
+          <div className="flex justify-center">
+            <img 
+              src={vision2030} 
+              alt="Saudi Vision 2030" 
+              className="h-20 md:h-24 w-auto object-contain hover:scale-105 transition-transform duration-300"
+            />
           </div>
         </div>
 

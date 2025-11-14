@@ -5,7 +5,7 @@ import image2 from "@/assets/img/image3.jpg";
 import image3 from "@/assets/img/image4.jpg";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Eye } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const FeaturedProjects = () => {
   const { t } = useLanguage();
@@ -39,19 +39,19 @@ const FeaturedProjects = () => {
       image: image1,
       title: t.project1Title,
       description: t.project1Description,
-      gradient: "from-purple-500/20 to-pink-500/20"
+      gradient: "from-primary/20 to-accent/20"
     },
     {
       image: image2,
       title: t.project2Title,
       description: t.project2Description,
-      gradient: "from-blue-500/20 to-cyan-500/20"
+      gradient: "from-accent/20 to-primary/20"
     },
     {
       image: image3,
       title: t.project3Title,
       description: t.project3Description,
-      gradient: "from-green-500/20 to-teal-500/20"
+      gradient: "from-primary/20 to-accent/20"
     }
   ];
 
