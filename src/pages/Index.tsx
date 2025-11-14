@@ -5,19 +5,24 @@ import FeaturedProjects from "@/components/FeaturedProjects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { useEffect, useRef } from "react"; // Import useEffect and useRef
+import LoadingScreen from "@/components/LoadingScreen";
+import { useEffect, useRef, useState } from "react";
 
 const Index = () => {
   const didMountRef = useRef(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Scroll to top on page load/navigation
   useEffect(() => {
-    // This ensures it only runs on the initial mount/navigation
     if (!didMountRef.current) {
         window.scrollTo(0, 0);
         didMountRef.current = true;
     }
   }, []);
+
+  if (isLoading) {
+    return <LoadingScreen onComplete={() => setIsLoading(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-background">

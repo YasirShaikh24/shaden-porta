@@ -1,7 +1,8 @@
 import { useLanguage } from "@/hooks/useLanguage";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, X, ZoomIn } from "lucide-react";
-import { Link } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { Play, Image as ImageIcon } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import image1 from "@/assets/img/image1.jpg";
 import image2 from "@/assets/img/image2.jpg";
@@ -24,68 +25,93 @@ import image18 from "@/assets/img/image18.jpg";
 import image19 from "@/assets/img/image19.jpg";
 import image20 from "@/assets/img/image20.jpg";
 import image21 from "@/assets/img/image21.jpg";
+import image22 from "@/assets/img/image22.jpg";
+
+type MediaItem = {
+  src: string;
+  type: 'image' | 'video';
+  thumbnail?: string;
+  title: string;
+};
 
 const Gallery = () => {
   const { t } = useLanguage();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
-  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
+  const [visibleItems, setVisibleItems] = useState<boolean[]>([]);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Gallery items - Mix of images and videos
+  const galleryItems: MediaItem[] = [
+    { src: image1, type: 'image', title: "Steel Frame Construction 1" },
+    { src: image2, type: 'image', title: "Modern Porta Cabin 1" },
+    { src: image3, type: 'image', title: "Office Interior 1" },
+    // Placeholder for videos - Replace with actual video URLs
+    { src: "/videos/video1.mp4", type: 'video', thumbnail: image4, title: "Construction Process Video" },
+    { src: image5, type: 'image', title: "Steel Frame Construction 2" },
+    { src: image6, type: 'image', title: "Modern Porta Cabin 2" },
+    { src: image7, type: 'image', title: "Office Interior 2" },
+    { src: image8, type: 'image', title: "Installation Site 1" },
+    { src: image9, type: 'image', title: "Completed Project 1" },
+    // Placeholder for video 2
+    { src: "/videos/video2.mp4", type: 'video', thumbnail: image10, title: "Site Tour Video" },
+    { src: image11, type: 'image', title: "Interior Design 1" },
+    { src: image12, type: 'image', title: "Exterior View 1" },
+    { src: image13, type: 'image', title: "Construction Detail 1" },
+    { src: image14, type: 'image', title: "Modular Unit 1" },
+    { src: image15, type: 'image', title: "Installation Process 1" },
+    // Placeholder for video 3
+    { src: "/videos/video3.mp4", type: 'video', thumbnail: image16, title: "Project Showcase Video" },
+    { src: image17, type: 'image', title: "Finished Project 2" },
+    { src: image18, type: 'image', title: "Interior Detail 1" },
+    { src: image19, type: 'image', title: "Exterior Detail 1" },
+    { src: image20, type: 'image', title: "Construction Site 2" },
+    { src: image21, type: 'image', title: "Modern Design 1" },
+    { src: image22, type: 'image', title: "Completed Installation 1" },
+  ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Intersection Observer for scroll animations
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+    const observers = itemRefs.current.map((ref, index) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
           if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute('data-index'));
-            setVisibleImages((prev) => new Set(prev).add(index));
+            setVisibleItems(prev => {
+              const newVisible = [...prev];
+              newVisible[index] = true;
+              return newVisible;
+            });
           }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '50px'
-      }
-    );
+        },
+        { threshold: 0.1 }
+      );
 
-    imageRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
+      if (ref) {
+        observer.observe(ref);
+      }
+
+      return observer;
     });
 
     return () => {
-      imageRefs.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
+      observers.forEach((observer, index) => {
+        if (itemRefs.current[index]) {
+          observer.unobserve(itemRefs.current[index]!);
+        }
       });
     };
   }, []);
 
-  const images = [
-    { src: image1, alt: "Steel Frame Construction Site" },
-    { src: image2, alt: "Modern Architecture" },
-    { src: image3, alt: "Premium Porta Cabin" },
-    { src: image4, alt: "Interior Kitchen Design" },
-    { src: image5, alt: "Spacious Interior Room" },
-    { src: image6, alt: "Exterior Porta Cabin" },
-    { src: image7, alt: "Modular Home with Landscaping" },
-    { src: image8, alt: "Two-Story Modular Accommodation" },
-    { src: image9, alt: "Large Modern Indoor Space" },
-    { src: image10, alt: "Modular Home with Landscaping" },
-    { src: image11, alt: "L-Shaped Modular Unit" },
-    { src: image12, alt: "Commercial Building Interior" },
-    { src: image13, alt: "Corrugated Panel Porta Cabins" },
-    { src: image14, alt: "Stacked Office and Restroom Units" },
-    { src: image15, alt: "Modular Washroom Interior" },
-    { src: image16, alt: "Long Dormitory Porta Cabin" },
-    { src: image17, alt: "Small Modular Security Cabin" },
-    { src: image18, alt: "Large Steel Structure Under Construction" },
-    { src: image19, alt: "Container Office with Platform" },
-    { src: image20, alt: "Open-Plan Modular Office" },
-    { src: image21, alt: "Modular Washroom Sink Area" },
-  ];
+  const openLightbox = (item: MediaItem) => {
+    setSelectedItem(item);
+  };
+
+  const closeLightbox = () => {
+    setSelectedItem(null);
+  };
 
   return (
     <div className="min-h-screen">
