@@ -53,8 +53,8 @@ const About = () => {
     {
       icon: Award,
       emoji: "🏆",
-      title: t.aboutFeature4,
-      description: "Built to withstand harsh environmental conditions",
+      title: t.aboutFeature4, // Now "Certified Quality & Performance"
+      description: "Recognized for superior build quality and long-term certified performance.", // UPDATED: More professional description
       gradient: "from-orange-500 to-red-500"
     }
   ];
@@ -88,7 +88,7 @@ const About = () => {
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
-              {/* Card Background with Gradient Border */}
+              {/* Card Background with Gradient Border - FIX: This ensures the glow effect works for all cards */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative bg-card p-8 rounded-2xl border border-border hover:border-transparent transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 overflow-hidden">

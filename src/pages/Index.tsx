@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Index = () => {
   const didMountRef = useRef(false);
-  const [isLoading, setIsLoading] = useState(true);
+  // REMOVED: const [isLoading, setIsLoading] = useState(true);
 
   // Scroll to top on page load/navigation
   useEffect(() => {
@@ -19,10 +19,8 @@ const Index = () => {
         didMountRef.current = true;
     }
   }, []);
-
-  if (isLoading) {
-    return <LoadingScreen onComplete={() => setIsLoading(false)} />;
-  }
+  
+  // REMOVED: LoadingScreen conditional rendering
 
   return (
     <div className="min-h-screen bg-background">

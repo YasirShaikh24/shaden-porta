@@ -1,13 +1,17 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import logo from "@/assets/img/logo.png";
-import headerBg from "@/assets/img/image22.jpg"; // Add this image to your assets
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+// FIX: Import necessary hooks from react-router-dom
+import { useNavigate, useLocation } from "react-router-dom"; 
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // FIX: Initialize hooks
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,25 +21,33 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setMobileMenuOpen(false);
+  // FIX: Updated function to handle navigation back to the root page with hash for section scrolling
+  const navigateToSection = (id: string) => {
+    setMobileMenuOpen(false);
+
+    // If currently on the Index page, scroll smoothly
+    if (location.pathname === '/') {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // If on another page (like /gallery), navigate to the home page and use a hash to scroll
+      navigate(`/#${id}`);
     }
   };
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled 
-        ? 'glass shadow-glow' 
-        : 'bg-background/40 backdrop-blur-md'
+        ? 'glass shadow-glow bg-card/70' // Use bg-card/70 and glass for light theme
+        : 'bg-background/80 backdrop-blur-md' // Use bg-background/80 for initial state
     }`}>
 
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center gap-3 group cursor-pointer">
+          <div className="flex items-center gap-3 group cursor-pointer" onClick={() => navigateToSection('home')}>
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-lg opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
               <img 
@@ -52,14 +64,14 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             <button 
-              onClick={() => scrollToSection('home')} 
+              onClick={() => navigateToSection('home')} // FIX: Use navigateToSection
               className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
             >
               {t.home}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
             <button 
-              onClick={() => scrollToSection('about')} 
+              onClick={() => navigateToSection('about')} // FIX: Use navigateToSection
               className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
             >
               {t.about}
@@ -73,7 +85,7 @@ const Header = () => {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </a>
             <button 
-              onClick={() => scrollToSection('contact')} 
+              onClick={() => navigateToSection('contact')} // FIX: Use navigateToSection
               className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
             >
               {t.contact}
@@ -119,16 +131,16 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-border glass">
+          <nav className="md:hidden py-4 border-t border-border bg-card/90 backdrop-blur-md">
             <div className="flex flex-col gap-4">
               <button 
-                onClick={() => scrollToSection('home')} 
+                onClick={() => navigateToSection('home')} // FIX: Use navigateToSection
                 className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.home}
               </button>
               <button 
-                onClick={() => scrollToSection('about')} 
+                onClick={() => navigateToSection('about')} // FIX: Use navigateToSection
                 className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.about}
@@ -140,7 +152,7 @@ const Header = () => {
                 {t.gallery}
               </a>
               <button 
-                onClick={() => scrollToSection('contact')} 
+                onClick={() => navigateToSection('contact')} // FIX: Use navigateToSection
                 className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.contact}

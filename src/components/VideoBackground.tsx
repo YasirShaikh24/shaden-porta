@@ -48,8 +48,8 @@ const VideoBackground = ({ videoUrl, posterImage, className = "" }: VideoBackgro
         </video>
       )}
 
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-header-background/70 via-transparent to-background/90"></div>
+      {/* Gradient Overlays - Adjusted to fade smoothly to the light background color at the bottom */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-background/90"></div> 
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10"></div>
     </div>
   );
