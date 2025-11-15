@@ -35,12 +35,13 @@ const Hero = () => {
       <div className="container mx-auto px-4 py-32 relative z-10">
         <div className="text-center max-w-5xl mx-auto animate-fade-in">
           {/* Premium Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/30 mb-8 animate-pulse-glow">
-            {/* Kept text-white for maximum contrast against the dark video background */}
-            <Sparkles className="text-white" size={18} />
-            <span className="text-sm font-semibold text-white">
-              ✨ {t.premiumConstruction}
-            </span>
+          <div className="inline-flex flex-col items-center gap-1 px-6 py-3 rounded-2xl glass border border-white/30 mb-8 animate-pulse-glow max-w-md mx-auto">
+            <div className="flex items-center gap-2">
+              <Sparkles className="text-white" size={18} />
+              <span className="text-sm font-semibold text-white">
+                ✨ {t.premiumConstruction}
+              </span>
+            </div>
           </div>
 
           {/* Main Heading */}
