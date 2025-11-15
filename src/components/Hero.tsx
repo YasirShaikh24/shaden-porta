@@ -43,16 +43,11 @@ const Hero = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="mb-6 md:mb-8 animate-scale-in">
+          <h1 className="mb-8 md:mb-10 animate-scale-in">
             <span className="block text-white font-extrabold drop-shadow-2xl text-4xl md:text-6xl lg:text-7xl leading-tight">
               {t.heroTitle}
             </span>
           </h1>
-
-          {/* Subtitle */}
-          <h2 className="text-lg md:text-2xl lg:text-3xl font-bold mb-6 md:mb-8 text-white drop-shadow-lg max-w-4xl mx-auto leading-relaxed">
-            {t.heroSubtitle}
-          </h2>
 
           {/* Description - Compact and Readable */}
           <p className="text-sm md:text-base lg:text-lg mb-10 md:mb-12 max-w-3xl mx-auto text-white/95 font-medium drop-shadow-lg leading-relaxed">
