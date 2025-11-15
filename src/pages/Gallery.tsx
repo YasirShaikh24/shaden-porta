@@ -28,7 +28,10 @@ import image18 from "@/assets/img/image18.jpg";
 import image19 from "@/assets/img/image19.jpg";
 import image20 from "@/assets/img/image20.jpg";
 import image21 from "@/assets/img/image21.jpg";
+// NEW: Added new image imports
 import image22 from "@/assets/img/image22.jpg";
+import image23 from "@/assets/img/image23.jpg";
+import image24 from "@/assets/img/image24.jpg";
 
 type MediaItem = {
   src: string;
@@ -70,7 +73,10 @@ const Gallery = () => {
     { src: image19, type: 'image', title: "Exterior Detail 1" },
     { src: image20, type: 'image', title: "Construction Site 2" },
     { src: image21, type: 'image', title: "Modern Design 1" },
-    { src: image22, type: 'image', title: "Completed Installation 1" },
+    // NEW: Added new images
+    { src: image22, type: 'image', title: "New Project Showcase 1" },
+    { src: image23, type: 'image', title: "New Project Showcase 2" },
+    { src: image24, type: 'image', title: "New Project Showcase 3" },
   ];
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { useLanguage } from "@/hooks/useLanguage";
-import { MapPin, Phone, Mail, Linkedin, Instagram } from "lucide-react";
+import { MapPin, Phone, Mail, Linkedin, Facebook, Instagram } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const Contact = () => {
@@ -62,7 +62,7 @@ const Contact = () => {
     }
   ];
 
-  // Social Media Info with Arabic translations
+  // Social Media Info with Arabic translations - NOW 3 CARDS (LinkedIn, Facebook, Instagram)
   const socialInfo = [
     {
       icon: Linkedin,
@@ -74,6 +74,15 @@ const Contact = () => {
       bgGradient: "from-blue-600/10 to-blue-400/10"
     },
     {
+      icon: Facebook,
+      label: language === 'ar' ? 'فيسبوك' : 'Facebook',
+      value: language === 'ar' ? 'تابعنا' : 'Follow us',
+      link: "https://www.facebook.com/profile.php?id=61578135137261",
+      gradient: "from-blue-500 to-blue-700",
+      iconColor: "text-blue-600",
+      bgGradient: "from-blue-500/10 to-blue-700/10"
+    },
+    {
       icon: Instagram,
       label: language === 'ar' ? 'إنستغرام' : 'Instagram',
       value: language === 'ar' ? 'تابعنا' : 'Follow us',
@@ -83,8 +92,6 @@ const Contact = () => {
       bgGradient: "from-pink-600/10 to-orange-500/10"
     }
   ];
-  
-  const allInfo = [...contactInfo, ...socialInfo];
 
   return (
     <section 
@@ -114,9 +121,8 @@ const Contact = () => {
           </p>
         </div>
 
-        {/* Unified Cards Rendering */}
+        {/* Contact Info Cards - 3 cards in a row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-          {/* Render Contact Info Cards */}
           {contactInfo.map((info, index) => {
             const CurrentIcon = info.icon;
             return (
@@ -139,7 +145,7 @@ const Contact = () => {
                 >
                   <div className={`absolute inset-0 bg-gradient-to-br ${info.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
-                  <div className={`flex flex-col items-center text-center relative z-10 ${isRTL ? 'text-right' : 'text-left'}`}>
+                  <div className={`flex flex-col items-center text-center relative z-10`}>
                     <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${info.gradient} p-0.5 mb-6 transform ${
                       hoveredIndex === index ? 'scale-110 rotate-3' : 'scale-100 rotate-0'
                     } transition-all duration-500`}>
@@ -168,8 +174,8 @@ const Contact = () => {
           })}
         </div>
 
-        {/* Social Media Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-16">
+        {/* Social Media Cards - 3 cards in a row (LinkedIn, Facebook, Instagram) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
           {socialInfo.map((info, index) => {
             const currentIndex = contactInfo.length + index;
             const CurrentIcon = info.icon;

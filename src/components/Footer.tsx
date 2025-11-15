@@ -1,7 +1,7 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import logo from "@/assets/img/logo.png";
 import saudimade from "@/assets/img/saudimade.png";
-import vision2030 from "@/assets/img/vision2030.jpg";
+import vision2030 from "@/assets/img/vision2030.png";
 import { MapPin, Phone, Mail, ArrowUp, Linkedin, Facebook, Instagram } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
@@ -88,9 +88,16 @@ const Footer = () => {
                 Shaden House
               </span>
             </div>
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mx-auto md:mx-0">
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mx-auto md:mx-0 mb-6">
               {t.footerDescription}
             </p>
+            
+            {/* Saudi Vision 2030 - Only in Column 1 */}
+            <img 
+                src={vision2030} 
+                alt="Saudi Vision 2030" 
+                className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300 border-2 border-primary rounded-lg shadow-lg shadow-primary/30"
+            />
           </div>
 
           {/* Quick Links - Column 2 */}
@@ -206,17 +213,12 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Saudi Made & Vision 2030 - Together */}
-            <div className="flex flex-col items-center md:items-end gap-6">
+            {/* Saudi Made Only - Vision 2030 Removed */}
+            <div className="flex items-center justify-center md:justify-end">
               <img 
                 src={saudimade} 
                 alt="Saudi Made" 
                 className="h-16 w-auto object-contain hover:scale-110 transition-transform duration-300"
-              />
-              <img 
-                src={vision2030} 
-                alt="Saudi Vision 2030" 
-                className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300"
               />
             </div>
           </div>
