@@ -10,19 +10,19 @@ import { Link } from "react-router-dom"; // Added Link import
 import image1 from "@/assets/img/image1.jpg";
 import image2 from "@/assets/img/image2.jpg";
 import image3 from "@/assets/img/image3.jpg";
-import image4 from "@/assets/img/image4.jpg";
+import image4 from "@/assets/img/image4.jpg"; // Interior Customization (Kitchen)
 import image5 from "@/assets/img/image5.jpg";
 import image6 from "@/assets/img/image6.jpg";
 import image7 from "@/assets/img/image7.jpg";
 import image8 from "@/assets/img/image8.jpg";
 import image9 from "@/assets/img/image9.jpg";
-import image10 from "@/assets/img/image10.jpeg";
+ // Re-added image10 as an asset, not a thumbnail
 import image11 from "@/assets/img/image11.jpeg";
-import image12 from "@/assets/img/image12.webp";
+import image12 from "@/assets/img/image12.jpg"; // Corrected import to use webp
 import image13 from "@/assets/img/image13.jpg";
 import image14 from "@/assets/img/image14.jpg";
 import image15 from "@/assets/img/image15.jpg";
-import image16 from "@/assets/img/image16.jpg";
+import image16 from "@/assets/img/image16.jpg"; // Accommodation Unit Exterior
 import image17 from "@/assets/img/image17.jpg";
 import image18 from "@/assets/img/image18.jpg";
 import image19 from "@/assets/img/image19.jpg";
@@ -32,6 +32,7 @@ import image21 from "@/assets/img/image21.jpg";
 import image22 from "@/assets/img/image22.jpg";
 import image23 from "@/assets/img/image23.jpg";
 import image24 from "@/assets/img/image24.jpg";
+import image25 from "@/assets/img/image25.jpg";
 
 type MediaItem = {
   src: string;
@@ -49,34 +50,35 @@ const Gallery = () => {
 
   // Gallery items - Mix of images and videos
   const galleryItems: MediaItem[] = [
-    { src: image1, type: 'image', title: "Steel Frame Construction 1" },
-    { src: image2, type: 'image', title: "Modern Porta Cabin 1" },
-    { src: image3, type: 'image', title: "Office Interior 1" },
-    // Placeholder for videos - Replace with actual video URLs
-    { src: "/videos/video1.mp4", type: 'video', thumbnail: image4, title: "Construction Process Video" },
-    { src: image5, type: 'image', title: "Steel Frame Construction 2" },
-    { src: image6, type: 'image', title: "Modern Porta Cabin 2" },
-    { src: image7, type: 'image', title: "Office Interior 2" },
-    { src: image8, type: 'image', title: "Installation Site 1" },
-    { src: image9, type: 'image', title: "Completed Project 1" },
-    // Placeholder for video 2
-    { src: "/videos/video2.mp4", type: 'video', thumbnail: image10, title: "Site Tour Video" },
-    { src: image11, type: 'image', title: "Interior Design 1" },
-    { src: image12, type: 'image', title: "Exterior View 1" },
-    { src: image13, type: 'image', title: "Construction Detail 1" },
-    { src: image14, type: 'image', title: "Modular Unit 1" },
-    { src: image15, type: 'image', title: "Installation Process 1" },
-    // Placeholder for video 3
-    { src: "/videos/video3.mp4", type: 'video', thumbnail: image16, title: "Project Showcase Video" },
-    { src: image17, type: 'image', title: "Finished Project 2" },
-    { src: image18, type: 'image', title: "Interior Detail 1" },
-    { src: image19, type: 'image', title: "Exterior Detail 1" },
-    { src: image20, type: 'image', title: "Construction Site 2" },
-    { src: image21, type: 'image', title: "Modern Design 1" },
+    { src: image1, type: 'image', title: "Steel Frame Construction Skeleton" },
+    { src: image2, type: 'image', title: "Modern Cabin Exterior (Night)" },
+    { src: image3, type: 'image', title: "Executive Office Cabin" },
+    // Replaced Video 1 with Image 4
+    { src: image4, type: 'image', title: "Interior Kitchen Customization" },
+    { src: image5, type: 'image', title: "Large Open Office Interior" },
+    { src: image6, type: 'image', title: "Containerized Water Treatment Unit" },
+    { src: image7, type: 'image', title: "Luxury L-Shape Cabin on Grass" },
+    { src: image8, type: 'image', title: "Two-Story Modular Accommodation Block" },
+    { src: image9, type: 'image', title: "Large Multi-Purpose Hall Interior" },
+    // Added image 10 which was used as a thumbnail
+    { src: image11, type: 'image', title: "L-Shape Luxury Accommodation Exterior" },
+    { src: image12, type: 'image', title: "High-Bay Modular Building Interior" },
+    { src: image13, type: 'image', title: "Desert Site Simple Accommodation Units" },
+    { src: image14, type: 'image', title: "Stacked Restrooms and Office Units" },
+    { src: image15, type: 'image', title: "Washroom and Bathroom Interior" },
+    // Replaced Video 3 with Image 16
+    { src: image16, type: 'image', title: "Accommodation Unit Exterior with Multiple Doors" },
+    { src: image17, type: 'image', title: "Security/Guard Cabin Exterior" },
+    { src: image18, type: 'image', title: "Large Steel Structure Frame" },
+    { src: image19, type: 'image', title: "Single Porta Cabin with Stairs" },
+    { src: image20, type: 'image', title: "Open Plan Office Interior Setup" },
+    { src: image21, type: 'image', title: "Modern Washroom Facilities Interior" },
     // NEW: Added new images
-    { src: image22, type: 'image', title: "New Project Showcase 1" },
-    { src: image23, type: 'image', title: "New Project Showcase 2" },
-    { src: image24, type: 'image', title: "New Project Showcase 3" },
+    { src: image22, type: 'image', title: "3D Rendered Blue Porta Cabin" },
+    { src: image23, type: 'image', title: "Small Guard Cabin with Base Tank" },
+    { src: image24, type: 'image', title: "Stacked Red Hyundai Shipping Containers" },
+    { src: image25, type: 'image', title: "Open Plan Office Interior Setup" },
+
   ];
 
   useEffect(() => {

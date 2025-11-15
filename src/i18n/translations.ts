@@ -38,6 +38,8 @@ export const translations = {
     exploreMore: "Explore More", // For Hero scroll indicator
     madeInSaudi: "Proudly Made in Saudi Arabia", // For Saudi Made image
     socialLinks: "Follow Us", // For Social Media Header
+    // NEW: Snapchat translation
+    snapchat: "Snapchat",
   },
   ar: {
     home: "الرئيسية",
@@ -78,5 +80,7 @@ export const translations = {
     exploreMore: "استكشف المزيد",
     madeInSaudi: "صنع بفخر في المملكة العربية السعودية",
     socialLinks: "تابعنا",
+    // NEW: Snapchat translation
+    snapchat: "سناب شات",
   }
 };
