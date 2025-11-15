@@ -54,7 +54,7 @@ const About = () => {
       icon: Award,
       emoji: "🏆",
       title: t.aboutFeature4,
-      description: "Recognized for superior build quality and long-term certified performance.",
+      description: "Recognized for superior build quality and long-term performance",
       gradient: "from-orange-500 to-red-500"
     }
   ];
@@ -144,24 +144,24 @@ const About = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`group relative transition-all duration-700 ${
+              className={`group relative h-full transition-all duration-700 ${
                 isVisible ? 'opacity-100 translate-y-0 animate-blink-in' : 'opacity-0 translate-y-10'
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="relative bg-card p-8 rounded-2xl border border-border hover:border-transparent transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 overflow-hidden">
+              <div className="relative bg-card p-8 rounded-2xl border border-border hover:border-transparent transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 overflow-hidden h-full flex flex-col">
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                 
-                <div className="flex flex-col items-center text-center relative z-10">
+                <div className="flex flex-col items-center text-center relative z-10 flex-1">
                   <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${feature.gradient} p-0.5 mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                     <div className="w-full h-full bg-card rounded-2xl flex items-center justify-center">
                       <span className="text-4xl">{feature.emoji}</span>
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
                     {feature.title}
                   </h3>
 
