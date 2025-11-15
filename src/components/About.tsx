@@ -53,8 +53,8 @@ const About = () => {
     {
       icon: Award,
       emoji: "🏆",
-      title: t.aboutFeature4, // Now "Certified Quality & Performance"
-      description: "Recognized for superior build quality and long-term certified performance.", // UPDATED: More professional description
+      title: t.aboutFeature4,
+      description: "Recognized for superior build quality and long-term certified performance.",
       gradient: "from-orange-500 to-red-500"
     }
   ];
@@ -79,42 +79,97 @@ const About = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Video Section 1 - Text Left, Video Right */}
+        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="space-y-6">
+            <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Our Construction Excellence
+            </h3>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              We specialize in delivering high-quality porta cabin solutions with precision engineering and modern construction techniques. Our team ensures every project meets international standards.
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              From design to delivery, we focus on creating durable, efficient, and aesthetically pleasing structures that exceed client expectations.
+            </p>
+          </div>
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="relative aspect-video rounded-2xl overflow-hidden border-2 border-border hover:border-primary/50 transition-all duration-500">
+              {/* Video placeholder - Add your about1.mp4 here */}
+              <video
+                className="w-full h-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+              >
+                <source src="/src/assets/img/about1.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+
+        {/* Video Section 2 - Video Left, Text Right */}
+        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="relative group order-2 lg:order-1">
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="relative aspect-video rounded-2xl overflow-hidden border-2 border-border hover:border-accent/50 transition-all duration-500">
+              {/* Video placeholder - Add your about2.mp4 here */}
+              <video
+                className="w-full h-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+              >
+                <source src="/src/assets/img/about2.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+          <div className="space-y-6 order-1 lg:order-2">
+            <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+              Quality & Innovation
+            </h3>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Innovation drives our approach to porta cabin construction. We utilize cutting-edge technology and sustainable materials to create structures that stand the test of time.
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Our commitment to quality ensures that every project is completed with meticulous attention to detail and adherence to safety standards.
+            </p>
+          </div>
+        </div>
+
+        {/* Feature Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
           {features.map((feature, index) => (
             <div
               key={index}
               className={`group relative transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                isVisible ? 'opacity-100 translate-y-0 animate-blink-in' : 'opacity-0 translate-y-10'
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
-              {/* Card Background with Gradient Border - FIX: This ensures the glow effect works for all cards */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative bg-card p-8 rounded-2xl border border-border hover:border-transparent transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 overflow-hidden">
-                {/* Gradient Overlay on Hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                 
                 <div className="flex flex-col items-center text-center relative z-10">
-                  {/* Icon Container */}
                   <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${feature.gradient} p-0.5 mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                     <div className="w-full h-full bg-card rounded-2xl flex items-center justify-center">
                       <span className="text-4xl">{feature.emoji}</span>
                     </div>
                   </div>
 
-                  {/* Title */}
                   <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
                     {feature.title}
                   </h3>
 
-                  {/* Description */}
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
 
-                {/* Bottom Shine Effect */}
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
             </div>
@@ -122,7 +177,7 @@ const About = () => {
         </div>
 
         {/* Stats Section */}
-        <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {[
             { value: "500+", label: "Projects Completed" },
             { value: "15+", label: "Years Experience" },

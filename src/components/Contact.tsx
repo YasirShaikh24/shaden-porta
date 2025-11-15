@@ -59,6 +59,25 @@ const Contact = () => {
     }
   ];
 
+  const socialInfo = [
+    {
+      emoji: "💼",
+      label: "LinkedIn",
+      value: "Connect with us",
+      link: "#",
+      gradient: "from-blue-600 to-blue-400",
+      bgGradient: "from-blue-600/10 to-blue-400/10"
+    },
+    {
+      emoji: "📸",
+      label: "Instagram",
+      value: "Follow us",
+      link: "#",
+      gradient: "from-pink-600 to-orange-500",
+      bgGradient: "from-pink-600/10 to-orange-500/10"
+    }
+  ];
+
   return (
     <section id="contact" ref={sectionRef} className="py-20 bg-gradient-to-b from-background via-secondary/10 to-background relative overflow-hidden">
       {/* Background Decoration */}
@@ -79,7 +98,7 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
           {contactInfo.map((info, index) => (
             <div
               key={index}
@@ -107,6 +126,57 @@ const Contact = () => {
                   <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${info.gradient} p-0.5 mb-6 transform ${
                     hoveredIndex === index ? 'scale-110 rotate-3' : 'scale-100 rotate-0'
                   } transition-all duration-500`}>
+                    <div className="w-full h-full bg-card rounded-2xl flex items-center justify-center">
+                      {/* Emoji Inside the Square Box */}
+                      <span className="text-5xl">{info.emoji}</span>
+                    </div>
+                  </div>
+
+                  {/* Label */}
+                  <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent group-hover:bg-clip-text transition-all duration-300">
+                    {info.label}
+                  </h3>
+
+                  {/* Value */}
+                  <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-foreground transition-colors duration-300">
+                    {info.value}
+                  </p>
+                </div>
+
+                {/* Bottom Shine Effect */}
+                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${info.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+              </a>
+            </div>
+          ))}
+        </div>
+
+        {/* Social Media Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-16">
+          {socialInfo.map((info, index) => (
+            <div
+              key={index}
+              className={`group relative transition-all duration-700 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ transitionDelay: `${(contactInfo.length + index) * 150}ms` }}
+              onMouseEnter={() => setHoveredIndex(contactInfo.length + index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              {/* Glow Effect */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${info.bgGradient} rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+
+              <a
+                href={info.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative block bg-card p-8 rounded-2xl border border-border hover:border-transparent transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 overflow-hidden"
+              >
+                {/* Background Gradient on Hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${info.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+
+                <div className="flex flex-col items-center text-center relative z-10">
+                  {/* Icon Container - Square Box with Emoji */}
+                  <div className={`relative w-24 h-24 rounded-2xl bg-gradient-to-br ${info.gradient} p-0.5 mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                     <div className="w-full h-full bg-card rounded-2xl flex items-center justify-center">
                       {/* Emoji Inside the Square Box */}
                       <span className="text-5xl">{info.emoji}</span>
