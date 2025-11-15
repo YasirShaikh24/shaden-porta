@@ -103,7 +103,7 @@ const About = () => {
                 muted
                 playsInline
               >
-                <source src="/src/assets/img/about1.mp4" type="video/mp4" />
+                <source src="/videos/about1.mp4" type="video/mp4" />
               </video>
             </div>
           </div>
@@ -122,7 +122,7 @@ const About = () => {
                 muted
                 playsInline
               >
-                <source src="/src/assets/img/about2.mp4" type="video/mp4" />
+                <source src="/videos/about2.mp4" type="video/mp4" />
               </video>
             </div>
           </div>

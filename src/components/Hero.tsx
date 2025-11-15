@@ -2,8 +2,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Sparkles } from "lucide-react";
 import VideoBackground from "./VideoBackground";
-// IMPORTING THE VIDEO ASSET FROM THE SPECIFIED PATH
-import truckVideo from "@/assets/img/truck.mp4"; 
+// REMOVED: import truckVideo from "@/assets/img/truck.mp4"; 
 // REMOVED: import heroImage from "@/assets/img/image3.jpg";
 
 const Hero = () => {
@@ -27,7 +26,7 @@ const Hero = () => {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Video Background - Using only the imported truckVideo asset */}
       <VideoBackground 
-        videoUrl={truckVideo} 
+        videoUrl="/videos/truck.mp4" 
         // REMOVED: posterImage prop
       />
 

@@ -7,22 +7,20 @@ interface VideoBackgroundProps {
 }
 
 const VideoBackground = ({ videoUrl, posterImage, className = "" }: VideoBackgroundProps) => {
+  // FIX: Simplified state logic - assume video will start loading immediately
   const [isLoading, setIsLoading] = useState(true);
   const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
-    // Show loading for 1-2 seconds
-    const loadingTimer = setTimeout(() => {
-      setIsLoading(false);
-      setShowVideo(true);
-    }, 1500);
-
-    return () => clearTimeout(loadingTimer);
+    // FIX: Set video to show immediately
+    setShowVideo(true);
+    // FIX: Removed arbitrary loading timeout. We will use onCanPlayThrough to set isLoading to false.
+    // If the video loads quickly, the loading overlay will disappear immediately.
   }, []);
 
   return (
     <div className={`absolute inset-0 ${className}`}>
-      {/* Loading Animation */}
+      {/* Loading Animation - Will hide once onCanPlayThrough fires or immediately if cached */}
       {isLoading && (
         <div className="absolute inset-0 z-20 flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 backdrop-blur-sm animate-video-fade">
           <div className="text-center">
@@ -35,6 +33,8 @@ const VideoBackground = ({ videoUrl, posterImage, className = "" }: VideoBackgro
       {/* Video Element */}
       {showVideo && (
         <video
+          // FIX: Added 'onCanPlayThrough' to hide the loading overlay exactly when the video is ready
+          onCanPlayThrough={() => setIsLoading(false)} 
           autoPlay
           loop
           muted
