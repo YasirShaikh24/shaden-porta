@@ -5,7 +5,6 @@ import image2 from "@/assets/img/image3.jpg";
 import image3 from "@/assets/img/image4.jpg";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-// FIX: Import the Eye icon from lucide-react
 import { ArrowRight, Eye } from "lucide-react";
 
 const FeaturedProjects = () => {
@@ -108,7 +107,6 @@ const FeaturedProjects = () => {
                   <div className={`absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 transition-all duration-300 ${
                     hoveredIndex === index ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
                   }`}>
-                    {/* The Eye icon is now defined */}
                     <Eye size={20} className="text-white" />
                   </div>
                 </div>
@@ -118,17 +116,9 @@ const FeaturedProjects = () => {
                   <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent group-hover:bg-clip-text transition-all duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-4">
+                  <p className="text-muted-foreground leading-relaxed">
                     {project.description}
                   </p>
-                  
-                  {/* View More Link */}
-                  <div className={`flex items-center gap-2 text-primary font-medium transition-all duration-300 ${
-                    hoveredIndex === index ? 'translate-x-2 opacity-100' : 'translate-x-0 opacity-0'
-                  }`}>
-                    <span>View Details</span>
-                    <ArrowRight size={16} />
-                  </div>
                 </div>
 
                 {/* Bottom Accent Line */}

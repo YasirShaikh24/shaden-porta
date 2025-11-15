@@ -206,30 +206,19 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Saudi Made Image */}
-            <div className="flex flex-col items-center md:items-end gap-4">
+            {/* Saudi Made & Vision 2030 - Together */}
+            <div className="flex flex-col items-center md:items-end gap-6">
               <img 
                 src={saudimade} 
                 alt="Saudi Made" 
-                className="h-12 w-auto object-contain hover:scale-110 transition-transform duration-300"
+                className="h-16 w-auto object-contain hover:scale-110 transition-transform duration-300"
               />
-              <p className="text-xs font-medium text-muted-foreground italic">
-                {t.madeInSaudi}
-              </p>
+              <img 
+                src={vision2030} 
+                alt="Saudi Vision 2030" 
+                className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-300"
+              />
             </div>
-          </div>
-        </div>
-
-        {/* Vision 2030 Section */}
-        <div className={`mt-12 pt-8 border-t border-border/50 transition-all duration-700 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`} style={{ transitionDelay: '450ms' }}>
-          <div className="flex justify-center">
-            <img 
-              src={vision2030} 
-              alt="Saudi Vision 2030" 
-              className="h-20 md:h-24 w-auto object-contain hover:scale-105 transition-transform duration-300"
-            />
           </div>
         </div>
 
