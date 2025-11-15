@@ -2,8 +2,6 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Sparkles } from "lucide-react";
 import VideoBackground from "./VideoBackground";
-// REMOVED: import truckVideo from "@/assets/img/truck.mp4"; 
-// REMOVED: import heroImage from "@/assets/img/image3.jpg";
 
 const Hero = () => {
   const { t } = useLanguage();
@@ -24,10 +22,9 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Video Background - Using only the imported truckVideo asset */}
+      {/* Optimized Video Background */}
       <VideoBackground 
-        videoUrl="/videos/truck.mp4" 
-        // REMOVED: posterImage prop
+        videoUrl="/videos/truck.mp4"
       />
 
       {/* Content */}
@@ -48,7 +45,7 @@ const Hero = () => {
             </span>
           </h1>
 
-          {/* Description - Compact and Readable */}
+          {/* Description */}
           <p className="text-sm md:text-base lg:text-lg mb-10 md:mb-12 max-w-3xl mx-auto text-white/95 font-medium drop-shadow-lg leading-relaxed">
             {t.heroDescription}
           </p>
@@ -92,7 +89,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Bottom Fade - Fades into the dark background */}
+      {/* Bottom Fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
     </section>
   );
