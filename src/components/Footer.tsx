@@ -113,11 +113,11 @@ const Footer = () => {
               {t.footerDescription}
             </p>
             
-            {/* Saudi Vision 2030 - No animation classes here, kept as is */}
+            {/* Saudi Vision 2030 with hover effect */}
             <img 
                 src={vision2030} 
                 alt="Saudi Vision 2030" 
-                className="h-20 w-auto object-contain border-2 border-primary rounded-lg"
+                className="h-20 w-auto object-contain hover:scale-110 transition-transform duration-300"
             />
           </div>
 
