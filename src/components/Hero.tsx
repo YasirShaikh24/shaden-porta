@@ -32,42 +32,39 @@ const Hero = () => {
       />
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-32 relative z-10">
-        <div className="text-center max-w-5xl mx-auto animate-fade-in">
+      <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
+        <div className="text-center max-w-6xl mx-auto animate-fade-in">
           {/* Premium Badge */}
-          <div className="inline-flex flex-col items-center gap-1 px-6 py-3 rounded-2xl glass border border-white/30 mb-8 animate-pulse-glow max-w-md mx-auto">
-            <div className="flex items-center gap-2">
-              <Sparkles className="text-white" size={18} />
-              <span className="text-sm font-semibold text-white">
-                ✨ {t.premiumConstruction}
-              </span>
-            </div>
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass border border-white/40 mb-6 animate-pulse-glow backdrop-blur-md">
+            <Sparkles className="text-white" size={20} />
+            <span className="text-sm md:text-base font-semibold text-white whitespace-nowrap">
+              {t.premiumConstruction}
+            </span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="mb-4 animate-scale-in">
-            {/* Kept text-white for maximum contrast against the dark video background */}
-            <span className="block text-white font-extrabold drop-shadow-2xl">
+          <h1 className="mb-6 md:mb-8 animate-scale-in">
+            <span className="block text-white font-extrabold drop-shadow-2xl text-4xl md:text-6xl lg:text-7xl leading-tight">
               {t.heroTitle}
             </span>
           </h1>
 
           {/* Subtitle */}
-          <h2 className="text-xl md:text-3xl font-bold mb-4 text-white drop-shadow-lg">
+          <h2 className="text-lg md:text-2xl lg:text-3xl font-bold mb-6 md:mb-8 text-white drop-shadow-lg max-w-4xl mx-auto leading-relaxed">
             {t.heroSubtitle}
           </h2>
 
-          {/* Description - Smaller and Better */}
-          <p className="text-sm md:text-base mb-10 max-w-2xl mx-auto text-white/90 font-normal drop-shadow-md leading-relaxed">
+          {/* Description - Compact and Readable */}
+          <p className="text-sm md:text-base lg:text-lg mb-10 md:mb-12 max-w-3xl mx-auto text-white/95 font-medium drop-shadow-lg leading-relaxed">
             {t.heroDescription}
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-12 md:mb-20">
             <Button
               onClick={scrollToContact}
               size="lg"
-              className="group px-8 py-6 text-lg font-bold bg-gradient-to-r from-primary to-accent text-white rounded-xl shadow-glow-lg hover:shadow-neon hover:scale-105 transition-all duration-300 border-0"
+              className="group px-8 md:px-10 py-6 md:py-7 text-base md:text-lg font-bold bg-gradient-to-r from-primary to-accent text-white rounded-xl shadow-glow-lg hover:shadow-neon hover:scale-105 transition-all duration-300 border-0 w-full sm:w-auto"
             >
               {t.getStarted}
               <ArrowDown className="ml-2 group-hover:translate-y-1 transition-transform" size={20} />
@@ -77,21 +74,19 @@ const Hero = () => {
               onClick={() => window.location.href = '/gallery'}
               size="lg"
               variant="outline"
-              // The new dark theme (from index.css) will ensure proper contrast
-              className="px-8 py-6 text-lg font-bold glass text-white border-2 border-white/30 rounded-xl hover:bg-white/10 hover:scale-105 transition-all duration-300 hover:border-white/50"
+              className="px-8 md:px-10 py-6 md:py-7 text-base md:text-lg font-bold glass text-white border-2 border-white/40 rounded-xl hover:bg-white/20 hover:scale-105 transition-all duration-300 hover:border-white/60 backdrop-blur-md w-full sm:w-auto"
             >
               {t.viewGallery}
             </Button>
           </div>
 
           {/* Scroll Down Indicator */}
-          <div className="animate-float">
+          <div className="animate-float mt-8">
             <button
               onClick={scrollToAbout}
-              // Kept text-white for contrast
-              className="flex flex-col items-center gap-2 mx-auto text-white hover:text-primary transition-colors duration-300 group"
+              className="flex flex-col items-center gap-2 mx-auto text-white/90 hover:text-white transition-colors duration-300 group"
             >
-              <span className="text-sm font-semibold uppercase tracking-wider">
+              <span className="text-xs md:text-sm font-semibold uppercase tracking-wider">
                 {t.exploreMore}
               </span>
               <ArrowDown 

@@ -48,9 +48,9 @@ const VideoBackground = ({ videoUrl, posterImage, className = "" }: VideoBackgro
         </video>
       )}
 
-      {/* Gradient Overlays - Adjusted to fade smoothly to the light background color at the bottom */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-background/90"></div> 
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10"></div>
+      {/* Gradient Overlays - Better video visibility with darker overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background/95"></div> 
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5"></div>
     </div>
   );
 };
