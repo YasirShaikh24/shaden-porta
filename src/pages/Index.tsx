@@ -12,9 +12,8 @@ import { useLocation } from "react-router-dom";
 
 const Index = () => {
   const didMountRef = useRef(false);
-  const [showLoading, setShowLoading] = useState(true);
   // NEW: Initialize useLocation
-  const location = useLocation();
+  const location = useLocation(); 
 
   // Scroll to section based on URL hash or default to top
   useEffect(() => {
@@ -45,13 +44,9 @@ const Index = () => {
   }, [location.pathname, location.hash]);
   
   // REMOVED: LoadingScreen conditional rendering
-  
-  if (showLoading) {
-    return <LoadingScreen onComplete={() => setShowLoading(false)} />;
-  }
 
   return (
-    <div className="min-h-screen bg-background animate-fade-in">
+    <div className="min-h-screen bg-background">
       <Header />
       <Hero />
       <About />
