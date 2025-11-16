@@ -21,17 +21,17 @@ const About = () => {
 
   const isRTL = language === 'ar';
 
-  // English and Arabic texts
+ // English and Arabic texts
   const texts = {
     en: {
-      text1: "We specialize in delivering high-quality porta cabin solutions with precision engineering and modern construction techniques. Our team ensures every project meets international standards. From design to delivery, we focus on creating durable, efficient, and aesthetically pleasing structures that exceed client expectations.",
-      text2: "Innovation drives our approach to porta cabin construction. We utilize cutting-edge technology and sustainable materials to create structures that stand the test of time. Our commitment to quality ensures that every project is completed with meticulous attention to detail and adherence to safety standards.",
+      text1: "We specialize in delivering high-quality porta cabin solutions with precision engineering and modern construction techniques. Our team ensures every project meets international standards. From design to delivery, we focus on creating durable, efficient, and aesthetically pleasing structures that exceed client expectations. With years of experience in the industry, we have successfully completed over 500 projects across various sectors. Our commitment to excellence drives us to continuously innovate and improve our construction methods. We work closely with our clients to understand their unique requirements and deliver customized solutions that perfectly match their needs.",
+      text2: "Innovation drives our approach to porta cabin construction. We utilize cutting-edge technology and sustainable materials to create structures that stand the test of time. Our commitment to quality ensures that every project is completed with meticulous attention to detail and adherence to safety standards. Each structure undergoes rigorous quality checks at every stage of construction to guarantee superior performance. We pride ourselves on using eco-friendly materials and energy-efficient designs that reduce environmental impact. Our skilled workforce combines traditional craftsmanship with modern technology to deliver exceptional results that consistently exceed industry benchmarks.",
       title1: "Our Construction Excellence",
       title2: "Quality & Innovation"
     },
     ar: {
-      text1: "نحن متخصصون في تقديم حلول الكبائن المتنقلة عالية الجودة مع الهندسة الدقيقة وتقنيات البناء الحديثة. يضمن فريقنا أن كل مشروع يلبي المعايير الدولية. من التصميم إلى التسليم، نركز على إنشاء هياكل متينة وفعالة وجذابة من الناحية الجمالية تتجاوز توقعات العملاء.",
-      text2: "الابتكار يدفع نهجنا في بناء الكبائن المتنقلة. نستخدم أحدث التقنيات والمواد المستدامة لإنشاء هياكل تصمد أمام اختبار الزمن. التزامنا بالجودة يضمن إكمال كل مشروع باهتمام دقيق بالتفاصيل والالتزام بمعايير السلامة.",
+      text1: "نحن متخصصون في تقديم حلول الكبائن المتنقلة عالية الجودة مع الهندسة الدقيقة وتقنيات البناء الحديثة. يضمن فريقنا أن كل مشروع يلبي المعايير الدولية. من التصميم إلى التسليم، نركز على إنشاء هياكل متينة وفعالة وجذابة من الناحية الجمالية تتجاوز توقعات العملاء. مع سنوات من الخبرة في الصناعة، نجحنا في إكمال أكثر من 500 مشروع في مختلف القطاعات. التزامنا بالتميز يدفعنا إلى الابتكار المستمر وتحسين أساليب البناء لدينا. نعمل بشكل وثيق مع عملائنا لفهم متطلباتهم الفريدة وتقديم حلول مخصصة تتناسب تماماً مع احتياجاتهم.",
+      text2: "الابتكار يدفع نهجنا في بناء الكبائن المتنقلة. نستخدم أحدث التقنيات والمواد المستدامة لإنشاء هياكل تصمد أمام اختبار الزمن. التزامنا بالجودة يضمن إكمال كل مشروع باهتمام دقيق بالتفاصيل والالتزام بمعايير السلامة. يخضع كل هيكل لفحوصات جودة صارمة في كل مرحلة من مراحل البناء لضمان الأداء المتفوق. نحن نفخر باستخدام مواد صديقة للبيئة وتصاميم موفرة للطاقة تقلل من التأثير البيئي. تجمع قوتنا العاملة الماهرة بين الحرفية التقليدية والتكنولوجيا الحديثة لتقديم نتائج استثنائية تتجاوز باستمرار معايير الصناعة.",
       title1: "تميزنا في البناء",
       title2: "الجودة والابتكار"
     }
