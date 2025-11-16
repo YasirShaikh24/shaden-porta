@@ -90,7 +90,7 @@ const Header = () => {
               {t.about}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
-            <a
+            
               href="/gallery"
               className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
             >
@@ -161,7 +161,7 @@ const Header = () => {
               >
                 {t.about}
               </button>
-              <a
+              
                 href="/gallery"
                 className="text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
