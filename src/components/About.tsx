@@ -192,29 +192,13 @@ const About = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Video Section 1 - Layout changes based on language */}
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 ${isRTL ? 'lg:grid-flow-dense' : ''}`}>
-          {/* Text Section */}
-          <div 
-            ref={text1Ref}
-            className={`space-y-6 transition-all duration-1000 ${
-              text1Visible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? 'translate-x-20' : '-translate-x-20'}`
-            } ${isRTL ? 'lg:col-start-2' : ''}`}
-          >
-            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
-              {texts[language].title1}
-            </h3>
-            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
-              {typedText1}
-              {!isTyping1Complete && <span className="animate-pulse text-primary">{isRTL ? '|' : '|'}</span>}
-            </div>
-          </div>
-          
-          {/* Video Section */}
+        {/* Video Section 1 */}
+        <div className="mb-20 space-y-12">
+          {/* Video 1 */}
           <div 
             className={`relative group transition-all duration-1000 ${
-              isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
-            } ${isRTL ? 'lg:col-start-1 lg:row-start-1' : ''}`}
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative aspect-[16/10] rounded-2xl overflow-hidden border-2 border-border hover:border-primary/50 transition-all duration-500">
@@ -229,15 +213,31 @@ const About = () => {
               </video>
             </div>
           </div>
+
+          {/* Text Section 1 */}
+          <div 
+            ref={text1Ref}
+            className={`space-y-6 transition-all duration-1000 ${
+              text1Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
+              {texts[language].title1}
+            </h3>
+            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
+              {typedText1}
+              {!isTyping1Complete && <span className="animate-pulse text-primary">|</span>}
+            </div>
+          </div>
         </div>
 
-        {/* Video Section 2 - Layout changes based on language */}
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 ${isRTL ? 'lg:grid-flow-dense' : ''}`}>
-          {/* Video Section */}
+        {/* Video Section 2 */}
+        <div className="mb-20 space-y-12">
+          {/* Video 2 */}
           <div 
             className={`relative group transition-all duration-1000 delay-200 ${
-              isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? 'translate-x-20' : '-translate-x-20'}`
-            } ${isRTL ? 'lg:col-start-2' : ''}`}
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative aspect-[16/10] rounded-2xl overflow-hidden border-2 border-border hover:border-accent/50 transition-all duration-500">
@@ -253,19 +253,19 @@ const About = () => {
             </div>
           </div>
           
-          {/* Text Section */}
+          {/* Text Section 2 */}
           <div 
             ref={text2Ref}
             className={`space-y-6 transition-all duration-1000 ${
-              text2Visible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
-            } ${isRTL ? 'lg:col-start-1' : ''}`}
+              text2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
           >
             <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
               {texts[language].title2}
             </h3>
             <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
               {typedText2}
-              {!isTyping2Complete && <span className="animate-pulse text-accent">{isRTL ? '|' : '|'}</span>}
+              {!isTyping2Complete && <span className="animate-pulse text-accent">|</span>}
             </div>
           </div>
         </div>
