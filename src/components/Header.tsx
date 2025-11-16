@@ -1,7 +1,3 @@
-// ====================================
-// UPDATED HEADER.TSX
-// ====================================
-
 import { useLanguage } from "@/hooks/useLanguage";
 import logo from "@/assets/img/logo.png";
 import { Menu, X, Send } from "lucide-react";
@@ -14,6 +10,9 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Determine RTL status once for the component
+  const isRTL = language === 'ar';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,15 +60,12 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-<<<<<<< HEAD
+          {/* CONFLICT RESOLUTION: Merged the two versions, keeping the RTL logic (dir={isRTL ? 'rtl' : 'ltr'}) */}
           <div 
             className="flex items-center gap-3 group cursor-pointer" 
             onClick={() => navigateToSection('home')}
             dir={isRTL ? 'rtl' : 'ltr'}
           >
-=======
-          <div className="flex items-center gap-3 group cursor-pointer" onClick={() => navigateToSection('home')}>
->>>>>>> 75161ecc24eac72e0caf91dc417232f76dd80032
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-lg opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
               <img
@@ -162,14 +158,11 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-<<<<<<< HEAD
+          {/* CONFLICT RESOLUTION: Merged the two versions, keeping the RTL logic (dir={isRTL ? 'rtl' : 'ltr'}) */}
           <nav 
             className="md:hidden py-4 border-t border-border bg-card/90 backdrop-blur-md"
             dir={isRTL ? 'rtl' : 'ltr'}
           >
-=======
-          <nav className="md:hidden py-4 border-t border-border bg-card/90 backdrop-blur-md">
->>>>>>> 75161ecc24eac72e0caf91dc417232f76dd80032
             <div className="flex flex-col gap-4">
               <button
                 onClick={() => navigateToSection('home')}
