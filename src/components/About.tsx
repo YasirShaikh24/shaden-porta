@@ -192,8 +192,24 @@ const About = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Video Section 1 */}
+        {/* Section 1: Title + Video */}
         <div className="mb-20 space-y-12">
+          {/* Text Section 1 */}
+          <div 
+            ref={text1Ref}
+            className={`space-y-6 transition-all duration-1000 ${
+              text1Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
+              {texts[language].title1}
+            </h3>
+            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
+              {typedText1}
+              {!isTyping1Complete && <span className="animate-pulse text-primary">|</span>}
+            </div>
+          </div>
+
           {/* Video 1 */}
           <div 
             className={`relative group transition-all duration-1000 ${
@@ -213,26 +229,26 @@ const About = () => {
               </video>
             </div>
           </div>
-
-          {/* Text Section 1 */}
-          <div 
-            ref={text1Ref}
-            className={`space-y-6 transition-all duration-1000 ${
-              text1Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
-              {texts[language].title1}
-            </h3>
-            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
-              {typedText1}
-              {!isTyping1Complete && <span className="animate-pulse text-primary">|</span>}
-            </div>
-          </div>
         </div>
 
-        {/* Video Section 2 */}
+        {/* Section 2: Title + Video */}
         <div className="mb-20 space-y-12">
+          {/* Text Section 2 */}
+          <div 
+            ref={text2Ref}
+            className={`space-y-6 transition-all duration-1000 ${
+              text2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
+              {texts[language].title2}
+            </h3>
+            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
+              {typedText2}
+              {!isTyping2Complete && <span className="animate-pulse text-accent">|</span>}
+            </div>
+          </div>
+
           {/* Video 2 */}
           <div 
             className={`relative group transition-all duration-1000 delay-200 ${
@@ -250,22 +266,6 @@ const About = () => {
               >
                 <source src="/videos/about2.mp4" type="video/mp4" />
               </video>
-            </div>
-          </div>
-          
-          {/* Text Section 2 */}
-          <div 
-            ref={text2Ref}
-            className={`space-y-6 transition-all duration-1000 ${
-              text2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
-              {texts[language].title2}
-            </h3>
-            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
-              {typedText2}
-              {!isTyping2Complete && <span className="animate-pulse text-accent">|</span>}
             </div>
           </div>
         </div>
