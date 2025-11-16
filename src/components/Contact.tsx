@@ -19,8 +19,9 @@ const SnapchatIcon = ({ size = 24, className = "" }) => (
 const Contact = () => {
   const { t, language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [cardVisibility, setCardVisibility] = useState<boolean[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const isRTL = language === 'ar';
 
@@ -45,6 +46,38 @@ const Contact = () => {
     };
   }, []);
 
+  // Intersection observer for individual cards with blink animation
+  useEffect(() => {
+    const observers = cardRefs.current.map((ref, index) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setCardVisibility(prev => {
+              const newVisible = [...prev];
+              newVisible[index] = true;
+              return newVisible;
+            });
+          }
+        },
+        { threshold: 0.2 }
+      );
+
+      if (ref) {
+        observer.observe(ref);
+      }
+
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer, index) => {
+        if (cardRefs.current[index]) {
+          observer.unobserve(cardRefs.current[index]!);
+        }
+      });
+    };
+  }, []);
+
   // Standard Contact Info
   const contactInfo = [
     {
@@ -54,7 +87,8 @@ const Contact = () => {
       link: "tel:+966554467464",
       gradient: "from-blue-500 to-cyan-500",
       iconColor: "text-blue-500",
-      bgGradient: "from-blue-500/10 to-cyan-500/10"
+      bgGradient: "from-blue-500/10 to-cyan-500/10",
+      blinkClass: "animate-blink-in-blue"
     },
     {
       icon: Mail,
@@ -63,7 +97,8 @@ const Contact = () => {
       link: "mailto:info@shadenhouseportacabin.com",
       gradient: "from-green-500 to-teal-500",
       iconColor: "text-green-500",
-      bgGradient: "from-green-500/10 to-teal-500/10"
+      bgGradient: "from-green-500/10 to-teal-500/10",
+      blinkClass: "animate-blink-in-green"
     },
     {
       icon: MapPin,
@@ -72,7 +107,8 @@ const Contact = () => {
       link: "https://maps.app.goo.gl/tLXMWyfjmn6QCaWK8",
       gradient: "from-purple-500 to-pink-500",
       iconColor: "text-purple-500",
-      bgGradient: "from-purple-500/10 to-pink-500/10"
+      bgGradient: "from-purple-500/10 to-pink-500/10",
+      blinkClass: "animate-blink-in-purple"
     }
   ];
 
@@ -85,7 +121,8 @@ const Contact = () => {
       link: "https://www.linkedin.com/in/shaden-portacabin/",
       gradient: "from-blue-600 to-blue-400",
       iconColor: "text-blue-600",
-      bgGradient: "from-blue-600/10 to-blue-400/10"
+      bgGradient: "from-blue-600/10 to-blue-400/10",
+      blinkClass: "animate-blink-in-blue"
     },
     {
       icon: Facebook,
@@ -94,7 +131,8 @@ const Contact = () => {
       link: "https://www.facebook.com/profile.php?id=61578135137261",
       gradient: "from-blue-500 to-blue-700",
       iconColor: "text-blue-600",
-      bgGradient: "from-blue-500/10 to-blue-700/10"
+      bgGradient: "from-blue-500/10 to-blue-700/10",
+      blinkClass: "animate-blink-in-blue"
     },
     {
       icon: Instagram,
@@ -103,7 +141,8 @@ const Contact = () => {
       link: "https://www.instagram.com/shadenhouse31/",
       gradient: "from-pink-600 to-orange-500",
       iconColor: "text-pink-500",
-      bgGradient: "from-pink-600/10 to-orange-500/10"
+      bgGradient: "from-pink-600/10 to-orange-500/10",
+      blinkClass: "animate-blink-in-pink"
     },
     {
       icon: SnapchatIcon,
@@ -112,9 +151,13 @@ const Contact = () => {
       link: "https://www.snapchat.com/add/shadenhouse25?share_id=M8L_4rW1k34&locale=en-US",
       gradient: "from-yellow-400 to-yellow-600",
       iconColor: "text-[#FFFC00]",
-      bgGradient: "from-yellow-400/10 to-yellow-600/10"
+      bgGradient: "from-yellow-400/10 to-yellow-600/10",
+      blinkClass: "animate-blink-in-yellow"
     }
   ];
+
+  // Combine both arrays for unified card tracking
+  const allCards = [...contactInfo, ...socialInfo];
 
   return (
     <section 
@@ -151,12 +194,14 @@ const Contact = () => {
             return (
               <div
                 key={index}
+                ref={(el) => (cardRefs.current[index] = el)}
                 className={`group relative transition-all duration-700 ${
-                  isVisible ? 'opacity-100 animate-blink-in' : 'opacity-0'
+                  cardVisibility[index] ? 'opacity-100 animate-blink-in' : 'opacity-0'
                 }`}
-                style={{ animationDelay: `${index * 150}ms`, transitionDelay: '0ms' }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
+                style={{ 
+                  animationDelay: `${index * 150}ms`,
+                  animationFillMode: 'forwards'
+                }}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${info.bgGradient} rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
@@ -169,9 +214,7 @@ const Contact = () => {
                   <div className={`absolute inset-0 bg-gradient-to-br ${info.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
                   <div className={`flex flex-col items-center text-center relative z-10`}>
-                    <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${info.gradient} p-0.5 mb-6 transform ${
-                      hoveredIndex === index ? 'scale-110 rotate-3' : 'scale-100 rotate-0'
-                    } transition-all duration-500`}>
+                    <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${info.gradient} p-0.5 mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                       <div className="w-full h-full bg-card rounded-2xl flex items-center justify-center">
                         <CurrentIcon 
                           size={40} 
@@ -206,12 +249,14 @@ const Contact = () => {
             return (
               <div
                 key={currentIndex}
+                ref={(el) => (cardRefs.current[currentIndex] = el)}
                 className={`group relative transition-all duration-700 ${
-                  isVisible ? 'opacity-100 animate-blink-in' : 'opacity-0'
+                  cardVisibility[currentIndex] ? 'opacity-100 animate-blink-in' : 'opacity-0'
                 }`}
-                style={{ animationDelay: `${currentIndex * 150}ms`, transitionDelay: '0ms' }}
-                onMouseEnter={() => setHoveredIndex(currentIndex)}
-                onMouseLeave={() => setHoveredIndex(null)}
+                style={{ 
+                  animationDelay: `${currentIndex * 150}ms`,
+                  animationFillMode: 'forwards'
+                }}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${info.bgGradient} rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
@@ -224,9 +269,7 @@ const Contact = () => {
                   <div className={`absolute inset-0 bg-gradient-to-br ${info.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
                   <div className={`flex flex-col items-center text-center relative z-10`}>
-                    <div className={`relative w-24 h-24 rounded-2xl bg-gradient-to-br ${info.gradient} p-0.5 mb-6 transform ${
-                      hoveredIndex === currentIndex ? 'scale-110 rotate-3' : 'scale-100 rotate-0'
-                    } transition-all duration-500`}>
+                    <div className={`relative w-24 h-24 rounded-2xl bg-gradient-to-br ${info.gradient} p-0.5 mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                       <div className="w-full h-full bg-card rounded-2xl flex items-center justify-center">
                         <CurrentIcon 
                             size={40} 

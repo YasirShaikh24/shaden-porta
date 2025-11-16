@@ -11,9 +11,13 @@ const About = () => {
   const [typedText2, setTypedText2] = useState("");
   const [isTyping1Complete, setIsTyping1Complete] = useState(false);
   const [isTyping2Complete, setIsTyping2Complete] = useState(false);
+  const [cardVisibility, setCardVisibility] = useState<boolean[]>([]);
+  const [statsVisibility, setStatsVisibility] = useState<boolean[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
   const text1Ref = useRef<HTMLDivElement>(null);
   const text2Ref = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const statsRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const isRTL = language === 'ar';
 
@@ -147,35 +151,110 @@ const About = () => {
     }
   }, [text2Visible, isTyping2Complete, fullText2]);
 
+  // Feature cards intersection observer with blink animation
+  useEffect(() => {
+    const observers = cardRefs.current.map((ref, index) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setCardVisibility(prev => {
+              const newVisible = [...prev];
+              newVisible[index] = true;
+              return newVisible;
+            });
+          }
+        },
+        { threshold: 0.2 }
+      );
+
+      if (ref) {
+        observer.observe(ref);
+      }
+
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer, index) => {
+        if (cardRefs.current[index]) {
+          observer.unobserve(cardRefs.current[index]!);
+        }
+      });
+    };
+  }, []);
+
+  // Stats intersection observer with blink animation
+  useEffect(() => {
+    const observers = statsRefs.current.map((ref, index) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setStatsVisibility(prev => {
+              const newVisible = [...prev];
+              newVisible[index] = true;
+              return newVisible;
+            });
+          }
+        },
+        { threshold: 0.3 }
+      );
+
+      if (ref) {
+        observer.observe(ref);
+      }
+
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer, index) => {
+        if (statsRefs.current[index]) {
+          observer.unobserve(statsRefs.current[index]!);
+        }
+      });
+    };
+  }, []);
+
   const features = [
     {
       icon: Shield,
       emoji: "🛡️",
       title: t.aboutFeature1,
       description: "High-grade materials ensuring longevity and safety",
-      gradient: "from-purple-500 to-pink-500"
+      gradient: "from-purple-500 to-pink-500",
+      blinkClass: "animate-blink-in-purple"
     },
     {
       icon: Zap,
       emoji: "⚡",
       title: t.aboutFeature2,
       description: "Efficient project execution and timely completion",
-      gradient: "from-blue-500 to-cyan-500"
+      gradient: "from-blue-500 to-cyan-500",
+      blinkClass: "animate-blink-in-blue"
     },
     {
       icon: Wrench,
       emoji: "🔧",
       title: t.aboutFeature3,
       description: "Tailored designs to meet your specific requirements",
-      gradient: "from-green-500 to-teal-500"
+      gradient: "from-green-500 to-teal-500",
+      blinkClass: "animate-blink-in-green"
     },
     {
       icon: Award,
       emoji: "🏆",
       title: t.aboutFeature4,
       description: "Recognized for superior build quality and long-term performance",
-      gradient: "from-orange-500 to-red-500"
+      gradient: "from-orange-500 to-red-500",
+      blinkClass: "animate-blink-in-orange"
     }
+  ];
+
+  const stats = [
+    { value: "500+", label: "Projects Completed" },
+    { value: "15+", label: "Years Experience" },
+    { value: "100%", label: "Client Satisfaction" },
+    { value: "24/7", label: "Support Available" }
   ];
 
   return (
@@ -270,15 +349,19 @@ const About = () => {
           </div>
         </div>
 
-        {/* Feature Cards Grid */}
+        {/* Feature Cards Grid with Blink Animation */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
           {features.map((feature, index) => (
             <div
               key={index}
+              ref={(el) => (cardRefs.current[index] = el)}
               className={`group relative h-full transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0 animate-blink-in' : 'opacity-0 translate-y-10'
+                cardVisibility[index] ? 'opacity-100 translate-y-0 animate-blink-in' : 'opacity-0 translate-y-10'
               }`}
-              style={{ transitionDelay: `${index * 150}ms` }}
+              style={{ 
+                animationDelay: `${index * 150}ms`,
+                animationFillMode: 'forwards'
+              }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -307,15 +390,19 @@ const About = () => {
           ))}
         </div>
 
-        {/* Stats Section */}
-        <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          {[
-            { value: "500+", label: "Projects Completed" },
-            { value: "15+", label: "Years Experience" },
-            { value: "100%", label: "Client Satisfaction" },
-            { value: "24/7", label: "Support Available" }
-          ].map((stat, index) => (
-            <div key={index} className="text-center group cursor-pointer">
+       {/* Stats Section WITHOUT Blink Animation */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <div 
+              key={index}
+              ref={(el) => (statsRefs.current[index] = el)}
+              className={`text-center group cursor-pointer transition-all duration-700 ${
+                statsVisibility[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ 
+                transitionDelay: `${index * 100}ms`
+              }}
+            >
               <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
                 {stat.value}
               </div>

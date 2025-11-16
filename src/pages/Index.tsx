@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -5,53 +6,49 @@ import FeaturedProjects from "@/components/FeaturedProjects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import LoadingScreen from "@/components/LoadingScreen";
-import { useEffect, useRef, useState } from "react";
-// NEW: Import useLocation to read the URL hash
-import { useLocation } from "react-router-dom"; 
+import VideoIntro from "@/components/VideoIntro";
 
 const Index = () => {
-  const didMountRef = useRef(false);
-  // NEW: Initialize useLocation
-  const location = useLocation(); 
+  const [showIntro, setShowIntro] = useState(true);
+  const [showContent, setShowContent] = useState(false);
 
-  // Scroll to section based on URL hash or default to top
   useEffect(() => {
-    const hash = location.hash;
+    // Check if user has already seen the intro in this session
+    const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
     
-    if (hash) {
-      // Remove the '#' and get the section ID
-      const id = hash.substring(1); 
-      const element = document.getElementById(id);
-      
-      if (element) {
-        // Scroll to the element
-        element.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // If hash is invalid, scroll to top as a fallback
-        window.scrollTo(0, 0);
-      }
-    } else if (!didMountRef.current) {
-      // If no hash and it's the initial mount, scroll to top
-      window.scrollTo(0, 0);
+    if (hasSeenIntro) {
+      // Skip intro if already seen in this session
+      setShowIntro(false);
+      setShowContent(true);
     }
+  }, []);
+
+  const handleIntroComplete = () => {
+    // Mark intro as seen for this session
+    sessionStorage.setItem('hasSeenIntro', 'true');
+    setShowIntro(false);
     
-    // Mark as mounted
-    didMountRef.current = true;
+    // Small delay before showing content for smooth transition
+    setTimeout(() => {
+      setShowContent(true);
+    }, 100);
+  };
 
-    // This effect runs on mount and whenever the hash or path changes, 
-    // ensuring scrolling works when navigating from the Gallery page.
-  }, [location.pathname, location.hash]);
-  
-  // REMOVED: LoadingScreen conditional rendering
+  // If intro is playing, show only the intro
+  if (showIntro) {
+    return <VideoIntro onComplete={handleIntroComplete} />;
+  }
 
+  // Show main content with fade-in animation
   return (
-    <div className="min-h-screen bg-background">
+    <div className={`transition-opacity duration-500 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
       <Header />
-      <Hero />
-      <About />
-      <FeaturedProjects />
-      <Contact />
+      <main>
+        <Hero />
+        <About />
+        <FeaturedProjects />
+        <Contact />
+      </main>
       <Footer />
       <WhatsAppButton />
     </div>

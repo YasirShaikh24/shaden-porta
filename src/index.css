@@ -392,25 +392,197 @@
   animation: fade-in-scale 0.6s ease-out forwards;
 }
 
-/* Blink In */
-@keyframes blink-in {
+/* ============================================ */
+/* SUBTLE COLORED BLINK ANIMATIONS */
+/* ============================================ */
+
+/* Primary to Accent Blink (Blue to Cyan) - Subtle */
+@keyframes blink-in-primary {
   0% {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.95) translateY(10px);
+    box-shadow: 0 0 0 0 hsla(220, 85%, 65%, 0);
   }
-  50% {
+  40% {
     opacity: 1;
     transform: scale(1.02);
+    box-shadow: 0 0 15px 3px hsla(220, 85%, 65%, 0.4);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 0 0 hsla(220, 85%, 65%, 0);
+  }
+}
+
+.animate-blink-in-primary {
+  animation: blink-in-primary 0.5s ease-out forwards;
+}
+
+/* Purple to Pink Blink - Subtle */
+@keyframes blink-in-purple {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    box-shadow: 0 0 0 0 hsla(280, 85%, 65%, 0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 0 15px 3px hsla(280, 85%, 65%, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 0 0 hsla(280, 85%, 65%, 0);
+  }
+}
+
+.animate-blink-in-purple {
+  animation: blink-in-purple 0.5s ease-out forwards;
+}
+
+/* Blue to Cyan Blink - Subtle */
+@keyframes blink-in-blue {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    box-shadow: 0 0 0 0 hsla(210, 85%, 60%, 0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 0 15px 3px hsla(210, 85%, 60%, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 0 0 hsla(210, 85%, 60%, 0);
+  }
+}
+
+.animate-blink-in-blue {
+  animation: blink-in-blue 0.5s ease-out forwards;
+}
+
+/* Green to Teal Blink - Subtle */
+@keyframes blink-in-green {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    box-shadow: 0 0 0 0 hsla(142, 71%, 45%, 0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 0 15px 3px hsla(142, 71%, 45%, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 0 0 hsla(142, 71%, 45%, 0);
+  }
+}
+
+.animate-blink-in-green {
+  animation: blink-in-green 0.5s ease-out forwards;
+}
+
+/* Orange to Red Blink - Subtle */
+@keyframes blink-in-orange {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    box-shadow: 0 0 0 0 hsla(30, 92%, 50%, 0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 0 15px 3px hsla(30, 92%, 50%, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 0 0 hsla(30, 92%, 50%, 0);
+  }
+}
+
+.animate-blink-in-orange {
+  animation: blink-in-orange 0.5s ease-out forwards;
+}
+
+/* Pink to Orange Blink (Instagram colors) - Subtle */
+@keyframes blink-in-pink {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    box-shadow: 0 0 0 0 hsla(330, 85%, 60%, 0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 0 15px 3px hsla(330, 85%, 60%, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 0 0 hsla(330, 85%, 60%, 0);
+  }
+}
+
+.animate-blink-in-pink {
+  animation: blink-in-pink 0.5s ease-out forwards;
+}
+
+/* Yellow Blink (Snapchat) - Subtle */
+@keyframes blink-in-yellow {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    box-shadow: 0 0 0 0 hsla(60, 100%, 50%, 0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 0 15px 3px hsla(60, 100%, 50%, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 0 0 hsla(60, 100%, 50%, 0);
+  }
+}
+
+.animate-blink-in-yellow {
+  animation: blink-in-yellow 0.5s ease-out forwards;
+}
+
+/* General Blink In (default - kept for compatibility) - Subtle */
+@keyframes blink-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    box-shadow: 0 0 0 0 hsla(220, 85%, 65%, 0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 0 15px 3px hsla(220, 85%, 65%, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 0 0 hsla(220, 85%, 65%, 0);
   }
 }
 
 .animate-blink-in {
-  animation: blink-in 0.6s ease-out forwards;
+  animation: blink-in 0.5s ease-out forwards;
 }
+
+/* ============================================ */
+/* END COLORED BLINK ANIMATIONS */
+/* ============================================ */
 
 /* Bounce In */
 @keyframes bounce-in {

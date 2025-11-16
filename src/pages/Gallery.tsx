@@ -2,33 +2,30 @@ import { useLanguage } from "@/hooks/useLanguage";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-// FIX: Added missing imports for UI components and icons
 import { Play, Image as ImageIcon, ArrowLeft, X, ZoomIn } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button"; // Added Button import
-import { Link } from "react-router-dom"; // Added Link import
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import image1 from "@/assets/img/image1.jpg";
 import image2 from "@/assets/img/image2.jpg";
 import image3 from "@/assets/img/image3.jpg";
-import image4 from "@/assets/img/image4.jpg"; // Interior Customization (Kitchen)
+import image4 from "@/assets/img/image4.jpg";
 import image5 from "@/assets/img/image5.jpg";
 import image6 from "@/assets/img/image6.jpg";
 import image7 from "@/assets/img/image7.jpg";
 import image8 from "@/assets/img/image8.jpg";
 import image9 from "@/assets/img/image9.jpg";
- // Re-added image10 as an asset, not a thumbnail
 import image11 from "@/assets/img/image11.jpeg";
-import image12 from "@/assets/img/image12.jpg"; // Corrected import to use webp
+import image12 from "@/assets/img/image12.jpg";
 import image13 from "@/assets/img/image13.jpg";
 import image14 from "@/assets/img/image14.jpg";
 import image15 from "@/assets/img/image15.jpg";
-import image16 from "@/assets/img/image16.jpg"; // Accommodation Unit Exterior
+import image16 from "@/assets/img/image16.jpg";
 import image17 from "@/assets/img/image17.jpg";
 import image18 from "@/assets/img/image18.jpg";
 import image19 from "@/assets/img/image19.jpg";
 import image20 from "@/assets/img/image20.jpg";
 import image21 from "@/assets/img/image21.jpg";
-// NEW: Added new image imports
 import image22 from "@/assets/img/image22.jpg";
 import image23 from "@/assets/img/image23.jpg";
 import image24 from "@/assets/img/image24.jpg";
@@ -45,7 +42,7 @@ const Gallery = () => {
   const { t } = useLanguage();
   const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
   const [visibleItems, setVisibleItems] = useState<boolean[]>([]);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null); // FIX: Added missing state
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Gallery items - Mix of images and videos
@@ -53,41 +50,35 @@ const Gallery = () => {
     { src: image1, type: 'image', title: "Steel Frame Construction Skeleton" },
     { src: image2, type: 'image', title: "Modern Cabin Exterior (Night)" },
     { src: image3, type: 'image', title: "Executive Office Cabin" },
-    // Replaced Video 1 with Image 4
     { src: image4, type: 'image', title: "Interior Kitchen Customization" },
     { src: image5, type: 'image', title: "Large Open Office Interior" },
     { src: image6, type: 'image', title: "Containerized Water Treatment Unit" },
     { src: image7, type: 'image', title: "Luxury L-Shape Cabin on Grass" },
     { src: image8, type: 'image', title: "Two-Story Modular Accommodation Block" },
     { src: image9, type: 'image', title: "Large Multi-Purpose Hall Interior" },
-    // Added image 10 which was used as a thumbnail
     { src: image11, type: 'image', title: "L-Shape Luxury Accommodation Exterior" },
     { src: image12, type: 'image', title: "High-Bay Modular Building Interior" },
     { src: image13, type: 'image', title: "Desert Site Simple Accommodation Units" },
     { src: image14, type: 'image', title: "Stacked Restrooms and Office Units" },
     { src: image15, type: 'image', title: "Washroom and Bathroom Interior" },
-    // Replaced Video 3 with Image 16
     { src: image16, type: 'image', title: "Accommodation Unit Exterior with Multiple Doors" },
     { src: image17, type: 'image', title: "Security/Guard Cabin Exterior" },
     { src: image18, type: 'image', title: "Large Steel Structure Frame" },
     { src: image19, type: 'image', title: "Single Porta Cabin with Stairs" },
     { src: image20, type: 'image', title: "Open Plan Office Interior Setup" },
     { src: image21, type: 'image', title: "Modern Washroom Facilities Interior" },
-    // NEW: Added new images
     { src: image22, type: 'image', title: "3D Rendered Blue Porta Cabin" },
     { src: image23, type: 'image', title: "Small Guard Cabin with Base Tank" },
     { src: image24, type: 'image', title: "Stacked Red Hyundai Shipping Containers" },
     { src: image25, type: 'image', title: "Open Plan Office Interior Setup" },
-
   ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Initialize visibleItems state array to match galleryItems length
     setVisibleItems(new Array(galleryItems.length).fill(false));
   }, []);
 
-  // Intersection Observer for scroll animations
+  // Intersection Observer for scroll animations with blink effect
   useEffect(() => {
     const observers = itemRefs.current.map((ref, index) => {
       const observer = new IntersectionObserver(
@@ -100,7 +91,7 @@ const Gallery = () => {
             });
           }
         },
-        { threshold: 0.1 }
+        { threshold: 0.15 }
       );
 
       if (ref) {
@@ -117,7 +108,7 @@ const Gallery = () => {
         }
       });
     };
-  }, [galleryItems.length]); // Added galleryItems.length to dependencies
+  }, [galleryItems.length]);
 
   const openLightbox = (item: MediaItem) => {
     setSelectedItem(item);
@@ -127,22 +118,18 @@ const Gallery = () => {
     setSelectedItem(null);
   };
   
-  // Helper function to get image source for lightbox/grid
   const getMediaSource = (item: MediaItem) => {
       return item.type === 'video' ? item.thumbnail || item.src : item.src;
   };
   
-  // Helper function to get video URL for lightbox
   const getVideoUrl = (item: MediaItem) => {
       return item.type === 'video' ? item.src : '';
   };
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
       <Header />
 
-      {/* Gallery Content */}
       <main className="container mx-auto px-4 pt-32 pb-12">
         {/* Title Section with Entrance Animation */}
         <div className="text-center mb-16 opacity-0 translate-y-10 animate-fade-in">
@@ -156,7 +143,7 @@ const Gallery = () => {
           </p>
         </div>
 
-        {/* Image Grid with Individual Scroll Animations */}
+        {/* Image Grid with Individual Scroll Animations and Blink Effect */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {galleryItems.map((item, index) => {
             const isVisible = visibleItems[index];
@@ -169,11 +156,12 @@ const Gallery = () => {
                 data-index={index}
                 className={`group relative overflow-hidden rounded-2xl border-2 border-border bg-card hover:border-transparent cursor-pointer aspect-video hover:shadow-2xl transition-all duration-700 ${
                   isVisible 
-                    ? 'opacity-100 translate-y-0 scale-100' 
+                    ? 'opacity-100 translate-y-0 scale-100 animate-blink-in' 
                     : 'opacity-0 translate-y-20 scale-95'
                 }`}
                 style={{
-                  transitionDelay: isVisible ? `${(index % 3) * 100}ms` : '0ms',
+                  animationDelay: isVisible ? `${(index % 3) * 100}ms` : '0ms',
+                  animationFillMode: 'forwards',
                   transform: isHovered ? 'translateY(-12px) scale(1.02)' : undefined
                 }}
                 onClick={() => openLightbox(item)}
@@ -242,7 +230,7 @@ const Gallery = () => {
 
         {/* Gallery Stats with Entrance Animation */}
         <div className="mt-16 text-center opacity-0 translate-y-10 animate-fade-in" style={{ animationDelay: '300ms' }}>
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 backdrop-blur-sm hover:scale-105 transition-transform duration-300">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 backdrop-blur-sm hover:scale-105 transition-transform duration-300 animate-blink-in" style={{ animationDelay: '500ms' }}>
             <div className="text-center group">
               <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 {galleryItems.length}
