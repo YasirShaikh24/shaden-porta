@@ -369,12 +369,9 @@ const About = () => {
               key={index}
               ref={(el) => (cardRefs.current[index] = el)}
               className={`group relative h-full transition-all duration-700 ${
-                cardVisibility[index] ? 'opacity-100 translate-y-0 animate-blink-in' : 'opacity-0 translate-y-10'
+                cardVisibility[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
-              style={{ 
-                animationDelay: `${index * 150}ms`,
-                animationFillMode: 'forwards'
-              }}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -412,9 +409,7 @@ const About = () => {
               className={`text-center group cursor-pointer transition-all duration-700 ${
                 statsVisibility[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
-              style={{ 
-                transitionDelay: `${index * 100}ms`
-              }}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
                 {stat.value}

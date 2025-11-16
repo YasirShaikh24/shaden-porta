@@ -2,10 +2,8 @@ import { useLanguage } from "@/hooks/useLanguage";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { Play, Image as ImageIcon, ArrowLeft, X, ZoomIn } from "lucide-react";
+import { Play, X, ZoomIn } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import image1 from "@/assets/img/image1.jpg";
 import image2 from "@/assets/img/image2.jpg";
 import image3 from "@/assets/img/image3.jpg";
@@ -84,7 +82,7 @@ const Gallery = () => {
     setVisibleItems(new Array(galleryItems.length).fill(false));
   }, []);
 
-  // Intersection Observer for scroll animations with blink effect
+  // Intersection Observer for scroll animations
   useEffect(() => {
     const observers = itemRefs.current.map((ref, index) => {
       const observer = new IntersectionObserver(
@@ -149,7 +147,7 @@ const Gallery = () => {
           </p>
         </div>
 
-        {/* Image Grid with Individual Scroll Animations and Blink Effect */}
+        {/* Image Grid with Individual Scroll Animations */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {galleryItems.map((item, index) => {
             const isVisible = visibleItems[index];
@@ -162,12 +160,11 @@ const Gallery = () => {
                 data-index={index}
                 className={`group relative overflow-hidden rounded-2xl border-2 border-border bg-card hover:border-transparent cursor-pointer aspect-video hover:shadow-2xl transition-all duration-700 ${
                   isVisible 
-                    ? 'opacity-100 translate-y-0 scale-100 animate-blink-in' 
+                    ? 'opacity-100 translate-y-0 scale-100' 
                     : 'opacity-0 translate-y-20 scale-95'
                 }`}
                 style={{
-                  animationDelay: isVisible ? `${(index % 3) * 100}ms` : '0ms',
-                  animationFillMode: 'forwards',
+                  transitionDelay: isVisible ? `${(index % 3) * 100}ms` : '0ms',
                   transform: isHovered ? 'translateY(-12px) scale(1.02)' : undefined
                 }}
                 onClick={() => openLightbox(item)}
@@ -188,17 +185,6 @@ const Gallery = () => {
                       isHovered ? 'scale-110' : 'scale-100'
                     }`}
                   />
-                  
-                  {/* Shimmer Effect on Load */}
-                  {isVisible && (
-                    <div 
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer"
-                      style={{
-                        animation: 'shimmer 1.5s ease-in-out',
-                        animationDelay: `${(index % 3) * 150}ms`
-                      }}
-                    />
-                  )}
                 </div>
 
                 {/* Overlay with Smooth Fade */}
@@ -236,7 +222,7 @@ const Gallery = () => {
 
         {/* Gallery Stats with Entrance Animation */}
         <div className="mt-16 text-center opacity-0 translate-y-10 animate-fade-in" style={{ animationDelay: '300ms' }}>
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 backdrop-blur-sm hover:scale-105 transition-transform duration-300 animate-blink-in" style={{ animationDelay: '500ms' }}>
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 backdrop-blur-sm hover:scale-105 transition-transform duration-300">
             <div className="text-center group">
               <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 {galleryItems.length}
