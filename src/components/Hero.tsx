@@ -30,12 +30,18 @@ const Hero = () => {
       {/* Content */}
       <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
         <div className="text-center max-w-6xl mx-auto animate-fade-in">
-          {/* Premium Badge */}
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass border border-white/40 mb-6 animate-pulse-glow backdrop-blur-md">
-            <Sparkles className="text-white" size={20} />
-            <span className="text-sm md:text-base font-semibold text-white whitespace-nowrap">
-              {t.premiumConstruction}
-            </span>
+          {/* Premium Badge with Subtle Blinking Animation */}
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass border-2 border-black mb-6 backdrop-blur-md relative overflow-hidden animate-blink-badge">
+            {/* Subtle Background Glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-blue-500/20 animate-pulse-slow"></div>
+            
+            {/* Content */}
+            <div className="relative z-10 flex items-center gap-2">
+              <Sparkles className="text-white animate-spin-slow" size={20} />
+              <span className="text-sm md:text-base font-semibold text-white whitespace-nowrap">
+                {t.premiumConstruction}
+              </span>
+            </div>
           </div>
 
           {/* Main Heading */}
@@ -91,6 +97,48 @@ const Hero = () => {
 
       {/* Bottom Fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
+      
+      {/* Custom Styles for Subtle Blinking Animation */}
+      <style>{`
+        @keyframes blink-badge {
+          0%, 100% {
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+          }
+          50% {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+          }
+        }
+        
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 0.2;
+          }
+          50% {
+            opacity: 0.4;
+          }
+        }
+        
+        @keyframes spin-slow {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        
+        .animate-blink-badge {
+          animation: blink-badge 3s ease-in-out infinite;
+        }
+        
+        .animate-pulse-slow {
+          animation: pulse-slow 5s ease-in-out infinite;
+        }
+        
+        .animate-spin-slow {
+          animation: spin-slow 4s linear infinite;
+        }
+      `}</style>
     </section>
   );
 };

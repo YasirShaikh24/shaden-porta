@@ -35,43 +35,49 @@ type MediaItem = {
   src: string;
   type: 'image' | 'video';
   thumbnail?: string;
-  title: string;
+  titleEn: string;
+  titleAr: string;
 };
 
 const Gallery = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
   const [visibleItems, setVisibleItems] = useState<boolean[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Gallery items - Mix of images and videos
+  // Gallery items - Mix of images and videos with Arabic translations
   const galleryItems: MediaItem[] = [
-    { src: image1, type: 'image', title: "Steel Frame Construction Skeleton" },
-    { src: image2, type: 'image', title: "Modern Cabin Exterior (Night)" },
-    { src: image3, type: 'image', title: "Executive Office Cabin" },
-    { src: image4, type: 'image', title: "Interior Kitchen Customization" },
-    { src: image5, type: 'image', title: "Large Open Office Interior" },
-    { src: image6, type: 'image', title: "Containerized Water Treatment Unit" },
-    { src: image7, type: 'image', title: "Luxury L-Shape Cabin on Grass" },
-    { src: image8, type: 'image', title: "Two-Story Modular Accommodation Block" },
-    { src: image9, type: 'image', title: "Large Multi-Purpose Hall Interior" },
-    { src: image11, type: 'image', title: "L-Shape Luxury Accommodation Exterior" },
-    { src: image12, type: 'image', title: "High-Bay Modular Building Interior" },
-    { src: image13, type: 'image', title: "Desert Site Simple Accommodation Units" },
-    { src: image14, type: 'image', title: "Stacked Restrooms and Office Units" },
-    { src: image15, type: 'image', title: "Washroom and Bathroom Interior" },
-    { src: image16, type: 'image', title: "Accommodation Unit Exterior with Multiple Doors" },
-    { src: image17, type: 'image', title: "Security/Guard Cabin Exterior" },
-    { src: image18, type: 'image', title: "Large Steel Structure Frame" },
-    { src: image19, type: 'image', title: "Single Porta Cabin with Stairs" },
-    { src: image20, type: 'image', title: "Open Plan Office Interior Setup" },
-    { src: image21, type: 'image', title: "Modern Washroom Facilities Interior" },
-    { src: image22, type: 'image', title: "3D Rendered Blue Porta Cabin" },
-    { src: image23, type: 'image', title: "Small Guard Cabin with Base Tank" },
-    { src: image24, type: 'image', title: "Stacked Red Hyundai Shipping Containers" },
-    { src: image25, type: 'image', title: "Open Plan Office Interior Setup" },
+    { src: image1, type: 'image', titleEn: "Steel Frame Construction Skeleton", titleAr: "هيكل إطار فولاذي للبناء" },
+    { src: image2, type: 'image', titleEn: "Modern Cabin Exterior (Night)", titleAr: "واجهة الكابينة الحديثة (ليلاً)" },
+    { src: image3, type: 'image', titleEn: "Executive Office Cabin", titleAr: "كابينة مكتب تنفيذي" },
+    { src: image4, type: 'image', titleEn: "Interior Kitchen Customization", titleAr: "تخصيص المطبخ الداخلي" },
+    { src: image5, type: 'image', titleEn: "Large Open Office Interior", titleAr: "مكتب مفتوح كبير من الداخل" },
+    { src: image6, type: 'image', titleEn: "Containerized Water Treatment Unit", titleAr: "وحدة معالجة المياه المعبأة" },
+    { src: image7, type: 'image', titleEn: "Luxury L-Shape Cabin on Grass", titleAr: "كابينة فاخرة على شكل L على العشب" },
+    { src: image8, type: 'image', titleEn: "Two-Story Modular Accommodation Block", titleAr: "مبنى سكن معياري من طابقين" },
+    { src: image9, type: 'image', titleEn: "Large Multi-Purpose Hall Interior", titleAr: "قاعة متعددة الأغراض كبيرة من الداخل" },
+    { src: image11, type: 'image', titleEn: "L-Shape Luxury Accommodation Exterior", titleAr: "واجهة سكن فاخر على شكل L" },
+    { src: image12, type: 'image', titleEn: "High-Bay Modular Building Interior", titleAr: "مبنى معياري عالي من الداخل" },
+    { src: image13, type: 'image', titleEn: "Desert Site Simple Accommodation Units", titleAr: "وحدات سكنية بسيطة في موقع صحراوي" },
+    { src: image14, type: 'image', titleEn: "Stacked Restrooms and Office Units", titleAr: "دورات المياه والوحدات المكتبية المكدسة" },
+    { src: image15, type: 'image', titleEn: "Washroom and Bathroom Interior", titleAr: "غرفة الغسيل والحمام من الداخل" },
+    { src: image16, type: 'image', titleEn: "Accommodation Unit Exterior with Multiple Doors", titleAr: "واجهة وحدة سكنية بأبواب متعددة" },
+    { src: image17, type: 'image', titleEn: "Security/Guard Cabin Exterior", titleAr: "واجهة كابينة الأمن والحراسة" },
+    { src: image18, type: 'image', titleEn: "Large Steel Structure Frame", titleAr: "إطار هيكل فولاذي كبير" },
+    { src: image19, type: 'image', titleEn: "Single Porta Cabin with Stairs", titleAr: "كابينة متنقلة واحدة مع سلالم" },
+    { src: image20, type: 'image', titleEn: "Open Plan Office Interior Setup", titleAr: "إعداد مكتب مفتوح من الداخل" },
+    { src: image21, type: 'image', titleEn: "Modern Washroom Facilities Interior", titleAr: "مرافق دورات مياه حديثة من الداخل" },
+    { src: image22, type: 'image', titleEn: "3D Rendered Blue Porta Cabin", titleAr: "كابينة متنقلة زرقاء بتقنية ثلاثية الأبعاد" },
+    { src: image23, type: 'image', titleEn: "Small Guard Cabin with Base Tank", titleAr: "كابينة حراسة صغيرة مع خزان قاعدة" },
+    { src: image24, type: 'image', titleEn: "Stacked Red Hyundai Shipping Containers", titleAr: "حاويات شحن هيونداي حمراء مكدسة" },
+    { src: image25, type: 'image', titleEn: "Open Plan Office Interior Setup", titleAr: "إعداد مكتب مفتوح من الداخل" },
   ];
+
+  // Get title based on current language
+  const getTitle = (item: MediaItem) => {
+    return language === 'ar' ? item.titleAr : item.titleEn;
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -177,7 +183,7 @@ const Gallery = () => {
                 <div className="relative w-full h-full overflow-hidden">
                   <img
                     src={getMediaSource(item)}
-                    alt={item.title}
+                    alt={getTitle(item)}
                     className={`w-full h-full object-cover transition-transform duration-700 brightness-105 ${
                       isHovered ? 'scale-110' : 'scale-100'
                     }`}
@@ -206,11 +212,11 @@ const Gallery = () => {
                     {item.type === 'video' ? <Play className="text-white fill-white ml-1" size={24} /> : <ZoomIn className="text-white" size={24} />}
                   </div>
 
-                  {/* Title with Slide Up */}
+                  {/* Title with Slide Up - Now with Language Support */}
                   <p className={`text-foreground font-bold text-lg text-center transition-all duration-300 ${
                     isHovered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                  }`}>
-                    {item.title}
+                  } ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                    {getTitle(item)}
                   </p>
                 </div>
 
@@ -235,17 +241,23 @@ const Gallery = () => {
               <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 {galleryItems.length}
               </div>
-              <div className="text-sm text-muted-foreground font-medium">Total Projects</div>
+              <div className="text-sm text-muted-foreground font-medium">
+                {language === 'ar' ? 'إجمالي المشاريع' : 'Total Projects'}
+              </div>
             </div>
             <div className="w-px h-12 bg-border hidden sm:block"></div>
             <div className="text-center group">
               <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                 500+
               </div>
-              <div className="text-sm text-muted-foreground font-medium">Projects Done</div>
+              <div className="text-sm text-muted-foreground font-medium">
+                {language === 'ar' ? 'المشاريع المنجزة' : 'Projects Done'}
+              </div>
             </div>
           </div>
-          <p className="mt-6 text-muted-foreground text-sm animate-pulse">More exciting projects coming soon!</p>
+          <p className="mt-6 text-muted-foreground text-sm animate-pulse">
+            {language === 'ar' ? 'المزيد من المشاريع المثيرة قريباً!' : 'More exciting projects coming soon!'}
+          </p>
         </div>
       </main>
 
@@ -275,7 +287,7 @@ const Gallery = () => {
             {selectedItem.type === 'image' ? (
                 <img
                   src={selectedItem.src}
-                  alt={selectedItem.title}
+                  alt={getTitle(selectedItem)}
                   className="relative z-10 max-w-full max-h-full object-contain rounded-3xl shadow-2xl border-4 border-border"
                   onClick={(e) => e.stopPropagation()}
                 />
@@ -290,8 +302,10 @@ const Gallery = () => {
                 />
             )}
             
-            <p className="absolute bottom-2 left-1/2 transform -translate-x-1/2 px-4 py-1.5 bg-background/80 backdrop-blur-md rounded-full text-sm font-semibold text-foreground z-20">
-                {selectedItem.title}
+            <p className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 px-4 py-1.5 bg-background/80 backdrop-blur-md rounded-full text-sm font-semibold text-foreground z-20 ${
+              language === 'ar' ? 'text-right' : 'text-left'
+            }`}>
+                {getTitle(selectedItem)}
             </p>
           </div>
         </div>

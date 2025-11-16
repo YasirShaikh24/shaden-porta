@@ -2,14 +2,12 @@ import { useLanguage } from "@/hooks/useLanguage";
 import logo from "@/assets/img/logo.png";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-// FIX: Import necessary hooks from react-router-dom
-import { useNavigate, useLocation } from "react-router-dom"; 
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  // FIX: Initialize hooks
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,27 +19,39 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // FIX: Updated function to handle navigation back to the root page with hash for section scrolling
+  // Handle hash-based navigation when landing on home page with hash
+  useEffect(() => {
+    if (location.pathname === '/' && location.hash) {
+      const id = location.hash.replace('#', '');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location]);
+
   const navigateToSection = (id: string) => {
     setMobileMenuOpen(false);
 
-    // If currently on the Index page, scroll smoothly
     if (location.pathname === '/') {
+      // Already on home page - just scroll
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // If on another page (like /gallery), navigate to the home page and use a hash to scroll
+      // Navigate to home with hash
       navigate(`/#${id}`);
     }
   };
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'glass shadow-glow bg-card/70' // Use bg-card/70 and glass for light theme
-        : 'bg-background/80 backdrop-blur-md' // Use bg-background/80 for initial state
+      scrolled
+        ? 'glass shadow-glow bg-card/70'
+        : 'bg-background/80 backdrop-blur-md'
     }`}>
 
       <div className="container mx-auto px-4">
@@ -50,10 +60,10 @@ const Header = () => {
           <div className="flex items-center gap-3 group cursor-pointer" onClick={() => navigateToSection('home')}>
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-lg opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
-              <img 
-                src={logo} 
-                alt="Shaden House Logo" 
-                className="h-12 w-12 object-contain relative z-10 transform group-hover:scale-110 transition-transform duration-300" 
+              <img
+                src={logo}
+                alt="Shaden House Logo"
+                className="h-12 w-12 object-contain relative z-10 transform group-hover:scale-110 transition-transform duration-300"
               />
             </div>
             <span className="text-lg font-bold text-foreground hidden sm:inline-block group-hover:text-primary transition-colors duration-300">
@@ -63,29 +73,29 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <button 
-              onClick={() => navigateToSection('home')} // FIX: Use navigateToSection
+            <button
+              onClick={() => navigateToSection('home')}
               className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
             >
               {t.home}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button 
-              onClick={() => navigateToSection('about')} // FIX: Use navigateToSection
+            <button
+              onClick={() => navigateToSection('about')}
               className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
             >
               {t.about}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
-            <a 
-              href="/gallery" 
+            <a
+              href="/gallery"
               className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
             >
               {t.gallery}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </a>
-            <button 
-              onClick={() => navigateToSection('contact')} // FIX: Use navigateToSection
+            <button
+              onClick={() => navigateToSection('contact')}
               className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
             >
               {t.contact}
@@ -95,13 +105,13 @@ const Header = () => {
 
           {/* Language Toggle & Mobile Menu */}
           <div className="flex items-center gap-3">
-            {/* Language Buttons - UPDATED WITH FLAGS */}
+            {/* Language Buttons */}
             <div className="flex gap-2">
               <button
                 onClick={() => setLanguage('en')}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 hover:scale-105 ${
-                  language === 'en' 
-                    ? 'bg-gradient-to-r from-primary to-accent text-white shadow-glow' 
+                  language === 'en'
+                    ? 'bg-gradient-to-r from-primary to-accent text-white shadow-glow'
                     : 'bg-card text-foreground hover:bg-secondary border border-border'
                 }`}
               >
@@ -110,8 +120,8 @@ const Header = () => {
               <button
                 onClick={() => setLanguage('ar')}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 hover:scale-105 ${
-                  language === 'ar' 
-                    ? 'bg-gradient-to-r from-primary to-accent text-white shadow-glow' 
+                  language === 'ar'
+                    ? 'bg-gradient-to-r from-primary to-accent text-white shadow-glow'
                     : 'bg-card text-foreground hover:bg-secondary border border-border'
                 }`}
               >
@@ -133,26 +143,26 @@ const Header = () => {
         {mobileMenuOpen && (
           <nav className="md:hidden py-4 border-t border-border bg-card/90 backdrop-blur-md">
             <div className="flex flex-col gap-4">
-              <button 
-                onClick={() => navigateToSection('home')} // FIX: Use navigateToSection
+              <button
+                onClick={() => navigateToSection('home')}
                 className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.home}
               </button>
-              <button 
-                onClick={() => navigateToSection('about')} // FIX: Use navigateToSection
+              <button
+                onClick={() => navigateToSection('about')}
                 className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.about}
               </button>
-              <a 
-                href="/gallery" 
+              <a
+                href="/gallery"
                 className="text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.gallery}
               </a>
-              <button 
-                onClick={() => navigateToSection('contact')} // FIX: Use navigateToSection
+              <button
+                onClick={() => navigateToSection('contact')}
                 className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.contact}

@@ -87,7 +87,7 @@ const Footer = () => {
         {/* Mobile: Stack everything vertically, Desktop: 4 columns */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12">
           
-          {/* Company Info - Column 1: Removed 'group' class to disable hover animations on children */}
+          {/* Company Info - Column 1 */}
           <div 
             className={`flex flex-col items-center md:items-start text-center md:text-left transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -96,12 +96,10 @@ const Footer = () => {
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="relative">
-                {/* Removed 'group-hover:opacity-70' to stop the logo glow on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-md opacity-0 transition-opacity duration-300"></div>
                 <img 
                   src={logo} 
                   alt="Shaden House Logo" 
-                  // Removed 'group-hover:scale-110' to stop the logo scaling on hover
                   className="h-12 w-12 object-contain relative z-10 transform transition-transform duration-300" 
                 />
               </div>
@@ -113,11 +111,11 @@ const Footer = () => {
               {t.footerDescription}
             </p>
             
-            {/* Saudi Vision 2030 - No animation classes here, kept as is */}
+            {/* Saudi Vision 2030 with hover effect */}
             <img 
                 src={vision2030} 
                 alt="Saudi Vision 2030" 
-                className="h-20 w-auto object-contain border-2 border-primary rounded-lg"
+                className="h-20 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer"
             />
           </div>
 
@@ -237,12 +235,12 @@ const Footer = () => {
               })}
             </div>
 
-            {/* Saudi Made Only - Vision 2030 Removed */}
+            {/* Saudi Made with hover effect */}
             <div className="flex items-center justify-center md:justify-end">
               <img 
                 src={saudimade} 
                 alt="Saudi Made" 
-                className="h-16 w-auto object-contain hover:scale-110 transition-transform duration-300"
+                className="h-16 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer"
               />
             </div>
           </div>

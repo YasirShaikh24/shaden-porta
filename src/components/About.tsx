@@ -21,7 +21,7 @@ const About = () => {
 
   const isRTL = language === 'ar';
 
- // English and Arabic texts
+  // English and Arabic texts
   const texts = {
     en: {
       text1: "We specialize in delivering high-quality porta cabin solutions with precision engineering and modern construction techniques. Our team ensures every project meets international standards. From design to delivery, we focus on creating durable, efficient, and aesthetically pleasing structures that exceed client expectations. With years of experience in the industry, we have successfully completed over 500 projects across various sectors. Our commitment to excellence drives us to continuously innovate and improve our construction methods. We work closely with our clients to understand their unique requirements and deliver customized solutions that perfectly match their needs.",
@@ -105,14 +105,30 @@ const About = () => {
     };
   }, []);
 
-  // Reset typing when language changes
+  // Reset typing when language changes and trigger immediately if section is in view
   useEffect(() => {
     setTypedText1("");
     setTypedText2("");
     setIsTyping1Complete(false);
     setIsTyping2Complete(false);
-    setText1Visible(false);
-    setText2Visible(false);
+    
+    // Check if sections are currently in viewport
+    const checkVisibility = () => {
+      if (text1Ref.current) {
+        const rect1 = text1Ref.current.getBoundingClientRect();
+        const isVisible1 = rect1.top < window.innerHeight && rect1.bottom > 0;
+        setText1Visible(isVisible1);
+      }
+      
+      if (text2Ref.current) {
+        const rect2 = text2Ref.current.getBoundingClientRect();
+        const isVisible2 = rect2.top < window.innerHeight && rect2.bottom > 0;
+        setText2Visible(isVisible2);
+      }
+    };
+    
+    // Check immediately after language change
+    setTimeout(checkVisibility, 50);
   }, [language]);
 
   // Fast typing effect for first text - 10ms per character
@@ -151,7 +167,7 @@ const About = () => {
     }
   }, [text2Visible, isTyping2Complete, fullText2]);
 
-  // Feature cards intersection observer with blink animation
+  // Feature cards intersection observer
   useEffect(() => {
     const observers = cardRefs.current.map((ref, index) => {
       const observer = new IntersectionObserver(
@@ -183,7 +199,7 @@ const About = () => {
     };
   }, []);
 
-  // Stats intersection observer with blink animation
+  // Stats intersection observer
   useEffect(() => {
     const observers = statsRefs.current.map((ref, index) => {
       const observer = new IntersectionObserver(
@@ -222,7 +238,6 @@ const About = () => {
       title: t.aboutFeature1,
       description: "High-grade materials ensuring longevity and safety",
       gradient: "from-purple-500 to-pink-500",
-      blinkClass: "animate-blink-in-purple"
     },
     {
       icon: Zap,
@@ -230,7 +245,6 @@ const About = () => {
       title: t.aboutFeature2,
       description: "Efficient project execution and timely completion",
       gradient: "from-blue-500 to-cyan-500",
-      blinkClass: "animate-blink-in-blue"
     },
     {
       icon: Wrench,
@@ -238,7 +252,6 @@ const About = () => {
       title: t.aboutFeature3,
       description: "Tailored designs to meet your specific requirements",
       gradient: "from-green-500 to-teal-500",
-      blinkClass: "animate-blink-in-green"
     },
     {
       icon: Award,
@@ -246,7 +259,6 @@ const About = () => {
       title: t.aboutFeature4,
       description: "Recognized for superior build quality and long-term performance",
       gradient: "from-orange-500 to-red-500",
-      blinkClass: "animate-blink-in-orange"
     }
   ];
 
@@ -262,7 +274,6 @@ const About = () => {
       id="about" 
       ref={sectionRef} 
       className="py-20 relative overflow-hidden"
-      dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Background Decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -271,29 +282,13 @@ const About = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Video Section 1: Text -> Video (Mobile & Desktop LTR) */}
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 ${isRTL ? 'lg:grid-flow-dense' : ''}`}>
-          {/* Text Section 1 (Always first on Mobile/Default) */}
-          <div 
-            ref={text1Ref}
-            className={`space-y-6 transition-all duration-1000 ${
-              text1Visible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? 'translate-x-20' : '-translate-x-20'}`
-            } ${isRTL ? 'lg:col-start-2' : ''}`}
-          >
-            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
-              {texts[language].title1}
-            </h3>
-            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
-              {typedText1}
-              {!isTyping1Complete && <span className="animate-pulse text-primary">{isRTL ? '|' : '|'}</span>}
-            </div>
-          </div>
-          
-          {/* Video Section 1 (Always second on Mobile/Default) */}
+        {/* Section 1: Image LEFT, Text RIGHT for LTR / Image RIGHT, Text LEFT for RTL */}
+        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20`}>
+          {/* Video - Order 1 on Desktop for LTR, Order 2 for RTL */}
           <div 
             className={`relative group transition-all duration-1000 ${
-              isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
-            } ${isRTL ? 'lg:col-start-1 lg:row-start-1' : ''}`}
+              isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? 'translate-x-20' : '-translate-x-20'}`
+            } ${isRTL ? 'lg:order-2' : 'lg:order-1'} order-2`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative aspect-[16/10] rounded-2xl overflow-hidden border-2 border-border hover:border-primary/50 transition-all duration-500">
@@ -308,31 +303,49 @@ const About = () => {
               </video>
             </div>
           </div>
+
+          {/* Text Section 1 - Order 2 on Desktop for LTR, Order 1 for RTL */}
+          <div 
+            ref={text1Ref}
+            className={`space-y-6 transition-all duration-1000 ${
+              text1Visible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
+            } ${isRTL ? 'lg:order-1' : 'lg:order-2'} order-1`}
+            dir={isRTL ? 'rtl' : 'ltr'}
+          >
+            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
+              {texts[language].title1}
+            </h3>
+            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
+              {typedText1}
+              {!isTyping1Complete && <span className="animate-pulse text-primary">|</span>}
+            </div>
+          </div>
         </div>
 
-        {/* Video Section 2: Text -> Video (Mobile), Video -> Text (Desktop LTR) */}
+        {/* Section 2: Text LEFT, Image RIGHT for LTR / Text RIGHT, Image LEFT for RTL */}
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20`}>
-          {/* Text Section 2 (First in Source Code for Mobile Display) */}
+          {/* Text Section 2 - Order 1 on Desktop for LTR, Order 2 for RTL */}
           <div 
             ref={text2Ref}
-            className={`space-y-6 transition-all duration-1000 lg:order-2 ${
-              text2Visible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
-            } ${isRTL ? 'lg:col-start-1' : ''}`}
+            className={`space-y-6 transition-all duration-1000 ${
+              text2Visible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? 'translate-x-20' : '-translate-x-20'}`
+            } ${isRTL ? 'lg:order-2' : 'lg:order-1'} order-1`}
+            dir={isRTL ? 'rtl' : 'ltr'}
           >
             <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
               {texts[language].title2}
             </h3>
             <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
               {typedText2}
-              {!isTyping2Complete && <span className="animate-pulse text-accent">{isRTL ? '|' : '|'}</span>}
+              {!isTyping2Complete && <span className="animate-pulse text-accent">|</span>}
             </div>
           </div>
-          
-          {/* Video Section 2 (Second in Source Code for Mobile Display) */}
+
+          {/* Video - Order 2 on Desktop for LTR, Order 1 for RTL */}
           <div 
-            className={`relative group transition-all duration-1000 delay-200 lg:order-1 ${
-              isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? 'translate-x-20' : '-translate-x-20'}`
-            } ${isRTL ? 'lg:col-start-2' : ''}`}
+            className={`relative group transition-all duration-1000 delay-200 ${
+              isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
+            } ${isRTL ? 'lg:order-1' : 'lg:order-2'} order-2`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative aspect-[16/10] rounded-2xl overflow-hidden border-2 border-border hover:border-accent/50 transition-all duration-500">
@@ -349,7 +362,7 @@ const About = () => {
           </div>
         </div>
 
-        {/* Feature Cards Grid with Blink Animation */}
+        {/* Feature Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
           {features.map((feature, index) => (
             <div
@@ -368,7 +381,7 @@ const About = () => {
               <div className="relative bg-card p-8 rounded-2xl border border-border hover:border-transparent transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 overflow-hidden h-full flex flex-col">
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                 
-                <div className={`flex flex-col items-center text-center relative z-10 flex-1 ${isRTL ? 'text-right' : 'text-left'}`}>
+                <div className={`flex flex-col items-center text-center relative z-10 flex-1`}>
                   <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${feature.gradient} p-0.5 mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                     <div className="w-full h-full bg-card rounded-2xl flex items-center justify-center">
                       <span className="text-4xl">{feature.emoji}</span>
@@ -390,7 +403,7 @@ const About = () => {
           ))}
         </div>
 
-       {/* Stats Section WITHOUT Blink Animation */}
+        {/* Stats Section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <div 
