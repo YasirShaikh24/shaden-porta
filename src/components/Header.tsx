@@ -15,9 +15,6 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isRTL = language === 'ar';
-  const textAlignment = isRTL ? 'text-right' : 'text-left';
-
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -64,11 +61,15 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
+<<<<<<< HEAD
           <div 
             className="flex items-center gap-3 group cursor-pointer" 
             onClick={() => navigateToSection('home')}
             dir={isRTL ? 'rtl' : 'ltr'}
           >
+=======
+          <div className="flex items-center gap-3 group cursor-pointer" onClick={() => navigateToSection('home')}>
+>>>>>>> 75161ecc24eac72e0caf91dc417232f76dd80032
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-lg opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
               <img
@@ -77,7 +78,7 @@ const Header = () => {
                 className="h-12 w-12 object-contain relative z-10 transform group-hover:scale-110 transition-transform duration-300"
               />
             </div>
-            <span className={`text-lg font-bold text-foreground hidden sm:inline-block group-hover:text-primary transition-colors duration-300 ${isRTL ? 'text-right' : 'text-left'}`}>
+            <span className="text-lg font-bold text-foreground hidden sm:inline-block group-hover:text-primary transition-colors duration-300">
               Shaden House Porta Cabin
             </span>
           </div>
@@ -161,32 +162,36 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
+<<<<<<< HEAD
           <nav 
             className="md:hidden py-4 border-t border-border bg-card/90 backdrop-blur-md"
             dir={isRTL ? 'rtl' : 'ltr'}
           >
+=======
+          <nav className="md:hidden py-4 border-t border-border bg-card/90 backdrop-blur-md">
+>>>>>>> 75161ecc24eac72e0caf91dc417232f76dd80032
             <div className="flex flex-col gap-4">
               <button
                 onClick={() => navigateToSection('home')}
-                className={`${textAlignment} text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold`}
+                className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.home}
               </button>
               <button
                 onClick={() => navigateToSection('about')}
-                className={`${textAlignment} text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold`}
+                className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.about}
               </button>
               <a
                 href="/gallery"
-                className={`${textAlignment} text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold`}
+                className="text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.gallery}
               </a>
               <button
                 onClick={() => navigateToSection('contact')}
-                className={`${textAlignment} text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold`}
+                className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
               >
                 {t.contact}
               </button>
