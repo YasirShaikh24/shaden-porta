@@ -192,7 +192,7 @@ const About = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Video Section 1 - Text then Video on Mobile, Text then Video on Desktop (or reversed for RTL) */}
+        {/* Video Section 1: Text -> Video (Mobile & Desktop LTR) */}
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 ${isRTL ? 'lg:grid-flow-dense' : ''}`}>
           {/* Text Section 1 (Always first on Mobile/Default) */}
           <div 
@@ -231,12 +231,12 @@ const About = () => {
           </div>
         </div>
 
-        {/* Video Section 2 - Video then Text on Desktop, Text then Video on Mobile */}
+        {/* Video Section 2: Text -> Video (Mobile), Video -> Text (Desktop LTR) */}
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20`}>
-          {/* Text Section 2 (Desktop: second column/Mobile: first row) */}
+          {/* Text Section 2 (First in Source Code for Mobile Display) */}
           <div 
             ref={text2Ref}
-            className={`space-y-6 transition-all duration-1000 order-2 lg:order-1 ${
+            className={`space-y-6 transition-all duration-1000 lg:order-2 ${
               text2Visible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
             } ${isRTL ? 'lg:col-start-1' : ''}`}
           >
@@ -249,9 +249,9 @@ const About = () => {
             </div>
           </div>
           
-          {/* Video Section 2 (Desktop: first column/Mobile: second row) */}
+          {/* Video Section 2 (Second in Source Code for Mobile Display) */}
           <div 
-            className={`relative group transition-all duration-1000 delay-200 order-1 lg:order-2 ${
+            className={`relative group transition-all duration-1000 delay-200 lg:order-1 ${
               isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? 'translate-x-20' : '-translate-x-20'}`
             } ${isRTL ? 'lg:col-start-2' : ''}`}
           >
