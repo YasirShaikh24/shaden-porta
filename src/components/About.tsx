@@ -192,9 +192,9 @@ const About = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Video Section 1 - Layout changes based on language */}
+        {/* Video Section 1 - Text then Video on Mobile, Text then Video on Desktop (or reversed for RTL) */}
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 ${isRTL ? 'lg:grid-flow-dense' : ''}`}>
-          {/* Text Section */}
+          {/* Text Section 1 (Always first on Mobile/Default) */}
           <div 
             ref={text1Ref}
             className={`space-y-6 transition-all duration-1000 ${
@@ -210,7 +210,7 @@ const About = () => {
             </div>
           </div>
           
-          {/* Video Section */}
+          {/* Video Section 1 (Always second on Mobile/Default) */}
           <div 
             className={`relative group transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
@@ -231,11 +231,27 @@ const About = () => {
           </div>
         </div>
 
-        {/* Video Section 2 - Layout changes based on language */}
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 ${isRTL ? 'lg:grid-flow-dense' : ''}`}>
-          {/* Video Section */}
+        {/* Video Section 2 - Video then Text on Desktop, Text then Video on Mobile */}
+        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20`}>
+          {/* Text Section 2 (Desktop: second column/Mobile: first row) */}
           <div 
-            className={`relative group transition-all duration-1000 delay-200 ${
+            ref={text2Ref}
+            className={`space-y-6 transition-all duration-1000 order-2 lg:order-1 ${
+              text2Visible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
+            } ${isRTL ? 'lg:col-start-1' : ''}`}
+          >
+            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
+              {texts[language].title2}
+            </h3>
+            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
+              {typedText2}
+              {!isTyping2Complete && <span className="animate-pulse text-accent">{isRTL ? '|' : '|'}</span>}
+            </div>
+          </div>
+          
+          {/* Video Section 2 (Desktop: first column/Mobile: second row) */}
+          <div 
+            className={`relative group transition-all duration-1000 delay-200 order-1 lg:order-2 ${
               isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? 'translate-x-20' : '-translate-x-20'}`
             } ${isRTL ? 'lg:col-start-2' : ''}`}
           >
@@ -250,22 +266,6 @@ const About = () => {
               >
                 <source src="/videos/about2.mp4" type="video/mp4" />
               </video>
-            </div>
-          </div>
-          
-          {/* Text Section */}
-          <div 
-            ref={text2Ref}
-            className={`space-y-6 transition-all duration-1000 ${
-              text2Visible ? 'opacity-100 translate-x-0' : `opacity-0 ${isRTL ? '-translate-x-20' : 'translate-x-20'}`
-            } ${isRTL ? 'lg:col-start-1' : ''}`}
-          >
-            <h3 className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent ${isRTL ? 'text-right' : 'text-left'}`}>
-              {texts[language].title2}
-            </h3>
-            <div className={`text-lg text-muted-foreground leading-relaxed min-h-[200px] ${isRTL ? 'text-right' : 'text-left'}`}>
-              {typedText2}
-              {!isTyping2Complete && <span className="animate-pulse text-accent">{isRTL ? '|' : '|'}</span>}
             </div>
           </div>
         </div>
