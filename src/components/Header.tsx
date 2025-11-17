@@ -70,7 +70,7 @@ const Header = () => {
               />
             </div>
             <span className="text-lg font-bold text-foreground hidden sm:inline-block group-hover:text-primary transition-colors duration-300">
-              Shaden House Porta Cabin
+              Shaden House Porta 
             </span>
           </div>
 
