@@ -31,7 +31,6 @@ export const translations = {
     address: "Al Yasmin, Riyadh 13325, Saudi Arabia",
     phone: "+966 55 446 7464",
     email: "info@shadenhouseportacabin.com",
-    // New Keys
     premiumConstruction: "Premium Construction Solutions",
     getStarted: "Get Started",
     viewGallery: "View Gallery",
@@ -39,10 +38,9 @@ export const translations = {
     madeInSaudi: "Proudly Made in Saudi Arabia",
     socialLinks: "Follow Us",
     snapchat: "Snapchat",
-    // NEW: Contact page intro and header button
     contactIntroText: "At Portacabin KSA, we are dedicated to providing high-quality portable cabin solutions tailored to your needs. Whether you require a temporary office, accommodation, or any other portable structure, our team is ready to assist you. For inquiries, quotes, or more information, our experienced professionals are available to discuss your requirements and provide personalized solutions. Connect with us today and discover how our innovative portacabins can meet your specific needs efficiently and effectively.",
-    headerContactButton: "Get a Free Quote", // Button text for the header
-    mobileNumber: "Mobile Number", // Label for mobile number field
+    headerContactButton: "Send Message", // CHANGED from "Get a Free Quote"
+    mobileNumber: "Mobile Number (Optional)",
   },
   ar: {
     home: "الرئيسية",
@@ -76,7 +74,6 @@ export const translations = {
     address: "الياسمين، الرياض 13325، المملكة العربية السعودية",
     phone: "+966 55 446 7464",
     email: "info@shadenhouseportacabin.com",
-    // New Keys
     premiumConstruction: "حلول بناء متميزة",
     getStarted: "ابدأ الآن",
     viewGallery: "عرض المعرض",
@@ -84,9 +81,8 @@ export const translations = {
     madeInSaudi: "صنع بفخر في المملكة العربية السعودية",
     socialLinks: "تابعنا",
     snapchat: "سناب شات",
-    // NEW: Contact page intro and header button
     contactIntroText: "في بورتكابين السعودية، نحن ملتزمون بتقديم حلول كبائن محمولة عالية الجودة ومصممة خصيصًا لتلبية احتياجاتك. سواء كنت تحتاج إلى مكتب مؤقت، أو سكن، أو أي هيكل محمول آخر، فإن فريقنا مستعد لمساعدتك. للاستفسارات أو طلب عروض الأسعار أو لمزيد من المعلومات، يتوفر متخصصونا ذوو الخبرة لمناقشة متطلباتك وتقديم حلول مخصصة. تواصل معنا اليوم واكتشف كيف يمكن لكبائننا المبتكرة تلبية احتياجاتك الخاصة بكفاءة وفعالية.",
-    headerContactButton: "احصل على عرض أسعار مجاني", // Button text for the header
-    mobileNumber: "رقم الجوال", // Label for mobile number field
+    headerContactButton: "إرسال رسالة", // CHANGED from "احصل على عرض أسعار مجاني"
+    mobileNumber: "رقم الجوال (اختياري)",
   }
 };
