@@ -3,6 +3,7 @@ import logo from "@/assets/img/logo.png";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button"; // Import Button
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -44,6 +45,11 @@ const Header = () => {
     } else {
       navigate(`/#${id}`);
     }
+  };
+  
+  // New function to scroll to contact (used by the new header button)
+  const scrollToContact = () => {
+    navigateToSection('contact');
   };
 
   return (
@@ -106,8 +112,17 @@ const Header = () => {
             </button>
           </nav>
 
-          {/* Language Toggle & Mobile Menu */}
+          {/* Language Toggle & Mobile Menu & NEW Button */}
           <div className="flex items-center gap-3">
+            {/* NEW: Get a Quote Button */}
+            <Button
+              onClick={scrollToContact}
+              size="sm"
+              className="hidden lg:flex bg-gradient-to-r from-primary to-accent text-white font-bold py-2 px-4 rounded-full shadow-lg hover:shadow-primary/50 transition-all duration-300"
+            >
+                {t.headerContactButton}
+            </Button>
+            
             {/* Language Buttons */}
             <div className="flex gap-2">
               <button
@@ -173,6 +188,14 @@ const Header = () => {
               >
                 {t.contact}
               </button>
+              {/* NEW: Mobile Button */}
+              <Button
+                onClick={scrollToContact}
+                size="lg"
+                className="w-full mt-4 bg-gradient-to-r from-primary to-accent text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-primary/50 transition-all duration-300"
+              >
+                  {t.headerContactButton}
+              </Button>
             </div>
           </nav>
         )}

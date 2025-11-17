@@ -32,14 +32,17 @@ export const translations = {
     phone: "+966 55 446 7464",
     email: "info@shadenhouseportacabin.com",
     // New Keys
-    premiumConstruction: "Premium Construction Solutions", // For Hero badge
-    getStarted: "Get Started", // For Hero button
-    viewGallery: "View Gallery", // For Hero button
-    exploreMore: "Explore More", // For Hero scroll indicator
-    madeInSaudi: "Proudly Made in Saudi Arabia", // For Saudi Made image
-    socialLinks: "Follow Us", // For Social Media Header
-    // NEW: Snapchat translation
+    premiumConstruction: "Premium Construction Solutions",
+    getStarted: "Get Started",
+    viewGallery: "View Gallery",
+    exploreMore: "Explore More",
+    madeInSaudi: "Proudly Made in Saudi Arabia",
+    socialLinks: "Follow Us",
     snapchat: "Snapchat",
+    // NEW: Contact page intro and header button
+    contactIntroText: "At Portacabin KSA, we are dedicated to providing high-quality portable cabin solutions tailored to your needs. Whether you require a temporary office, accommodation, or any other portable structure, our team is ready to assist you. For inquiries, quotes, or more information, our experienced professionals are available to discuss your requirements and provide personalized solutions. Connect with us today and discover how our innovative portacabins can meet your specific needs efficiently and effectively.",
+    headerContactButton: "Get a Free Quote", // Button text for the header
+    mobileNumber: "Mobile Number", // Label for mobile number field
   },
   ar: {
     home: "الرئيسية",
@@ -80,7 +83,10 @@ export const translations = {
     exploreMore: "استكشف المزيد",
     madeInSaudi: "صنع بفخر في المملكة العربية السعودية",
     socialLinks: "تابعنا",
-    // NEW: Snapchat translation
     snapchat: "سناب شات",
+    // NEW: Contact page intro and header button
+    contactIntroText: "في بورتكابين السعودية، نحن ملتزمون بتقديم حلول كبائن محمولة عالية الجودة ومصممة خصيصًا لتلبية احتياجاتك. سواء كنت تحتاج إلى مكتب مؤقت، أو سكن، أو أي هيكل محمول آخر، فإن فريقنا مستعد لمساعدتك. للاستفسارات أو طلب عروض الأسعار أو لمزيد من المعلومات، يتوفر متخصصونا ذوو الخبرة لمناقشة متطلباتك وتقديم حلول مخصصة. تواصل معنا اليوم واكتشف كيف يمكن لكبائننا المبتكرة تلبية احتياجاتك الخاصة بكفاءة وفعالية.",
+    headerContactButton: "احصل على عرض أسعار مجاني", // Button text for the header
+    mobileNumber: "رقم الجوال", // Label for mobile number field
   }
 };
