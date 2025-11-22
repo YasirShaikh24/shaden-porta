@@ -181,7 +181,7 @@ const Footer = () => {
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Phone size={16} className="text-primary" />
                 </div>
-                <span className="font-medium">📞 {t.phone}</span>
+                <span className="font-medium">{t.phone}</span>
               </a>
               <a 
                 href="mailto:info@shadenhouseportacabin.com" 
@@ -190,7 +190,7 @@ const Footer = () => {
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500/10 to-teal-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Mail size={16} className="text-primary" />
                 </div>
-                <span className="font-medium break-all md:break-normal">📧 {t.email}</span>
+                <span className="font-medium break-all md:break-normal">{t.email}</span>
               </a>
               <a 
                 href="https://maps.app.goo.gl/tLXMWyfjmn6QCaWK8" 
@@ -201,7 +201,7 @@ const Footer = () => {
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                   <MapPin size={16} className="text-primary" />
                 </div>
-                <span className="font-medium text-left max-w-[200px]">📍 {t.address}</span>
+                <span className="font-medium text-left max-w-[200px]">{t.address}</span>
               </a>
             </div>
           </div>
