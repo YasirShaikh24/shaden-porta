@@ -21,7 +21,7 @@ const Contact = () => {
 
   const isRTL = language === "ar";
 
-  // Your company email (FINAL)
+  // FINAL BUSINESS EMAIL
   const recipientEmail = "yasirazimshaikh5440@gmail.com";
 
   useEffect(() => {
@@ -33,7 +33,6 @@ const Contact = () => {
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
-
     return () => {
       if (sectionRef.current) observer.unobserve(sectionRef.current);
     };
@@ -62,25 +61,25 @@ const Contact = () => {
   const validateForm = () => {
     const newErrors: any = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = isRTL ? "الاسم مطلوب" : "Name is required";
-    }
+    if (!formData.name.trim()) newErrors.name = isRTL ? "الاسم مطلوب" : "Name is required";
 
     if (!formData.userEmail.trim()) {
-      newErrors.userEmail = isRTL ? "البريد الإلكتروني مطلوب" : "Email is required";
+      newErrors.userEmail = isRTL ? "البريد الإلكتروني مطلوب" : "Email required";
     } else if (!validateEmail(formData.userEmail.trim())) {
-      newErrors.userEmail = isRTL ? "صيغة بريد إلكتروني غير صحيحة" : "Invalid email";
+      newErrors.userEmail = isRTL ? "بريد غير صحيح" : "Invalid email";
     }
 
-    if (!formData.message.trim()) {
-      newErrors.message = isRTL ? "الرسالة مطلوبة" : "Message is required";
-    }
+    if (!formData.message.trim()) newErrors.message = isRTL ? "الرسالة مطلوبة" : "Message required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // ⭐ FINAL Gmail API — No permission popup
+  // Detect Mobile
+  const isMobile = () => {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
@@ -94,15 +93,23 @@ const Contact = () => {
 
     const body = encodeURIComponent(
       isRTL
-        ? `الاسم: ${formData.name}\nالبريد الإلكتروني: ${formData.userEmail}\nرقم الجوال: ${formData.userMobile}\n\n${formData.message}`
+        ? `الاسم: ${formData.name}\nالبريد: ${formData.userEmail}\nالجوال: ${formData.userMobile}\n\n${formData.message}`
         : `Name: ${formData.name}\nEmail: ${formData.userEmail}\nMobile: ${formData.userMobile}\n\n${formData.message}`
     );
 
-    // ⭐ DIRECT GMAIL COMPOSE (No popup, no asking choose app)
-    const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipientEmail}&su=${subject}&body=${body}`;
+    let finalURL = "";
 
-    window.open(gmailURL, "_blank");
+    if (isMobile()) {
+      // ⭐ MOBILE → OPEN GMAIL APP COMPOSE
+      finalURL = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+    } else {
+      // ⭐ LAPTOP → OPEN GMAIL WEB DIRECT COMPOSE
+      finalURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipientEmail}&su=${subject}&body=${body}`;
+    }
 
+    window.location.href = finalURL;
+
+    // Success message
     setShowSuccess(true);
 
     setTimeout(() => {
@@ -112,7 +119,6 @@ const Contact = () => {
         userMobile: "",
         message: ""
       });
-
       setShowSuccess(false);
     }, 2000);
   };
@@ -124,25 +130,20 @@ const Contact = () => {
       className="py-20 bg-gradient-to-b from-background via-secondary/10 to-background relative overflow-hidden"
       dir={isRTL ? "rtl" : "ltr"}
     >
-      {/* BG DECORATION */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Background */}
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div
-          className={`text-center mb-16 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
-        >
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0 translate-y-10"}`}>
           <h2 className="text-4xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               {t.contactTitle}
             </span>
           </h2>
-
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             {t.contactIntroText}
           </p>
         </div>
@@ -152,105 +153,86 @@ const Contact = () => {
             <CheckCircle className="text-primary" size={24} />
             <div>
               <p className="text-foreground font-semibold">
-                {isRTL ? "نجح!" : "Success!"}
+                {isRTL ? "تم بنجاح" : "Success!"}
               </p>
               <p className="text-primary-foreground text-sm">
-                {isRTL
-                  ? "جارٍ فتح Gmail برسالتك…"
-                  : "Opening Gmail with your message…"}
+                {isRTL ? "جارٍ فتح البريد..." : "Opening email compose…"}
               </p>
             </div>
           </div>
         )}
 
-        <div
-          className={`max-w-2xl mx-auto mb-16 transition-all duration-1000 delay-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
-        >
+        {/* FINAL FORM */}
+        <div className={`max-w-2xl mx-auto transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0 translate-y-10"}`}>
           <div className="bg-card/50 backdrop-blur-xl p-8 rounded-3xl shadow-glow border-2 border-border/50">
-            <h3 className="text-2xl font-bold text-foreground mb-6 text-center">
-              {isRTL ? "أرسل لنا رسالة" : "Send us a Message"}
-            </h3>
-
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* NAME */}
+
+              {/* Name */}
               <div>
-                <label className="flex items-center gap-2 text-foreground font-semibold mb-2">
+                <label className="flex items-center gap-2 font-semibold text-foreground">
                   <User size={18} className="text-primary" />
-                  {isRTL ? "اسمك (مطلوب)" : "Your Name (Required)"}
+                  {isRTL ? "اسمك" : "Your Name"}
                 </label>
                 <Input
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder={isRTL ? "أدخل اسمك الكامل" : "Enter your full name"}
                   className={errors.name ? "border-red-500" : ""}
+                  placeholder={isRTL ? "الاسم الكامل" : "Full Name"}
                 />
-                {errors.name && <p className="text-red-400 text-sm">{errors.name}</p>}
+                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
               </div>
 
-              {/* EMAIL */}
+              {/* Email */}
               <div>
-                <label className="flex items-center gap-2 text-foreground font-semibold mb-2">
+                <label className="flex items-center gap-2 font-semibold text-foreground">
                   <Mail size={18} className="text-primary" />
-                  {isRTL ? "بريدك الإلكتروني (مطلوب)" : "Your Email (Required)"}
+                  {isRTL ? "البريد الإلكتروني" : "Email"}
                 </label>
                 <Input
                   name="userEmail"
                   type="email"
                   value={formData.userEmail}
                   onChange={handleChange}
-                  placeholder={isRTL ? "أدخل بريدك" : "Enter your email"}
                   className={errors.userEmail ? "border-red-500" : ""}
+                  placeholder={isRTL ? "example@mail.com" : "example@mail.com"}
                 />
-                {errors.userEmail && (
-                  <p className="text-red-400 text-sm">{errors.userEmail}</p>
-                )}
+                {errors.userEmail && <p className="text-red-500 text-sm">{errors.userEmail}</p>}
               </div>
 
-              {/* MOBILE */}
+              {/* Phone */}
               <div>
-                <label className="flex items-center gap-2 text-foreground font-semibold mb-2">
+                <label className="flex items-center gap-2 font-semibold text-foreground">
                   <Phone size={18} className="text-primary" />
                   {t.mobileNumber}
                 </label>
                 <Input
                   name="userMobile"
-                  type="tel"
                   value={formData.userMobile}
                   onChange={handleChange}
-                  placeholder={
-                    isRTL ? "أدخل رقم جوالك" : "Enter your mobile number (optional)"
-                  }
+                  placeholder={isRTL ? "رقم الجوال" : "Mobile Number (optional)"}
                 />
               </div>
 
-              {/* MESSAGE */}
+              {/* Message */}
               <div>
-                <label className="flex items-center gap-2 text-foreground font-semibold mb-2">
+                <label className="flex items-center gap-2 font-semibold text-foreground">
                   <MessageSquare size={18} className="text-primary" />
-                  {isRTL ? "رسالتك (مطلوب)" : "Your Message (Required)"}
+                  {isRTL ? "رسالتك" : "Your Message"}
                 </label>
                 <Textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder={
-                    isRTL ? "اكتب رسالتك هنا…" : "Write your message here…"
-                  }
-                  className={`min-h-[140px] ${
-                    errors.message ? "border-red-500" : ""
-                  }`}
+                  className={errors.message ? "border-red-500" : ""}
+                  placeholder={isRTL ? "اكتب رسالتك..." : "Type your message..."}
                 />
-                {errors.message && (
-                  <p className="text-red-400 text-sm">{errors.message}</p>
-                )}
+                {errors.message && <p className="text-red-500 text-sm">{errors.message}</p>}
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-primary to-accent text-white font-bold py-3 rounded-xl hover:opacity-90 transition"
+                className="w-full py-3 bg-gradient-to-r from-primary to-accent text-white font-bold rounded-xl hover:opacity-90 transition"
               >
                 {isRTL ? "إرسال" : "Send Message"}
               </button>
