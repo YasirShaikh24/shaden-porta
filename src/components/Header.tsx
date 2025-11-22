@@ -3,7 +3,6 @@ import logo from "@/assets/img/logo.png";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button"; // Import Button
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -43,20 +42,13 @@ const Header = () => {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // Use replace: true to avoid pushing many entries to history when navigating to home sections
       navigate(`/#${id}`, { replace: true });
     }
   };
-  
-  // New function to scroll to contact (used by the new header button)
-  const scrollToContact = () => {
-    navigateToSection('contact');
-  };
-  
-  // Close mobile menu when navigating to the gallery, as it's a new page
+
   const navigateToGallery = () => {
-      setMobileMenuOpen(false);
-      navigate('/gallery');
+    setMobileMenuOpen(false);
+    navigate('/gallery');
   };
 
   return (
@@ -65,9 +57,9 @@ const Header = () => {
         ? 'glass shadow-glow bg-card/70'
         : 'bg-background/80 backdrop-blur-md'
     }`}>
-
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
+
           {/* Logo */}
           <div 
             className="flex items-center gap-3 group cursor-pointer" 
@@ -89,47 +81,30 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <button
-              onClick={() => navigateToSection('home')}
-              className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
-            >
+            <button onClick={() => navigateToSection('home')} className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group">
               {t.home}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button
-              onClick={() => navigateToSection('about')}
-              className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
-            >
+
+            <button onClick={() => navigateToSection('about')} className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group">
               {t.about}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button
-              onClick={navigateToGallery} // Changed to use button and handler
-              className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
-            >
+
+            <button onClick={navigateToGallery} className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group">
               {t.gallery}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button
-              onClick={() => navigateToSection('contact')}
-              className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group"
-            >
+
+            <button onClick={() => navigateToSection('contact')} className="relative text-foreground font-semibold hover:text-primary transition-all duration-300 group">
               {t.contact}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
             </button>
           </nav>
 
-          {/* Language Toggle & Mobile Menu & NEW Button */}
+          {/* Language Toggle + Mobile Menu */}
           <div className="flex items-center gap-3">
-            {/* NEW: Get a Quote Button */}
-            <Button
-              onClick={scrollToContact}
-              size="sm"
-              className="hidden lg:flex bg-gradient-to-r from-primary to-accent text-white font-bold py-2 px-4 rounded-full shadow-lg hover:shadow-primary/50 transition-all duration-300"
-            >
-                {t.headerContactButton}
-            </Button>
-            
+
             {/* Language Buttons */}
             <div className="flex gap-2">
               <button
@@ -142,6 +117,7 @@ const Header = () => {
               >
                 EN 🇬🇧
               </button>
+
               <button
                 onClick={() => setLanguage('ar')}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 hover:scale-105 ${
@@ -164,48 +140,25 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Menu - Enhanced Structure */}
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <nav 
-            className="md:hidden py-4 border-t border-border bg-card/90 backdrop-blur-md transition-all duration-300 animate-fade-in"
-            dir={isRTL ? 'rtl' : 'ltr'}
-          >
+          <nav className="md:hidden py-4 border-t border-border bg-card/90 backdrop-blur-md transition-all duration-300 animate-fade-in" dir={isRTL ? 'rtl' : 'ltr'}>
             <div className="flex flex-col gap-2">
-              <button
-                onClick={() => navigateToSection('home')}
-                className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
-              >
+              <button onClick={() => navigateToSection('home')} className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold">
                 {t.home}
               </button>
-              <button
-                onClick={() => navigateToSection('about')}
-                className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
-              >
+
+              <button onClick={() => navigateToSection('about')} className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold">
                 {t.about}
               </button>
-              <button
-                onClick={navigateToGallery}
-                className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
-              >
+
+              <button onClick={navigateToGallery} className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold">
                 {t.gallery}
               </button>
-              <button
-                onClick={() => navigateToSection('contact')}
-                className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold"
-              >
+
+              <button onClick={() => navigateToSection('contact')} className="text-left text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-secondary font-semibold">
                 {t.contact}
               </button>
-              
-              {/* Separator and Contact Button */}
-              <div className="my-2 border-t border-border/50"></div>
-              
-              <Button
-                onClick={scrollToContact}
-                size="lg"
-                className="w-full bg-gradient-to-r from-primary to-accent text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-primary/50 transition-all duration-300"
-              >
-                  {t.headerContactButton}
-              </Button>
             </div>
           </nav>
         )}

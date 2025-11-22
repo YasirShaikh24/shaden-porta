@@ -1,28 +1,13 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { useEffect, useRef, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { User, Mail, Phone, MessageSquare, CheckCircle } from "lucide-react";
+import { Award, Trophy, Star, BadgeCheck } from "lucide-react";
 
 const Contact = () => {
   const { t, language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    userEmail: "",
-    userMobile: "",
-    message: ""
-  });
-
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [showSuccess, setShowSuccess] = useState(false);
-
   const isRTL = language === "ar";
-
-  // FINAL BUSINESS EMAIL
-  const recipientEmail = "yasirazimshaikh5440@gmail.com";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -38,113 +23,6 @@ const Contact = () => {
     };
   }, []);
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: ""
-      }));
-    }
-  };
-
-  const validateEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validateForm = () => {
-    const newErrors: any = {};
-
-    if (!formData.name.trim()) newErrors.name = isRTL ? "الاسم مطلوب" : "Name is required";
-
-    if (!formData.userEmail.trim()) {
-      newErrors.userEmail = isRTL ? "البريد الإلكتروني مطلوب" : "Email required";
-    } else if (!validateEmail(formData.userEmail.trim())) {
-      newErrors.userEmail = isRTL ? "بريد غير صحيح" : "Invalid email";
-    }
-
-    if (!formData.message.trim()) newErrors.message = isRTL ? "الرسالة مطلوبة" : "Message required";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Detect Mobile
-  const isMobile = () => {
-    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  };
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
-    // PREMIUM SUBJECT
-    const subject = encodeURIComponent(
-      isRTL
-        ? `📩 شادن هاوس – استفسار جديد`
-        : `📩 Shaden House Porta Cabin – New Inquiry`
-    );
-
-    // PREMIUM PROFESSIONAL EMAIL BODY
-   const body = encodeURIComponent(
-  isRTL
-    ? 
-      `مرحبا فريق شادن هاوس،\n\n` +
-      `لقد تلقيتم استفسارًا جديدًا من أحد العملاء:\n\n` +
-
-      `👤 *الاسم:* ${formData.name}\n` +
-      `📧 *البريد الإلكتروني:* ${formData.userEmail}\n` +
-      `📱 *الجوال:* ${formData.userMobile || "غير متوفر"}\n\n` +
-
-      `📝 *الرسالة:*\n${formData.message}\n\n` +
-      
-      `تم إرسال هذا البريد من نموذج الاتصال بموقع *شادن هاوس بورتاكابين*.\n`
-
-    :
-
-      `Hello Shaden House Team,\n\n` +
-      `You have received a new customer inquiry:\n\n` +
-
-      `👤 *Name:* ${formData.name}\n` +
-      `📧 *Email:* ${formData.userEmail}\n` +
-      `📱 *Mobile:* ${formData.userMobile || "Not provided"}\n\n` +
-
-      `📝 *Message:*\n${formData.message}\n\n` +
-
-      `Sent via the *Shaden House Porta Cabin* website contact form.\n`
-);
-
-
-    let finalURL = "";
-
-    if (isMobile()) {
-      finalURL = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
-    } else {
-      finalURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipientEmail}&su=${subject}&body=${body}`;
-    }
-
-    window.location.href = finalURL;
-
-    setShowSuccess(true);
-
-    setTimeout(() => {
-      setFormData({
-        name: "",
-        userEmail: "",
-        userMobile: "",
-        message: ""
-      });
-      setShowSuccess(false);
-    }, 2000);
-  };
-
   return (
     <section
       id="contact"
@@ -152,129 +30,95 @@ const Contact = () => {
       className="py-20 bg-gradient-to-b from-background via-secondary/10 to-background relative overflow-hidden"
       dir={isRTL ? "rtl" : "ltr"}
     >
-      {/* Background */}
+      {/* Background Decorations */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
+        
+        {/* ⭐ AWARDS SECTION */}
         <div
-          className={`text-center mb-16 transition-all duration-1000 ${
-            isVisible ? "opacity-100" : "opacity-0 translate-y-10"
+          className={`mb-24 transition-all duration-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              {t.contactTitle}
-            </span>
+          <h2 className="text-center text-4xl md:text-5xl font-bold mb-20 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            {isRTL ? "جوائزنا وإنجازاتنا" : "Our Awards & Achievements"}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            {t.contactIntroText}
-          </p>
-        </div>
 
-        {showSuccess && (
-          <div className="mb-6 max-w-2xl mx-auto p-4 bg-primary/30 border border-primary/50 rounded-lg flex items-center gap-3 animate-fade-in">
-            <CheckCircle className="text-primary" size={24} />
-            <div>
-              <p className="text-foreground font-semibold">
-                {isRTL ? "تم بنجاح" : "Success!"}
-              </p>
-              <p className="text-primary-foreground text-sm">
-                {isRTL ? "جارٍ فتح البريد..." : "Opening email compose…"}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            {/* 25+ Years */}
+            <div className="p-6 bg-card/40 backdrop-blur-xl border border-border/50 rounded-3xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition duration-300">
+              <Award size={42} className="text-primary mb-3" />
+              <h3 className="text-3xl font-bold mb-1">25+</h3>
+              <p className="text-muted-foreground">
+                {isRTL ? "سنوات من الخبرة" : "Years of Excellence"}
               </p>
             </div>
-          </div>
-        )}
 
-        {/* FINAL FORM */}
-        <div
-          className={`max-w-2xl mx-auto transition-all duration-1000 ${
-            isVisible ? "opacity-100" : "opacity-0 translate-y-10"
-          }`}
-        >
-          <div className="bg-card/50 backdrop-blur-xl p-8 rounded-3xl shadow-glow border-2 border-border/50">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            {/* 5000+ Cabins */}
+            <div className="p-6 bg-card/40 backdrop-blur-xl border border-border/50 rounded-3xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition duration-300">
+              <Trophy size={42} className="text-accent mb-3" />
+              <h3 className="text-3xl font-bold mb-1">5000+</h3>
+              <p className="text-muted-foreground">
+                {isRTL ? "كبائن تم تسليمها" : "Porta Cabins Delivered"}
+              </p>
+            </div>
 
-              {/* Name */}
-              <div>
-                <label className="flex items-center gap-2 font-semibold text-foreground">
-                  <User size={18} className="text-primary" />
-                  {isRTL ? "اسمك" : "Your Name"}
-                </label>
-                <Input
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={errors.name ? "border-red-500" : ""}
-                  placeholder={isRTL ? "الاسم الكامل" : "Full Name"}
-                />
-                {errors.name && (
-                  <p className="text-red-500 text-sm">{errors.name}</p>
-                )}
-              </div>
+            {/* Top Quality */}
+            <div className="p-6 bg-card/40 backdrop-blur-xl border border-border/50 rounded-3xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition duration-300">
+              <Star size={42} className="text-yellow-400 mb-3" />
+              <h3 className="text-3xl font-bold mb-1">#1</h3>
+              <p className="text-muted-foreground">
+                {isRTL ? "جودة معتمدة" : "Top Quality Rated"}
+              </p>
+            </div>
 
-              {/* Email */}
-              <div>
-                <label className="flex items-center gap-2 font-semibold text-foreground">
-                  <Mail size={18} className="text-primary" />
-                  {isRTL ? "البريد الإلكتروني" : "Email"}
-                </label>
-                <Input
-                  name="userEmail"
-                  type="email"
-                  value={formData.userEmail}
-                  onChange={handleChange}
-                  className={errors.userEmail ? "border-red-500" : ""}
-                  placeholder={isRTL ? "example@mail.com" : "example@mail.com"}
-                />
-                {errors.userEmail && (
-                  <p className="text-red-500 text-sm">{errors.userEmail}</p>
-                )}
-              </div>
+            {/* Customer Satisfaction */}
+            <div className="p-6 bg-card/40 backdrop-blur-xl border border-border/50 rounded-3xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition duration-300">
+              <BadgeCheck size={42} className="text-green-500 mb-3" />
+              <h3 className="text-3xl font-bold mb-1">100%</h3>
+              <p className="text-muted-foreground">
+                {isRTL ? "رضا العملاء" : "Customer Satisfaction"}
+              </p>
+            </div>
 
-              {/* Phone */}
-              <div>
-                <label className="flex items-center gap-2 font-semibold text-foreground">
-                  <Phone size={18} className="text-primary" />
-                  {t.mobileNumber}
-                </label>
-                <Input
-                  name="userMobile"
-                  value={formData.userMobile}
-                  onChange={handleChange}
-                  placeholder={isRTL ? "رقم الجوال" : "Mobile Number (optional)"}
-                />
-              </div>
-
-              {/* Message */}
-              <div>
-                <label className="flex items-center gap-2 font-semibold text-foreground">
-                  <MessageSquare size={18} className="text-primary" />
-                  {isRTL ? "رسالتك" : "Your Message"}
-                </label>
-                <Textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className={errors.message ? "border-red-500" : ""}
-                  placeholder={isRTL ? "اكتب رسالتك..." : "Type your message..."}
-                />
-                {errors.message && (
-                  <p className="text-red-500 text-sm">{errors.message}</p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3 bg-gradient-to-r from-primary to-accent text-white font-bold rounded-xl hover:opacity-90 transition"
-              >
-                {isRTL ? "إرسال" : "Send Message"}
-              </button>
-            </form>
           </div>
         </div>
+
+        {/* CONTACT US HEADING */}
+        <div
+          className={`text-center mb-16 transition-all duration-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            {t.contactTitle}
+          </h2>
+        </div>
+
+        {/* 📍 MAP SECTION */}
+        <div
+          className={`rounded-3xl overflow-hidden border-2 border-border shadow-2xl transition-all duration-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.1234567890123!2d46.7777777777778!3d24.7777777777778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDQ2JzQwLjAiTiA0NsKwNDYnNDAuMCJF!5e0!3m2!1sen!2ssa!4v1234567890123!5m2!1sen!2ssa"
+            width="100%"
+            height="500"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Shaden House Porta Cabin Location"
+            className="rounded-3xl"
+          ></iframe>
+        </div>
+
       </div>
     </section>
   );
