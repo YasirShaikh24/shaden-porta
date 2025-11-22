@@ -6,30 +6,47 @@ interface VideoBackgroundProps {
   className?: string;
 }
 
-const VideoBackground = ({ videoUrl, posterImage, className = "" }: VideoBackgroundProps) => {
+const VideoBackground = ({
+  videoUrl,
+  posterImage = "/videos/truck-poster.jpg",
+  className = ""
+}: VideoBackgroundProps) => {
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
   React.useEffect(() => {
-    // Preload and optimize video loading
-    if (videoRef.current) {
-      // Set video to load immediately
-      videoRef.current.load();
-      
-      // Try to play as soon as possible
-      const playPromise = videoRef.current.play();
-      
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          // Auto-play was prevented, video will play when user interacts
-          console.log("Video autoplay prevented:", error);
-        });
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Force preload immediately
+    video.preload = "auto";
+
+    // Force immediate load
+    video.load();
+
+    // Try to autoplay instantly
+    const tryPlay = async () => {
+      try {
+        await video.play();
+      } catch (e) {
+        // Autoplay blocked on some devices (Android/iOS)
+        console.log("Autoplay prevented, waiting for user interaction");
+        const resumePlay = () => {
+          video.play().catch(() => {});
+          window.removeEventListener("touchstart", resumePlay);
+          window.removeEventListener("click", resumePlay);
+        };
+        window.addEventListener("touchstart", resumePlay, { once: true });
+        window.addEventListener("click", resumePlay, { once: true });
       }
-    }
+    };
+
+    tryPlay();
   }, []);
 
   return (
-    <div className={`absolute inset-0 ${className}`}>
-      {/* Optimized Video Element */}
+    <div className={`absolute inset-0 overflow-hidden ${className}`}>
+      
+      {/* Ultra-Optimized Video */}
       <video
         ref={videoRef}
         autoPlay
@@ -38,16 +55,24 @@ const VideoBackground = ({ videoUrl, posterImage, className = "" }: VideoBackgro
         playsInline
         preload="auto"
         poster={posterImage}
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: 'brightness(0.7)' }}
+        className="absolute inset-0 w-full h-full object-cover transform-gpu will-change-transform will-change-opacity"
+        style={{
+          filter: "brightness(0.68)",
+          WebkitTransform: "translateZ(0)",
+        }}
       >
+        {/* WebM first (faster if available) */}
+        <source src={videoUrl.replace(".mp4", ".webm")} type="video/webm" />
+
+        {/* MP4 fallback */}
         <source src={videoUrl} type="video/mp4" />
-        Your browser does not support the video tag.
+
+        Your browser does not support HTML5 video.
       </video>
 
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background/95"></div> 
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5"></div>
+      {/* Soft Gradients for visibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 pointer-events-none"></div>
     </div>
   );
 };
