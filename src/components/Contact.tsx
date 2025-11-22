@@ -85,31 +85,53 @@ const Contact = () => {
 
     if (!validateForm()) return;
 
+    // PREMIUM SUBJECT
     const subject = encodeURIComponent(
       isRTL
-        ? `استفسار جديد من ${formData.name}`
-        : `New Inquiry from ${formData.name}`
+        ? `📩 شادن هاوس – استفسار جديد`
+        : `📩 Shaden House Porta Cabin – New Inquiry`
     );
 
-    const body = encodeURIComponent(
-      isRTL
-        ? `الاسم: ${formData.name}\nالبريد: ${formData.userEmail}\nالجوال: ${formData.userMobile}\n\n${formData.message}`
-        : `Name: ${formData.name}\nEmail: ${formData.userEmail}\nMobile: ${formData.userMobile}\n\n${formData.message}`
-    );
+    // PREMIUM PROFESSIONAL EMAIL BODY
+   const body = encodeURIComponent(
+  isRTL
+    ? 
+      `مرحبا فريق شادن هاوس،\n\n` +
+      `لقد تلقيتم استفسارًا جديدًا من أحد العملاء:\n\n` +
+
+      `👤 *الاسم:* ${formData.name}\n` +
+      `📧 *البريد الإلكتروني:* ${formData.userEmail}\n` +
+      `📱 *الجوال:* ${formData.userMobile || "غير متوفر"}\n\n` +
+
+      `📝 *الرسالة:*\n${formData.message}\n\n` +
+      
+      `تم إرسال هذا البريد من نموذج الاتصال بموقع *شادن هاوس بورتاكابين*.\n`
+
+    :
+
+      `Hello Shaden House Team,\n\n` +
+      `You have received a new customer inquiry:\n\n` +
+
+      `👤 *Name:* ${formData.name}\n` +
+      `📧 *Email:* ${formData.userEmail}\n` +
+      `📱 *Mobile:* ${formData.userMobile || "Not provided"}\n\n` +
+
+      `📝 *Message:*\n${formData.message}\n\n` +
+
+      `Sent via the *Shaden House Porta Cabin* website contact form.\n`
+);
+
 
     let finalURL = "";
 
     if (isMobile()) {
-      // ⭐ MOBILE → OPEN GMAIL APP COMPOSE
       finalURL = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
     } else {
-      // ⭐ LAPTOP → OPEN GMAIL WEB DIRECT COMPOSE
       finalURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipientEmail}&su=${subject}&body=${body}`;
     }
 
     window.location.href = finalURL;
 
-    // Success message
     setShowSuccess(true);
 
     setTimeout(() => {
@@ -137,7 +159,11 @@ const Contact = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0 translate-y-10"}`}>
+        <div
+          className={`text-center mb-16 transition-all duration-1000 ${
+            isVisible ? "opacity-100" : "opacity-0 translate-y-10"
+          }`}
+        >
           <h2 className="text-4xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               {t.contactTitle}
@@ -163,7 +189,11 @@ const Contact = () => {
         )}
 
         {/* FINAL FORM */}
-        <div className={`max-w-2xl mx-auto transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0 translate-y-10"}`}>
+        <div
+          className={`max-w-2xl mx-auto transition-all duration-1000 ${
+            isVisible ? "opacity-100" : "opacity-0 translate-y-10"
+          }`}
+        >
           <div className="bg-card/50 backdrop-blur-xl p-8 rounded-3xl shadow-glow border-2 border-border/50">
             <form onSubmit={handleSubmit} className="space-y-6">
 
@@ -180,7 +210,9 @@ const Contact = () => {
                   className={errors.name ? "border-red-500" : ""}
                   placeholder={isRTL ? "الاسم الكامل" : "Full Name"}
                 />
-                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name}</p>
+                )}
               </div>
 
               {/* Email */}
@@ -197,7 +229,9 @@ const Contact = () => {
                   className={errors.userEmail ? "border-red-500" : ""}
                   placeholder={isRTL ? "example@mail.com" : "example@mail.com"}
                 />
-                {errors.userEmail && <p className="text-red-500 text-sm">{errors.userEmail}</p>}
+                {errors.userEmail && (
+                  <p className="text-red-500 text-sm">{errors.userEmail}</p>
+                )}
               </div>
 
               {/* Phone */}
@@ -227,7 +261,9 @@ const Contact = () => {
                   className={errors.message ? "border-red-500" : ""}
                   placeholder={isRTL ? "اكتب رسالتك..." : "Type your message..."}
                 />
-                {errors.message && <p className="text-red-500 text-sm">{errors.message}</p>}
+                {errors.message && (
+                  <p className="text-red-500 text-sm">{errors.message}</p>
+                )}
               </div>
 
               <button
