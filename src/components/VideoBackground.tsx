@@ -57,9 +57,11 @@ const VideoBackground = ({
         poster={posterImage}
         className="absolute inset-0 w-full h-full object-cover transform-gpu will-change-transform will-change-opacity"
         style={{
-          filter: "brightness(0.68)",
-          WebkitTransform: "translateZ(0)",
-        }}
+        filter: "brightness(0.68)",
+        transform: "scale(1.10) translateY(4%)",
+
+      }}
+
       >
         {/* WebM first (faster if available) */}
         <source src={videoUrl.replace(".mp4", ".webm")} type="video/webm" />
