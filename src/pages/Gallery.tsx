@@ -77,10 +77,12 @@ const Gallery = () => {
     return language === 'ar' ? item.titleAr : item.titleEn;
   };
 
+  // Scroll to top on mount/initial load and re-initialize visibility state
+  // Added window.scrollTo(0, 0) to enforce scroll to top on load/navigation
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); 
     setVisibleItems(new Array(galleryItems.length).fill(false));
-  }, []);
+  }, []); 
 
   // Intersection Observer for scroll animations
   useEffect(() => {
@@ -218,32 +220,6 @@ const Gallery = () => {
               </div>
             );
           })}
-        </div>
-
-        {/* Gallery Stats with Entrance Animation */}
-        <div className="mt-16 text-center opacity-0 translate-y-10 animate-fade-in" style={{ animationDelay: '300ms' }}>
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 backdrop-blur-sm hover:scale-105 transition-transform duration-300">
-            <div className="text-center group">
-              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
-                {galleryItems.length}
-              </div>
-              <div className="text-sm text-muted-foreground font-medium">
-                {language === 'ar' ? 'إجمالي المشاريع' : 'Total Projects'}
-              </div>
-            </div>
-            <div className="w-px h-12 bg-border hidden sm:block"></div>
-            <div className="text-center group">
-              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
-                500+
-              </div>
-              <div className="text-sm text-muted-foreground font-medium">
-                {language === 'ar' ? 'المشاريع المنجزة' : 'Projects Done'}
-              </div>
-            </div>
-          </div>
-          <p className="mt-6 text-muted-foreground text-sm animate-pulse">
-            {language === 'ar' ? 'المزيد من المشاريع المثيرة قريباً!' : 'More exciting projects coming soon!'}
-          </p>
         </div>
       </main>
 

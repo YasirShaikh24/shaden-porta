@@ -5,7 +5,10 @@ import { Award, Trophy, Star, BadgeCheck } from "lucide-react";
 const Contact = () => {
   const { t, language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
+  const [counters, setCounters] = useState({ years: 0, cabins: 0, quality: 0, satisfaction: 0 });
+  const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
 
   const isRTL = language === "ar";
 
@@ -23,6 +26,54 @@ const Contact = () => {
     };
   }, []);
 
+  // Counter Animation Effect - Only when scrolled into view
+  useEffect(() => {
+    const statsObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          
+          // Animate counters
+          const duration = 2000; // 2 seconds
+          const frameRate = 60;
+          const totalFrames = duration / (1000 / frameRate);
+          
+          let frame = 0;
+          const timer = setInterval(() => {
+            frame++;
+            const progress = frame / totalFrames;
+            
+            // Easing function for smooth animation
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            
+            setCounters({
+              years: Math.floor(25 * easeOutQuart),
+              cabins: Math.floor(5000 * easeOutQuart),
+              quality: Math.floor(1 * easeOutQuart),
+              satisfaction: Math.floor(100 * easeOutQuart)
+            });
+            
+            if (frame >= totalFrames) {
+              clearInterval(timer);
+              setCounters({ years: 25, cabins: 5000, quality: 1, satisfaction: 100 });
+            }
+          }, 1000 / frameRate);
+          
+          return () => clearInterval(timer);
+        }
+      },
+      { 
+        threshold: 0.5, // Trigger when 50% of section is visible
+        rootMargin: '0px 0px -100px 0px' // Add bottom margin to delay trigger
+      }
+    );
+
+    if (statsRef.current) statsObserver.observe(statsRef.current);
+    return () => {
+      if (statsRef.current) statsObserver.unobserve(statsRef.current);
+    };
+  }, [hasAnimated]);
+
   return (
     <section
       id="contact"
@@ -38,8 +89,9 @@ const Contact = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         
-        {/* ⭐ AWARDS SECTION */}
+        {/* ⭐ AWARDS SECTION with Counter Animation */}
         <div
+          ref={statsRef}
           className={`mb-24 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
@@ -53,7 +105,7 @@ const Contact = () => {
             {/* 25+ Years */}
             <div className="p-6 bg-card/40 backdrop-blur-xl border border-border/50 rounded-3xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition duration-300">
               <Award size={42} className="text-primary mb-3" />
-              <h3 className="text-3xl font-bold mb-1">25+</h3>
+              <h3 className="text-3xl font-bold mb-1">{counters.years}+</h3>
               <p className="text-muted-foreground">
                 {isRTL ? "سنوات من الخبرة" : "Years of Excellence"}
               </p>
@@ -62,7 +114,7 @@ const Contact = () => {
             {/* 5000+ Cabins */}
             <div className="p-6 bg-card/40 backdrop-blur-xl border border-border/50 rounded-3xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition duration-300">
               <Trophy size={42} className="text-accent mb-3" />
-              <h3 className="text-3xl font-bold mb-1">5000+</h3>
+              <h3 className="text-3xl font-bold mb-1">{counters.cabins.toLocaleString()}+</h3>
               <p className="text-muted-foreground">
                 {isRTL ? "كبائن تم تسليمها" : "Porta Cabins Delivered"}
               </p>
@@ -71,7 +123,7 @@ const Contact = () => {
             {/* Top Quality */}
             <div className="p-6 bg-card/40 backdrop-blur-xl border border-border/50 rounded-3xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition duration-300">
               <Star size={42} className="text-yellow-400 mb-3" />
-              <h3 className="text-3xl font-bold mb-1">#1</h3>
+              <h3 className="text-3xl font-bold mb-1">#{counters.quality}</h3>
               <p className="text-muted-foreground">
                 {isRTL ? "جودة معتمدة" : "Top Quality Rated"}
               </p>
@@ -80,7 +132,7 @@ const Contact = () => {
             {/* Customer Satisfaction */}
             <div className="p-6 bg-card/40 backdrop-blur-xl border border-border/50 rounded-3xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition duration-300">
               <BadgeCheck size={42} className="text-green-500 mb-3" />
-              <h3 className="text-3xl font-bold mb-1">100%</h3>
+              <h3 className="text-3xl font-bold mb-1">{counters.satisfaction}%</h3>
               <p className="text-muted-foreground">
                 {isRTL ? "رضا العملاء" : "Customer Satisfaction"}
               </p>

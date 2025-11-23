@@ -12,12 +12,15 @@ const About = () => {
   const [isTyping1Complete, setIsTyping1Complete] = useState(false);
   const [isTyping2Complete, setIsTyping2Complete] = useState(false);
   const [cardVisibility, setCardVisibility] = useState<boolean[]>([]);
-  const [statsVisibility, setStatsVisibility] = useState<boolean[]>([]);
+  // NEW STATE FOR COUNTERS AND ANIMATION
+  const [counters, setCounters] = useState({ projects: 0, years: 0, satisfaction: 0, support: 0 });
+  const [hasAnimated, setHasAnimated] = useState(false);
+  
   const sectionRef = useRef<HTMLDivElement>(null);
   const text1Ref = useRef<HTMLDivElement>(null);
   const text2Ref = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const statsRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const statsRefs = useRef<(HTMLDivElement | null)[]>([]); // Ref for the stats container
 
   const isRTL = language === 'ar';
 
@@ -40,6 +43,7 @@ const About = () => {
   const fullText1 = texts[language].text1;
   const fullText2 = texts[language].text2;
 
+  // Primary visibility observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -104,6 +108,57 @@ const About = () => {
       }
     };
   }, []);
+  
+  // Counter Animation Effect - Only when scrolled into view
+  useEffect(() => {
+    const targetValues = { projects: 500, years: 15, satisfaction: 100, support: 247 };
+    
+    const statsObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          
+          const duration = 2000; // 2 seconds
+          const frameRate = 60;
+          const totalFrames = duration / (1000 / frameRate);
+          
+          let frame = 0;
+          const timer = setInterval(() => {
+            frame++;
+            const progress = frame / totalFrames;
+            
+            // Easing function for smooth animation
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            
+            setCounters({
+              projects: Math.floor(targetValues.projects * easeOutQuart),
+              years: Math.floor(targetValues.years * easeOutQuart),
+              satisfaction: Math.floor(targetValues.satisfaction * easeOutQuart),
+              // We'll use 247 to represent 24/7 for the animation purposes
+              support: Math.floor(targetValues.support * easeOutQuart) 
+            });
+            
+            if (frame >= totalFrames) {
+              clearInterval(timer);
+              setCounters({ projects: 500, years: 15, satisfaction: 100, support: 247 });
+            }
+          }, 1000 / frameRate);
+          
+          return () => clearInterval(timer);
+        }
+      },
+      { 
+        threshold: 0.5, 
+        rootMargin: '0px 0px -100px 0px'
+      }
+    );
+
+    if (statsRefs.current[0]) statsObserver.observe(statsRefs.current[0]!);
+    return () => {
+      if (statsRefs.current[0]) statsObserver.unobserve(statsRefs.current[0]!);
+    };
+  }, [hasAnimated]);
+
 
   // Reset typing when language changes and trigger immediately if section is in view
   useEffect(() => {
@@ -131,7 +186,7 @@ const About = () => {
     setTimeout(checkVisibility, 50);
   }, [language]);
 
-  // Fast typing effect for first text - 5ms per character (INCREASED SPEED)
+  // Fast typing effect for first text
   useEffect(() => {
     if (text1Visible && !isTyping1Complete) {
       let currentIndex = 0;
@@ -143,13 +198,13 @@ const About = () => {
           setIsTyping1Complete(true);
           clearInterval(typingInterval);
         }
-      }, 5); // CHANGED from 10 to 5
+      }, 5); 
 
       return () => clearInterval(typingInterval);
     }
   }, [text1Visible, isTyping1Complete, fullText1]);
 
-  // Fast typing effect for second text - 5ms per character (INCREASED SPEED)
+  // Fast typing effect for second text
   useEffect(() => {
     if (text2Visible && !isTyping2Complete) {
       let currentIndex = 0;
@@ -161,7 +216,7 @@ const About = () => {
           setIsTyping2Complete(true);
           clearInterval(typingInterval);
         }
-      }, 5); // CHANGED from 10 to 5
+      }, 5); 
 
       return () => clearInterval(typingInterval);
     }
@@ -199,37 +254,6 @@ const About = () => {
     };
   }, []);
 
-  // Stats intersection observer
-  useEffect(() => {
-    const observers = statsRefs.current.map((ref, index) => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setStatsVisibility(prev => {
-              const newVisible = [...prev];
-              newVisible[index] = true;
-              return newVisible;
-            });
-          }
-        },
-        { threshold: 0.3 }
-      );
-
-      if (ref) {
-        observer.observe(ref);
-      }
-
-      return observer;
-    });
-
-    return () => {
-      observers.forEach((observer, index) => {
-        if (statsRefs.current[index]) {
-          observer.unobserve(statsRefs.current[index]!);
-        }
-      });
-    };
-  }, []);
 
   const features = [
     {
@@ -262,11 +286,15 @@ const About = () => {
     }
   ];
 
+  // Map state counters to display strings
   const stats = [
-    { value: "500+", label: "Projects Completed" },
-    { value: "15+", label: "Years Experience" },
-    { value: "100%", label: "Client Satisfaction" },
-    { value: "24/7", label: "Support Available" }
+    { value: `${counters.projects}+`, label: "Projects Completed" },
+    { value: `${counters.years}+`, label: "Years Experience" },
+    { value: `${counters.satisfaction}%`, label: "Client Satisfaction" },
+    { 
+      value: counters.support === 247 ? "24/7" : `${Math.floor(counters.support / 10)}/${counters.support % 10}`, 
+      label: "Support Available" 
+    }
   ];
 
   return (
@@ -400,16 +428,16 @@ const About = () => {
           ))}
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        {/* Stats Section with Animated Counters */}
+        <div 
+          ref={(el) => (statsRefs.current[0] = el)} // Attach ref to the container
+          className="grid grid-cols-2 md:grid-cols-4 gap-8"
+        >
           {stats.map((stat, index) => (
             <div 
               key={index}
-              ref={(el) => (statsRefs.current[index] = el)}
-              className={`text-center group cursor-pointer transition-all duration-700 ${
-                statsVisibility[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              className={`text-center group cursor-pointer transition-all duration-700`}
+              // We rely on the parent (statsRefs[0]) for animation trigger, not individual items here.
             >
               <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
                 {stat.value}

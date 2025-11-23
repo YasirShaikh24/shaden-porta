@@ -1,15 +1,10 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import VideoBackground from "./VideoBackground";
 
 const Hero = () => {
   const { t } = useLanguage();
-
-  const scrollToContact = () => {
-    const el = document.getElementById("contact");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
 
   const scrollToAbout = () => {
     const el = document.getElementById("about");
@@ -29,7 +24,7 @@ const Hero = () => {
         <div className="text-center max-w-6xl mx-auto animate-fade-in">
 
           {/* Premium Badge */}
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass border-2 border-white mb-6 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass border-2 border-white mb-6 backdrop-blur-md animate-pulse">
             <Sparkles className="text-white animate-spin-slow" size={20} />
             <span className="text-sm md:text-base font-semibold text-white">
               {t.premiumConstruction}
@@ -48,31 +43,31 @@ const Hero = () => {
             {t.heroDescription}
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-12 md:mb-20">
-            <Button
-              onClick={scrollToContact}
-              size="lg"
-              className="group px-8 md:px-10 py-6 text-base md:text-lg font-bold bg-gradient-to-r from-primary to-accent text-white rounded-xl shadow-lg hover:scale-105 transition-all duration-300"
-            >
-              {t.getStarted}
-              <ArrowDown
-                className="ml-2 group-hover:translate-y-1 transition"
-                size={20}
-              />
-            </Button>
-
+          {/* CTA Button - Single Centered Button */}
+          <div className="flex justify-center mb-12 md:mb-20">
             <Button
               onClick={() => (window.location.href = "/gallery")}
               size="lg"
-              variant="outline"
-              className="px-8 md:px-10 py-6 text-base md:text-lg font-bold text-white glass border-2 border-white hover:bg-white/20 hover:scale-105 transition rounded-xl"
+              className="group px-12 md:px-16 py-6 md:py-8 text-lg md:text-xl font-bold bg-gradient-to-r from-primary to-accent text-white rounded-xl shadow-2xl hover:shadow-primary/50 hover:scale-110 transition-all duration-500 relative overflow-hidden"
             >
-              {t.viewGallery}
+              {/* Animated Background Shimmer */}
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></span>
+              
+              <span className="relative z-10 flex items-center gap-3">
+                {t.viewGallery}
+                <svg 
+                  className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
             </Button>
           </div>
 
-          {/* ⭐ CENTERED Explore More Section */}
+          {/* Explore More Section - Centered */}
           <div className="flex justify-center mt-8">
             <button
               onClick={scrollToAbout}
@@ -81,10 +76,15 @@ const Hero = () => {
               <span className="text-xs md:text-sm font-semibold uppercase tracking-wider">
                 {t.exploreMore}
               </span>
-              <ArrowDown
-                className="group-hover:translate-y-2 transition-transform duration-300"
-                size={24}
-              />
+              {/* Animated Down Arrow - Bouncing */}
+              <svg 
+                className="w-6 h-6 animate-bounce" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
             </button>
           </div>
         </div>

@@ -4,6 +4,7 @@ import saudimade from "@/assets/img/saudimade.png";
 import vision2030 from "@/assets/img/vision2030.png";
 import { MapPin, Phone, Mail, ArrowUp, Linkedin, Facebook, Instagram } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Official Snapchat Ghost Icon
 const SnapchatIcon = ({ size = 20 }) => (
@@ -22,6 +23,8 @@ const Footer = () => {
   const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const footerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -46,6 +49,26 @@ const Footer = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToSection = (sectionId: string) => {
+    if (location.pathname !== '/') {
+      // If not on home page, navigate to home first
+      navigate('/');
+      // Wait for navigation to complete, then scroll
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      // Already on home page, just scroll
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   const socialLinks = [
@@ -131,34 +154,34 @@ const Footer = () => {
               <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-accent"></div>
             </h3>
             <div className="flex flex-col gap-3 items-center md:items-start">
-              <a 
-                href="#home" 
+              <button 
+                onClick={() => navigateToSection('home')}
                 className="group relative text-muted-foreground hover:text-primary transition-colors text-sm font-medium inline-block"
               >
                 {t.home}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
-              </a>
-              <a 
-                href="#about" 
+              </button>
+              <button 
+                onClick={() => navigateToSection('about')}
                 className="group relative text-muted-foreground hover:text-primary transition-colors text-sm font-medium inline-block"
               >
                 {t.about}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
-              </a>
-              <a 
-                href="/gallery" 
+              </button>
+              <button 
+                onClick={() => navigate('/gallery')}
                 className="group relative text-muted-foreground hover:text-primary transition-colors text-sm font-medium inline-block"
               >
                 {t.gallery}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
-              </a>
-              <a 
-                href="#contact" 
+              </button>
+              <button 
+                onClick={() => navigateToSection('contact')}
                 className="group relative text-muted-foreground hover:text-primary transition-colors text-sm font-medium inline-block"
               >
                 {t.contact}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></span>
-              </a>
+              </button>
             </div>
           </div>
 

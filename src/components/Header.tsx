@@ -13,6 +13,9 @@ const Header = () => {
 
   const isRTL = language === 'ar';
 
+  // The previous useEffect block for handling location.hash is removed here.
+  // This allows the browser's native scroll restoration to work correctly on refresh.
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -21,27 +24,17 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (location.pathname === '/' && location.hash) {
-      const id = location.hash.replace('#', '');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }
-  }, [location]);
-
   const navigateToSection = (id: string) => {
     setMobileMenuOpen(false);
 
     if (location.pathname === '/') {
       const element = document.getElementById(id);
       if (element) {
+        // This is the desired smooth scroll behavior for click events on the home page
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
+      // Correctly navigates to home page with a hash fragment from another route
       navigate(`/#${id}`, { replace: true });
     }
   };
